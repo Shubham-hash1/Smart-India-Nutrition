@@ -11,16 +11,16 @@ const Footer = () => {
             <h2 class="mb-6 text-sm font-bold text-heading uppercase ">Company</h2>
             <ul class="text-body font-medium">
                 <li class="mb-2">
-                    <a href="#" class=" hover:underline">About</a>
+                    <a href="about" class=" hover:underline">About</a>
                 </li>
                 <li class="mb-2">
                     <a href="#" class="hover:underline">Careers</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" class="hover:underline">Product</a>
+                    <a href="Products" class="hover:underline">Product</a>
                 </li>
                 <li class="mb-2">
-                    <a href="#" class="hover:underline">Blog</a>
+                    <a href="Blogs" class="hover:underline">Blogs</a>
                 </li>
             </ul>
         </div>

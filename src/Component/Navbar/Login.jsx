@@ -5,17 +5,28 @@ export default function Login() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="bg-orange-600">
+    <div className="w-full flex justify-end px-4 sm:px-6 md:px-10 py-3">
 
+      {/* Login Button */}
       <button
         onClick={() => setOpen(true)}
-        className="absolute right-10  text-xl font-bold cursor-pointer hover:text-blue-300 "
+        className="
+          text-sm
+          sm:text-base
+          md:text-lg
+          font-semibold
+          cursor-pointer
+          hover:text-blue-400
+          transition
+        "
       >
         Login
       </button>
 
-      {open && <LoginForm close={() => setOpen(false)} />}
+      {/* Modal */}
+      {open && (
+        <LoginForm close={() => setOpen(false)} />
+      )}
     </div>
   );
 }
-

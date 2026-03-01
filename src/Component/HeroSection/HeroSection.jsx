@@ -7,6 +7,7 @@ const HeroSection = () => {
     <section className="relative mt-5 mb-5 h-[450px] w-auto overflow-hidden object-cover bg-gray-900 m-6 ">
       <img 
         src={heroImg} 
+        loading='lazy'
         alt="Natural dairy and meat products" 
         className="absolute inset-0 h-[450px] w-full object-cover opacity-70"
       />

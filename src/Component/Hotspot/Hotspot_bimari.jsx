@@ -37,7 +37,7 @@ const Hotspot_bimari = () => {
       />
 
       <Card2
-        image={ObesityImg}
+        image={SugarImg}
         title="Diabetes"
         description="Chronic condition causing high blood sugar."
       />

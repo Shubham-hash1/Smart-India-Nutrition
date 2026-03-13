@@ -4,6 +4,12 @@ import Card2 from "./Card2";
 import Card3 from "./Card3";
 import Card4 from "./Card4";
 import Card5 from "./Card5";
+import ObesityImg from '../../Images/Obesity.jpg'
+import StomachImg from '../../Images/Stomach.jpg'
+import heartImg from '../../Images/heart.webp'
+import nutrtional from '../../Images/nutritional.jpg'
+
+
 
 const Hotspot_bimari = () => {
   return (
@@ -24,31 +30,31 @@ const Hotspot_bimari = () => {
       "
     >
       <Card1
-        image="https://www.clinico.in/wp-content/uploads/2022/02/Clinico-Blog-Post-Option-21.jpg"
+        image={ObesityImg}
         title="Obesity"
         description="Obesity is excessive body fat increasing health risks."
       />
 
       <Card2
-        image="https://diabetesandwellnessclinic.com/wp-content/uploads/elementor/thumbs/dr-10-r014h9ihul3bas6xel1k5jnwgtme6c0me5q8a8dngg.jpg"
+        image={ObesityImg}
         title="Diabetes"
         description="Chronic condition causing high blood sugar."
       />
 
       <Card3
-        image="https://www.epa.gov/system/files/styles/medium/private/images/2021-09/2.jpg"
+        image={heartImg}
         title="Heart"
         description="Conditions affecting heart function."
       />
 
       <Card4
-        image="https://www.neoalta.com/images/easyblog_articles/82/Stomach-Ache-and-Abdominal-Pain-1.jpg"
+        image={StomachImg}
         title="Stomach"
         description="Digestive problems causing discomfort."
       />
 
       <Card5
-        image="https://images.news18.com/ibnlive/uploads/2025/07/Nutritional-deficiencies_1-2025-07.jpg"
+        image={nutrtional}
         title="Nutritional Deficiencies"
         description="Lack of essential nutrients affecting body."
       />

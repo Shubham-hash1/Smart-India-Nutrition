@@ -8,6 +8,7 @@ import ObesityImg from '../../Images/Obesity.jpg'
 import StomachImg from '../../Images/Stomach.jpg'
 import heartImg from '../../Images/heart.webp'
 import nutrtional from '../../Images/nutritional.jpg'
+import SugarImg from '../../Images/Sugar.jpg'
 
 
 

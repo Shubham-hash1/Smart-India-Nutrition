@@ -26,7 +26,7 @@ const Card5 = ({ image, title, description }) => {
         loading="lazy"
         className="
           w-full h-full
-          object-cover
+          object-fill
           transition-transform
           duration-500
           group-hover:scale-110

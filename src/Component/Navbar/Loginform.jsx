@@ -44,7 +44,7 @@ export default function LoginForm({ close }) {
             hover:text-red-500
           "
         >
-          ×
+          X
         </button>
 
         <h2 className="text-xl sm:text-2xl font-bold mb-5 text-center">

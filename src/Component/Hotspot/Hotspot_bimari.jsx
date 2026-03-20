@@ -9,10 +9,12 @@ import StomachImg from '../../Images/Stomach.jpg'
 import heartImg from '../../Images/heart.webp'
 import nutrtional from '../../Images/nutritional.jpg'
 import SugarImg from '../../Images/Sugar.jpg'
+import { useNavigate } from "react-router-dom";
 
 
 
 const Hotspot_bimari = () => {
+  const navigate = useNavigate();
   return (
     <div
       className="
@@ -31,9 +33,11 @@ const Hotspot_bimari = () => {
       "
     >
       <Card1
+        className='onclick'
         image={ObesityImg}
         title="Obesity"
         description="Obesity is excessive body fat increasing health risks."
+        onClick={() => navigate("/obesity")}
       />
 
       <Card2
@@ -60,6 +64,7 @@ const Hotspot_bimari = () => {
         description="Lack of essential nutrients affecting body."
       />
     </div>
+   
   );
 };
 

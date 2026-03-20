@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card1 = ({ image, title, description }) => {
+const Card1 = ({ image, title, description, onClick }) => {
   return (
     <div
       className="
@@ -18,6 +18,7 @@ const Card1 = ({ image, title, description }) => {
         cursor-pointer
         mx-auto
       "
+      onClick={onClick}
     >
       {/* Image */}
       <img

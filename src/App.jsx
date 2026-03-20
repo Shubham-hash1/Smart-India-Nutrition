@@ -11,14 +11,16 @@ import Ai from "./Component/Ai_Section.jsx/Ai.jsx";
 import About from "./Component/Links/About.jsx";
 import Products from "./Component/Links/Product.jsx";
 import Blog from "./Component/Links/Blogs.jsx";
+import Obesitysol from "./Component/Hotspot/Obesitysol.jsx";
 
 /* Home Page */
 const Home = () => {
   return (
     <>
       <HeroSection />
-      <Ai />
+      <Ai /> 
       <Hotspot_bimari />
+      <Obesitysol/>
       <Age_Section />
     </>
   );
@@ -40,6 +42,7 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/products" element={<Products />} />
             <Route path="/blogs" element={<Blog />} />
+            <Route path="/obesity" element={<Obesitysol />} />
           </Routes>
         </main>
 

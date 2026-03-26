@@ -12,6 +12,7 @@ import About from "./Component/Links/About.jsx";
 import Products from "./Component/Links/Product.jsx";
 import Blog from "./Component/Links/Blogs.jsx";
 import Obesitysol from "./Component/Hotspot/Obesitysol.jsx";
+import DiabitesSol from "./Component/Hotspot/DiabitesSol.jsx"
 
 /* Home Page */
 const Home = () => {
@@ -20,7 +21,6 @@ const Home = () => {
       <HeroSection />
       <Ai /> 
       <Hotspot_bimari />
-      <Obesitysol/>
       <Age_Section />
     </>
   );
@@ -43,6 +43,7 @@ const App = () => {
             <Route path="/products" element={<Products />} />
             <Route path="/blogs" element={<Blog />} />
             <Route path="/obesity" element={<Obesitysol />} />
+            <Route path="/Diabites" element={<DiabitesSol/>}/>
           </Routes>
         </main>
 

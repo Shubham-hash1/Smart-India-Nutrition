@@ -39,11 +39,14 @@ const Hotspot_bimari = () => {
         description="Obesity is excessive body fat increasing health risks."
         onClick={() => navigate("/obesity")}
       />
+      
 
       <Card2
+      className='onclick'
         image={SugarImg}
         title="Diabetes"
         description="Chronic condition causing high blood sugar."
+        onClick={() => navigate("/Diabetes")}
       />
 
       <Card3

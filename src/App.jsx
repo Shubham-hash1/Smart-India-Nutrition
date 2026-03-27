@@ -13,12 +13,20 @@ import Products from "./Component/Links/Product.jsx";
 import Blog from "./Component/Links/Blogs.jsx";
 import Obesitysol from "./Component/Hotspot/Obesitysol.jsx";
 import DiabitesSol from "./Component/Hotspot/DiabitesSol.jsx"
+import HeartSol from "./Component/Hotspot/HeartSol.jsx";
+import StomachSol from "./Component/Hotspot/StomachSol.jsx";
+import NutritionalSol from "./Component/Hotspot/NutritionalSol.jsx";
+import AdultSol from "./Component/Acc_Age/AdultSol.jsx";
+import ChildSol from "./Component/Acc_Age/ChildSol.jsx";
+import TeenSol from "./Component/Acc_Age/TeenSol.jsx";
+import ToddlerSol from "./Component/Acc_Age/ToddlerSol.jsx";
+import OldAgeSol from "./Component/Acc_Age/OldAgeSol.jsx";
 
 /* Home Page */
 const Home = () => {
   return (
     <>
-      <HeroSection />
+      <HeroSection/>
       <Ai /> 
       <Hotspot_bimari />
       <Age_Section />
@@ -43,7 +51,17 @@ const App = () => {
             <Route path="/products" element={<Products />} />
             <Route path="/blogs" element={<Blog />} />
             <Route path="/obesity" element={<Obesitysol />} />
-            <Route path="/Diabites" element={<DiabitesSol/>}/>
+            <Route path="/diabetes" element={<DiabitesSol/>}/>
+            <Route path="/heart" element={<HeartSol/>}/>
+            <Route path="/stomach" element={<StomachSol />} />
+            <Route path="/nutritional" element={<NutritionalSol/>}/>
+            <Route path="/adult" element={<AdultSol/>}/>
+            <Route path="/child" element={<ChildSol/>}/>
+            <Route path="/teen" element={<TeenSol/>}/>
+            <Route path="/toddler" element={<ToddlerSol/>}/>
+            <Route path="/oldage" element={<OldAgeSol/>}/>
+
+            <Route path="*" element={<h1>Page Not Found</h1>} />
           </Routes>
         </main>
 

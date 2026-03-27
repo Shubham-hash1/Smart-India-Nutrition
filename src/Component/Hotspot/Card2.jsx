@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card2 = ({ image, title, description,onClick}) => {
+const Card2 = ({ image, title, description, onClick }) => {
   return (
     <div
       className="
@@ -16,9 +16,8 @@ const Card2 = ({ image, title, description,onClick}) => {
         overflow-hidden
         shadow-lg
         cursor-pointer
-        mx-auto
-      "
-       onClick={onClick}
+        mx-auto"
+      onClick={onClick}
     >
       {/* Image */}
       <img

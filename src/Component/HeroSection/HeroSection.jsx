@@ -5,7 +5,7 @@ const HeroSection = () => {
   return (
     <section className="
       relative
-      w-full
+      w-[95%]
       overflow-hidden
       bg-gray-900
       mx-2 sm:mx-4 md:mx-6
@@ -15,6 +15,7 @@ const HeroSection = () => {
       md:h-[400px]
       lg:h-[500px]
       rounded-xl
+      place-items-center
     ">
 
       {/* Background Image */}

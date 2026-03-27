@@ -16,7 +16,7 @@ const DiabetesSol = () => {
     { title: "Apple", key: "apple" },
     { title: "Bajra", key: "bajra" },
     { title: "Barley", key: "barley" },
-    { title: "Berries", key: "Berries" }, // ⚠️ capital B (your file name)
+    { title: "Berries", key: "berries" }, // ⚠️ capital B (your file name)
     { title: "Bitter Gourd", key: "bittergourd" },
     { title: "Black Chana", key: "blackchana" },
     { title: "Broccoli", key: "broccoli" },
@@ -42,7 +42,7 @@ const DiabetesSol = () => {
     { title: "Paneer", key: "paneer" },
     { title: "Papaya", key: "papaya" },
     { title: "Peanuts", key: "peanuts" },
-    { title: "Pear", key: "Pear" }, 
+    { title: "Pear", key: "pear" }, 
     { title: "Quinoa", key: "quinoa" },
     { title: "Ragi", key: "ragi" },
     { title: "Spinach", key: "spinach" },
@@ -112,7 +112,7 @@ const DiabetesSol = () => {
                 Exercise you should do
             </h1>
 
-            <div className='flex gap-4 flex-wrap justify-center'>
+            {/* <div className='flex gap-4 flex-wrap justify-center'>
                 {
                     exerciseDiebites.map((item, index) => (
                         <div key={index} className='flex flex-col items-center w-[140px] gap-2'>
@@ -127,7 +127,7 @@ const DiabetesSol = () => {
                         </div>
                     ))
                 }
-            </div>
+            </div> */}
 
         </div>
     )

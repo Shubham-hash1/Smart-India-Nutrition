@@ -1,96 +1,139 @@
 import React from 'react'
 
-const Obesitysol = () => {
+// ✅ AUTO IMPORT (only this, no manual map)
+const imageModules = import.meta.glob('/src/Images/stomach/*.jpg', { eager: true });
+const imageMap = {};
+
+Object.entries(imageModules).forEach(([path, module]) => {
+  const name = path.split('/').pop().split('.')[0];
+  imageMap[name] = module.default;
+});
+
+const StomachSol = () => {
 
     const FoodObesity = [
+        { title: "Paneer", key: "paneer" },
+        { title: "Tofu", key: "tofu" },
+        { title: "Soya chunks", key: "soya_chunks" },
+        { title: "Moong dal", key: "moong_dal" },
+        { title: "Masoor dal", key: "masoor_dal" },
+        { title: "Chickpeas", key: "chickpeas" },
+        { title: "Rajma", key: "rajma" },
+        { title: "Sprouts", key: "sprouts" },
+        { title: "Besan chilla", key: "besan_chilla" },
 
-    // 🥗 PROTEIN
-    { img: "https://4.imimg.com/data4/CA/SR/ANDROID-55243616/product-500x500.jpeg", title: "Paneer", category: "protein" },
-    { img: "", title: "Tofu", category: "protein" },
-    { img: "", title: "Soya chunks", category: "protein" },
-    { img: "", title: "Moong dal", category: "protein" },
-    { img: "", title: "Masoor dal", category: "protein" },
-    { img: "", title: "Chickpeas (chana)", category: "protein" },
-    { img: "", title: "Rajma", category: "protein" },
-    { img: "", title: "Sprouts", category: "protein" },
-    { img: "", title: "Besan (chilla)", category: "protein" },
+        { title: "Spinach", key: "spinach" },
+        { title: "Broccoli", key: "broccoli" },
+        { title: "Cabbage", key: "cabbage" },
+        { title: "Lauki", key: "lauki" },
+        { title: "Tori", key: "tori" },
+        { title: "Carrot", key: "carrot" },
+        { title: "Cucumber", key: "cucumber" },
+        { title: "Beans", key: "beans" },
+        { title: "Mushrooms", key: "Mushrooms" },
 
-    // 🥦 FIBER (VEGETABLES)
-    { img: "", title: "Spinach (palak)", category: "fiber" },
-    { img: "", title: "Broccoli", category: "fiber" },
-    { img: "", title: "Cabbage", category: "fiber" },
-    { img: "", title: "Lauki", category: "fiber" },
-    { img: "", title: "Tori", category: "fiber" },
-    { img: "", title: "Carrot", category: "fiber" },
-    { img: "", title: "Cucumber", category: "fiber" },
-    { img: "", title: "Beans", category: "fiber" },
+        { title: "Apple", key: "apple" },
+        { title: "Papaya", key: "papaya" },
+        { title: "Guava", key: "guava" },
+        { title: "Orange", key: "orange" },
+        { title: "Watermelon", key: "watermelon" },
+        { title: "Pineapple", key: "Pineapple" },
+        { title: "Coconut", key: "Coconut" }, 
+        { title: "Avacado", key: "avacado" }, 
 
-    // 🍎 FRUITS
-    { img: "", title: "Apple", category: "fruit" },
-    { img: "", title: "Papaya", category: "fruit" },
-    { img: "", title: "Guava", category: "fruit" },
-    { img: "", title: "Orange", category: "fruit" },
-    { img: "", title: "Watermelon", category: "fruit" },
+        { title: "Roti", key: "roti" },
+        { title: "Brown rice", key: "brown_rice" },
+        { title: "Oats", key: "oats" },
+        { title: "Daliya", key: "daliya" },
+        { title: "Bajra roti", key: "bajra_roti" },
+        { title: "Jowar roti", key: "jowar_roti" },
 
-    // 🍚 CARBS
-    { img: "", title: "Roti (whole wheat)", category: "carb" },
-    { img: "", title: "Brown rice", category: "carb" },
-    { img: "", title: "Oats", category: "carb" },
-    { img: "", title: "Daliya", category: "carb" },
-    { img: "", title: "Bajra roti", category: "carb" },
-    { img: "", title: "Jowar roti", category: "carb" },
+        { title: "Almonds", key: "almonds" },
+        { title: "Walnuts", key: "walnuts" },
+        { title: "Flax seeds", key: "flax_seeds" },
+        { title: "Peanuts", key: "peanuts" },
+    ]
 
-    // 🥜 HEALTHY FATS
-    { img: "", title: "Almonds", category: "fat" },
-    { img: "", title: "Walnuts", category: "fat" },
-    { img: "", title: "Flax seeds", category: "fat" },
-    { img: "", title: "Peanuts", category: "fat" },
+    const exerciseObesity = [
+        { title: "Walking", key: "walking" },
+        { title: "Brisk walking", key: "brisk_walking" },
+        { title: "Jogging", key: "jogging" },
+        { title: "Running", key: "running" },
+        { title: "Cycling", key: "cycling" },
+        { title: "Skipping rope", key: "skipping_rope" },
+        { title: "Swimming", key: "swimming" },
+        { title: "Jumping jacks", key: "jumping_jacks" },
+        { title: "Burpees", key: "burpees" },
 
-]
+        { title: "Push ups", key: "push_ups" },
+        { title: "Squats", key: "squats" },
+        { title: "Lunges", key: "lunges" },
+        { title: "Plank", key: "plank" },
+        { title: "Mountain climbers", key: "mountain_climbers" },
+        { title: "High knees", key: "high_knees" },
+        { title: "Sit ups", key: "sit_ups" },
+        { title: "Crunches", key: "crunches" },
 
-    const excersiceObesity = [
-        { img: "", title: "walk" },
-        { img: "", title: "walk" },
-        { img: "", title: "walk" },
-        { img: "", title: "walk" },
-        { img: "", title: "walk" },
-        { img: "", title: "walk" },
-        { img: "", title: "walk" }
+        { title: "Yoga", key: "yoga" },
+        { title: "Surya namaskar", key: "surya_namaskar" },
+        { title: "Stretching", key: "stretching" },
+        { title: "Zumba", key: "zumba" },
+        { title: "Aerobics", key: "aerobics" },
+        { title: "Dancing", key: "dancing" },
+
+        { title: "Stair climbing", key: "stair_climbing" },
+        { title: "Hiking", key: "hiking" },
+        { title: "Elliptical workout", key: "elliptical" },
+        { title: "Rowing", key: "rowing" }
     ]
 
     return (
-        <div className='m-2.5' >
-            <h1 className='bg-amber-600 w-screen h-[40px] font-bold flex justify-center items-center'>
+        <div className='m-2.5'>
+
+            <h1 className='text-5xl font-bold text-center mb-4'>
                 Food you should take
             </h1>
 
-            <div className='bg-amber-500 flex gap-4 flex-wrap p-4'>
+            <div className='flex gap-4 flex-wrap justify-center'>
                 {
                     FoodObesity.map((item, index) => (
-                        <div key={index} className='flex justify-center items-center flex-col h-[150px] w-[140px] gap-2'>
-                            <img src={item.img} alt="" />
-                            <p>{item.title}</p>
+                        <div key={index} className='flex flex-col items-center w-[140px] gap-2'>
+
+                            <img
+                                src={imageMap[item.key] ?? "https://via.placeholder.com/120"}
+                                alt={item.title}
+                                className='h-[120px] w-[120px] object-cover rounded'
+                            />
+
+                            <p className='text-sm text-center'>{item.title}</p>
                         </div>
                     ))
                 }
             </div>
 
-            <h1 className='bg-amber-600 w-screen h-[40px] font-bold flex justify-center items-center'>
+            <h1 className='text-5xl font-bold text-center my-6'>
                 Exercise you should do
             </h1>
 
-            <div className='flex gap-4 flex-wrap p-4'>
+            <div className='flex gap-4 flex-wrap justify-center'>
                 {
-                    excersiceObesity.map((item, index) => (
-                        <div key={index}>
-                            <img src={item.img} alt="" />
-                            <p>{item.title}</p>
+                    exerciseObesity.map((item, index) => (
+                        <div key={index} className='flex flex-col items-center w-[140px] gap-2'>
+
+                            <img
+                                src={imageMap[item.key] ?? "https://via.placeholder.com/120"}
+                                alt={item.title}
+                                className='h-[120px] w-[120px] object-cover rounded'
+                            />
+
+                            <p className='text-sm text-center'>{item.title}</p>
                         </div>
                     ))
                 }
             </div>
+
         </div>
     )
 }
 
-export default Obesitysol
+export default StomachSol;

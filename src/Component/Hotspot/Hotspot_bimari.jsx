@@ -50,21 +50,27 @@ const Hotspot_bimari = () => {
       />
 
       <Card3
+      className = 'onclick'
         image={heartImg}
         title="Heart"
         description="Conditions affecting heart function."
+        onClick={() => navigate('/Heart')}
       />
 
       <Card4
+      className= 'onclick'
         image={StomachImg}
         title="Stomach"
         description="Digestive problems causing discomfort."
+        onClick={() => navigate('/Stomach')}
       />
 
       <Card5
+      className = 'onclick'
         image={nutrtional}
         title="Nutritional Deficiencies"
         description="Lack of essential nutrients affecting body."
+        onClick={() => navigate('/Nutritional')}
       />
     </div>
    

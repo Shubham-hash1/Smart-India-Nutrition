@@ -1,6 +1,6 @@
 import React from "react";
 
-const Adult = ({ image, title, description }) => {
+const Adult = ({ image, title, description, onClick }) => {
   return (
     <div
       className="
@@ -18,6 +18,8 @@ const Adult = ({ image, title, description }) => {
         cursor-pointer
         mx-auto
       "
+      onClick={onClick}
+
     >
       {/* Background Image */}
       <img

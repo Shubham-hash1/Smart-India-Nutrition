@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Toddler = ({ image, title, description }) => {
+const Toddler = ({ image, title, description, onClick }) => {
   return (
 <div
       className="
@@ -18,6 +18,7 @@ const Toddler = ({ image, title, description }) => {
         cursor-pointer
         mx-auto
       "
+      onClick={onClick}
     >
       {/* Background Image */}
      <img

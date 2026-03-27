@@ -1,6 +1,6 @@
 import React from "react";
 
-const Card5 = ({ image, title, description }) => {
+const Card5 = ({ image, title, description, onClick }) => {
   return (
     <div
       className="
@@ -18,6 +18,7 @@ const Card5 = ({ image, title, description }) => {
         cursor-pointer
         mx-auto
       "
+      onClick={onClick}
     >
       {/* Image */}
       <img
@@ -31,6 +32,7 @@ const Card5 = ({ image, title, description }) => {
           duration-500
           group-hover:scale-110
         "
+
       />
 
       {/* Overlay */}

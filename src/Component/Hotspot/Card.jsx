@@ -1,14 +1,14 @@
-import React from 'react'
+import React from "react";
 
-const Teen = ({ image, title, description, onClick }) => {
+const Card = ({ image, title, description, onClick, className = "" }) => {
   return (
-<div
-      className="
+    <div
+      className={`
         group
         relative
         w-full
         max-w-[280px]
-        h-[260px]
+        h-[100px]
         sm:h-[300px]
         md:h-[320px]
         lg:h-[340px]
@@ -17,11 +17,12 @@ const Teen = ({ image, title, description, onClick }) => {
         shadow-lg
         cursor-pointer
         mx-auto
-      "
+        ${className}
+      `}
       onClick={onClick}
     >
-      {/* Background Image */}
-       <img
+      {/* Image */}
+      <img
         src={image}
         alt={title}
         loading="lazy"
@@ -34,26 +35,16 @@ const Teen = ({ image, title, description, onClick }) => {
         "
       />
 
-      {/* Dark Overlay */}
+      {/* Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
 
-      {/* Text Content */}
-           <div className="absolute bottom-0 p-4 sm:p-5 text-white">
-        <h2 className="
-          text-lg
-          sm:text-xl
-          md:text-2xl
-          font-bold
-        ">
+      {/* Content */}
+      <div className="absolute bottom-0 p-4 sm:p-5 text-white">
+        <h2 className="text-lg sm:text-xl md:text-2xl font-bold">
           {title}
         </h2>
 
-        <p className="
-          text-xs
-          sm:text-sm
-          opacity-90
-          mt-2
-        ">
+        <p className="text-xs sm:text-sm opacity-90 mt-2 line-clamp-3">
           {description}
         </p>
       </div>
@@ -61,4 +52,4 @@ const Teen = ({ image, title, description, onClick }) => {
   );
 };
 
-export default Teen
+export default Card;

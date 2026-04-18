@@ -64,4 +64,4 @@ const CommonPage = () => {
   );
 };
 
-export default CommonPage;
+export default CommonPage;  

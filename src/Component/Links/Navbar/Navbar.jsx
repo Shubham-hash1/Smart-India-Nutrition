@@ -1,38 +1,3 @@
-// import React from "react";
-// import Navlinks from "./Navlinks";
-// import Login from "./Login";
-
-// const Navbar = () => {
-//   return (
-//     <nav className="
-//       w-full
-//       bg-white
-//       shadow-md
-//       sticky top-0
-//       z-40
-//     ">
-//       <div className="
-//         max-w-screen-xl
-//         mx-auto
-//         flex
-//         items-center
-//         justify-between
-//         px-4 sm:px-6 md:px-10
-//         py-3
-//         font-semibold
-//       ">
-//         {/* Left Links */}
-//         <Navlinks />
-
-//         {/* Right Login */}
-//         <Login />
-//       </div>
-//     </nav>
-//   );
-// };
-
-// export default Navbar;
-
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navlinks from "./Navlinks";
@@ -50,110 +15,209 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Main Navbar */}
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500&display=swap');`}</style>
+
       <motion.nav
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`w-full sticky top-0 z-40 transition-all duration-300 ${
-          scrolled
-            ? "bg-white/80 backdrop-blur-md shadow-lg shadow-black/5 border-b border-gray-100"
-            : "bg-white shadow-sm"
-        }`}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        style={{
+          width: "100%",
+          position: "sticky",
+          top: 0,
+          zIndex: 40,
+          transition: "all 0.35s ease",
+          background: scrolled
+            ? "rgba(8,7,6,0.82)"
+            : "rgba(8,7,6,0.55)",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          borderBottom: scrolled
+            ? "1px solid rgba(255,255,255,0.07)"
+            : "1px solid transparent",
+          boxShadow: scrolled
+            ? "0 8px 40px rgba(0,0,0,0.4)"
+            : "none",
+        }}
       >
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 md:px-10 py-3 font-semibold">
-
-          {/* Logo */}
+        <div
+          style={{
+            maxWidth: "1280px",
+            margin: "0 auto",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "14px 32px",
+          }}
+        >
+          {/* ── Logo ── */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="flex items-center gap-2"
+            transition={{ delay: 0.2, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            style={{ display: "flex", alignItems: "center", gap: "10px" }}
           >
-            <div className="w-8 h-8 rounded-lg bg-linear-to-br from-green-400 to-emerald-600 flex items-center justify-center shadow-md">
-              <span className="text-white text-sm font-bold">N</span>
-            </div>
-            <span className="text-gray-800 font-bold text-lg tracking-tight hidden sm:block">
-              NutriSmart
+            {/* Icon mark */}
+            <motion.div
+              whileHover={{ scale: 1.08, rotate: 3 }}
+              transition={{ type: "spring", stiffness: 300, damping: 18 }}
+              style={{
+                width: "34px",
+                height: "34px",
+                borderRadius: "10px",
+                background: "linear-gradient(135deg, #22c55e 0%, #059669 100%)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxShadow: "0 0 16px rgba(34,197,94,0.35)",
+                flexShrink: 0,
+              }}
+            >
+              <span
+                style={{
+                  fontFamily: "'Playfair Display', serif",
+                  color: "#021a0a",
+                  fontSize: "15px",
+                  fontWeight: 700,
+                  lineHeight: 1,
+                }}
+              >
+                N
+              </span>
+            </motion.div>
+
+            {/* Wordmark */}
+            <span
+              style={{
+                fontFamily: "'Playfair Display', serif",
+                fontSize: "18px",
+                fontWeight: 700,
+                color: "#f0e8dc",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              Nutri
+              <span style={{ color: "#4ade80" }}>Smart</span>
             </span>
           </motion.div>
 
-          {/* Desktop Nav Links */}
+          {/* ── Desktop Nav Links ── */}
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
+            style={{ display: "flex" }}
             className="hidden md:flex"
           >
             <Navlinks />
           </motion.div>
 
-          {/* Right side — Login + Hamburger */}
+          {/* ── Right: Login + Hamburger ── */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
-            className="flex items-center gap-3"
+            style={{ display: "flex", alignItems: "center", gap: "12px" }}
           >
-            {/* Login — hidden on mobile */}
             <div className="hidden md:flex">
               <Login />
             </div>
 
-            {/* Hamburger — visible on mobile */}
+            {/* Hamburger */}
             <motion.button
-              whileTap={{ scale: 0.9 }}
+              whileTap={{ scale: 0.88 }}
               onClick={() => setMenuOpen(!menuOpen)}
-              className="md:hidden flex flex-col justify-center items-center w-9 h-9 rounded-lg hover:bg-gray-100 transition-colors gap-1.5"
+              className="md:hidden"
               aria-label="Toggle menu"
+              style={{
+                width: "38px",
+                height: "38px",
+                borderRadius: "10px",
+                border: "1px solid rgba(255,255,255,0.1)",
+                background: "rgba(255,255,255,0.05)",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "5px",
+                cursor: "pointer",
+              }}
             >
-              <motion.span
-                animate={menuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="block w-5 h-0.5 bg-gray-700 rounded-full"
-              />
-              <motion.span
-                animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
-                transition={{ duration: 0.2 }}
-                className="block w-5 h-0.5 bg-gray-700 rounded-full"
-              />
-              <motion.span
-                animate={menuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="block w-5 h-0.5 bg-gray-700 rounded-full"
-              />
+              {[
+                menuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 },
+                menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 },
+                menuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 },
+              ].map((anim, i) => (
+                <motion.span
+                  key={i}
+                  animate={anim}
+                  transition={{ duration: 0.28 }}
+                  style={{
+                    display: "block",
+                    width: "18px",
+                    height: "1.5px",
+                    background: "#f0e8dc",
+                    borderRadius: "2px",
+                  }}
+                />
+              ))}
             </motion.button>
           </motion.div>
         </div>
 
-        {/* Animated bottom border accent */}
+        {/* ── Animated green accent line ── */}
         <motion.div
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
-          transition={{ delay: 0.6, duration: 0.8, ease: "easeOut" }}
-          className="h-0.5 bg-gradient-to-r from-transparent via-green-400 to-transparent origin-center"
+          transition={{ delay: 0.7, duration: 1, ease: "easeOut" }}
+          style={{
+            height: "1px",
+            background: "linear-gradient(90deg, transparent, rgba(74,222,128,0.5), transparent)",
+            transformOrigin: "center",
+          }}
         />
       </motion.nav>
 
-      {/* Mobile Menu Dropdown */}
+      {/* ── Mobile dropdown ── */}
       <AnimatePresence>
         {menuOpen && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden sticky top-[57px] z-30 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-lg overflow-hidden"
+            transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              position: "sticky",
+              top: "63px",
+              zIndex: 30,
+              background: "rgba(10,9,8,0.97)",
+              backdropFilter: "blur(24px)",
+              WebkitBackdropFilter: "blur(24px)",
+              borderBottom: "1px solid rgba(255,255,255,0.07)",
+              overflow: "hidden",
+            }}
           >
             <motion.div
-              initial={{ y: -10, opacity: 0 }}
+              initial={{ y: -12, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -10, opacity: 0 }}
-              transition={{ delay: 0.1, duration: 0.3 }}
-              className="max-w-screen-xl mx-auto px-6 py-4 flex flex-col gap-4"
+              exit={{ y: -12, opacity: 0 }}
+              transition={{ delay: 0.08, duration: 0.3 }}
+              style={{
+                maxWidth: "1280px",
+                margin: "0 auto",
+                padding: "20px 28px 24px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "16px",
+              }}
             >
               <Navlinks mobile />
-              <div className="pt-2 border-t border-gray-100">
+              <div
+                style={{
+                  paddingTop: "16px",
+                  borderTop: "1px solid rgba(255,255,255,0.07)",
+                }}
+              >
                 <Login />
               </div>
             </motion.div>

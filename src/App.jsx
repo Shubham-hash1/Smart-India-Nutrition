@@ -25,6 +25,7 @@ import ToddlerSol from "./Component/Acc_Age_Sol/ToddlerSol.jsx";
 import OldAgeSol from "./Component/Acc_Age_Sol/OldAgeSol.jsx";
 
 import CommonPage from "./Component/Common/CommonPage.jsx";
+import ProductSection from "./Component/Product/ProductSection.jsx";
 
  
 /* Home Page */
@@ -67,6 +68,8 @@ const App = () => {
             <Route path="/teen" element={<CommonPage />}/>
             <Route path="/toddler" element={<CommonPage />}/>
             <Route path="/oldage" element={<CommonPage />}/>
+
+            <Route path="/Products" element={<ProductSection />}/>
 
             {/* <Route path="/nutrition" element={<CommonPage />} /> */}
 

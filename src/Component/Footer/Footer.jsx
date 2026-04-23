@@ -215,7 +215,7 @@ const Footer = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.85, duration: 0.7 }}
           style={{
-            borderTop: "1px solid rgba(255,255,255,0.05)",
+            borderTop: "1px solid rgba(255,255,255,0.20)",
             padding: "24px 0 32px",
             textAlign: "center",
           }}
@@ -239,7 +239,7 @@ const Footer = () => {
               lineHeight: 1.8,
               maxWidth: "600px",
               margin: "0 auto",
-              fontWeight: 800,
+              fontWeight: 500,
             }}
           >
             The content on this website is not intended to diagnose, treat, cure, or prevent any disease.

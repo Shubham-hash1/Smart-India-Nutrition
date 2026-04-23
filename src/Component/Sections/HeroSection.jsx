@@ -37,7 +37,7 @@ const HeroSection = () => {
           position: "relative",
           width: "95%",
           margin: "32px auto",
-          height: "clamp(400px, 60vh, 580px)",
+          height: "clamp(400px, 70vh, 680px)",
           borderRadius: "2.5rem",
           overflow: "hidden",
           boxShadow: "0 32px 80px rgba(0,0,0,0.45)",

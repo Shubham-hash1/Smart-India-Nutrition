@@ -9,52 +9,56 @@ Object.entries(imageModules).forEach(([path, module]) => {
   imageMap[name] = module.default;
 });
 
-const StomachSol = () => {
+const StomachSol = ({ category, onBack }) => {
 
-    const FoodObesity = [
-        { title: "Paneer", key: "paneer" },
-        { title: "Tofu", key: "tofu" },
-        { title: "Soya chunks", key: "soya_chunks" },
-        { title: "Moong dal", key: "moong_dal" },
-        { title: "Masoor dal", key: "masoor_dal" },
-        { title: "Chickpeas", key: "chickpeas" },
-        { title: "Rajma", key: "rajma" },
-        { title: "Sprouts", key: "sprouts" },
-        { title: "Besan chilla", key: "besan_chilla" },
+    const FoodStomach = {
+        Proteins: [
+            { title: "Paneer", key: "paneer" },
+            { title: "Tofu", key: "tofu" },
+            { title: "Soya chunks", key: "soya_chunks" },
+            { title: "Moong dal", key: "moong_dal" },
+            { title: "Masoor dal", key: "masoor_dal" },
+            { title: "Chickpeas", key: "chickpeas" },
+            { title: "Rajma", key: "rajma" },
+            { title: "Sprouts", key: "sprouts" },
+            { title: "Besan chilla", key: "besan_chilla" },
+        ],
+        Vitamins: [
+            { title: "Spinach", key: "spinach" },
+            { title: "Broccoli", key: "broccoli" },
+            { title: "Cabbage", key: "cabbage" },
+            { title: "Lauki", key: "lauki" },
+            { title: "Tori", key: "tori" },
+            { title: "Carrot", key: "carrot" },
+            { title: "Cucumber", key: "cucumber" },
+            { title: "Beans", key: "beans" },
+            { title: "Mushrooms", key: "Mushrooms" },
+            { title: "Apple", key: "apple" },
+            { title: "Papaya", key: "papaya" },
+            { title: "Guava", key: "guava" },
+            { title: "Orange", key: "orange" },
+            { title: "Watermelon", key: "watermelon" },
+            { title: "Pineapple", key: "Pineapple" },
+            { title: "Coconut", key: "Coconut" }, 
+            { title: "Avacado", key: "avacado" }, 
+        ],
+        Carbohydrates: [
+            { title: "Roti", key: "roti" },
+            { title: "Brown rice", key: "brown_rice" },
+            { title: "Oats", key: "oats" },
+            { title: "Daliya", key: "daliya" },
+            { title: "Bajra roti", key: "bajra_roti" },
+            { title: "Jowar roti", key: "jowar_roti" },
+        ],
+        Minerals: [
+            { title: "Almonds", key: "almonds" },
+            { title: "Walnuts", key: "walnuts" },
+            { title: "Flax seeds", key: "flax_seeds" },
+            { title: "Peanuts", key: "peanuts" },
+        ]
+    };
 
-        { title: "Spinach", key: "spinach" },
-        { title: "Broccoli", key: "broccoli" },
-        { title: "Cabbage", key: "cabbage" },
-        { title: "Lauki", key: "lauki" },
-        { title: "Tori", key: "tori" },
-        { title: "Carrot", key: "carrot" },
-        { title: "Cucumber", key: "cucumber" },
-        { title: "Beans", key: "beans" },
-        { title: "Mushrooms", key: "Mushrooms" },
-
-        { title: "Apple", key: "apple" },
-        { title: "Papaya", key: "papaya" },
-        { title: "Guava", key: "guava" },
-        { title: "Orange", key: "orange" },
-        { title: "Watermelon", key: "watermelon" },
-        { title: "Pineapple", key: "Pineapple" },
-        { title: "Coconut", key: "Coconut" }, 
-        { title: "Avacado", key: "avacado" }, 
-
-        { title: "Roti", key: "roti" },
-        { title: "Brown rice", key: "brown_rice" },
-        { title: "Oats", key: "oats" },
-        { title: "Daliya", key: "daliya" },
-        { title: "Bajra roti", key: "bajra_roti" },
-        { title: "Jowar roti", key: "jowar_roti" },
-
-        { title: "Almonds", key: "almonds" },
-        { title: "Walnuts", key: "walnuts" },
-        { title: "Flax seeds", key: "flax_seeds" },
-        { title: "Peanuts", key: "peanuts" },
-    ]
-
-    const exerciseObesity = [
+    const exerciseStomach = [
         { title: "Walking", key: "walking" },
         { title: "Brisk walking", key: "brisk_walking" },
         { title: "Jogging", key: "jogging" },
@@ -64,7 +68,6 @@ const StomachSol = () => {
         { title: "Swimming", key: "swimming" },
         { title: "Jumping jacks", key: "jumping_jacks" },
         { title: "Burpees", key: "burpees" },
-
         { title: "Push ups", key: "push_ups" },
         { title: "Squats", key: "squats" },
         { title: "Lunges", key: "lunges" },
@@ -73,65 +76,60 @@ const StomachSol = () => {
         { title: "High knees", key: "high_knees" },
         { title: "Sit ups", key: "sit_ups" },
         { title: "Crunches", key: "crunches" },
-
         { title: "Yoga", key: "yoga" },
         { title: "Surya namaskar", key: "surya_namaskar" },
         { title: "Stretching", key: "stretching" },
         { title: "Zumba", key: "zumba" },
         { title: "Aerobics", key: "aerobics" },
         { title: "Dancing", key: "dancing" },
-
         { title: "Stair climbing", key: "stair_climbing" },
         { title: "Hiking", key: "hiking" },
         { title: "Elliptical workout", key: "elliptical" },
         { title: "Rowing", key: "rowing" }
-    ]
+    ];
+
+    let itemsToDisplay = [];
+    let heading = "";
+
+    if (category === "Exercises") {
+        itemsToDisplay = exerciseStomach;
+        heading = "Exercise you should do";
+    } else if (category && FoodStomach[category]) {
+        itemsToDisplay = FoodStomach[category];
+        heading = `Food you should take for ${category}`;
+    }
+
+    if (!category) return null;
 
     return (
         <div className='m-2.5'>
-
-            <h1 className='text-5xl font-bold text-center mb-4'>
-                Food you should take
+            <div className="flex justify-center mb-8">
+                <button 
+                    onClick={onBack}
+                    className="px-6 py-2 bg-[#c4a484] text-[#0f0e0d] font-bold rounded-lg hover:bg-[#e8d5b7] transition-colors"
+                >
+                    &larr; Back to Categories
+                </button>
+            </div>
+            
+            <h1 className='text-5xl font-bold text-center mb-8 text-[#f0e8dc]'>
+                {heading}
             </h1>
 
             <div className='flex gap-4 flex-wrap justify-center'>
                 {
-                    FoodObesity.map((item, index) => (
+                    itemsToDisplay.map((item, index) => (
                         <div key={index} className='flex flex-col items-center w-[140px] gap-2'>
-
                             <img
                                 src={imageMap[item.key] ?? "https://via.placeholder.com/120"}
                                 alt={item.title}
                                 className='h-[120px] w-[120px] object-cover rounded'
                             />
-
-                            <p className='text-sm text-center'>{item.title}</p>
+                            <p className='text-sm text-center text-[rgba(240,232,220,0.8)]'>{item.title}</p>
                         </div>
                     ))
                 }
             </div>
-
-            <h1 className='text-5xl font-bold text-center my-6'>
-                Exercise you should do
-            </h1>
-
-            <div className='flex gap-4 flex-wrap justify-center'>
-                {
-                    exerciseObesity.map((item, index) => (
-                        <div key={index} className='flex flex-col items-center w-[140px] gap-2'>
-
-                            <img
-                                src={imageMap[item.key] ?? "https://via.placeholder.com/120"}
-                                alt={item.title}
-                                className='h-[120px] w-[120px] object-cover rounded'
-                            />
-
-                            <p className='text-sm text-center'>{item.title}</p>
-                        </div>
-                    ))
-                }
-            </div>
-
         </div>
     )
 }

@@ -152,7 +152,7 @@ const HeroSection = () => {
                     flexShrink: 0,
                   }}
                 />
-                Premium Wellness
+                 Wellness
               </span>
             </motion.div>
 
@@ -291,8 +291,8 @@ const HeroSection = () => {
           }}
         >
           {[
-            { num: "500+", label: "Products" },
-            { num: "98%", label: "Satisfaction" },
+            // { num: "500+", label: "Products" },
+            // { num: "98%", label: "Satisfaction" },
           ].map((stat) => (
             <div key={stat.label} style={{ textAlign: "center" }}>
               <p

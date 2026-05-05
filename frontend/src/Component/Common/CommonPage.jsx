@@ -24,7 +24,7 @@ import NutritionalSol from "../Hotspot_Sol/NutritionalSol";
 
 const CommonPage = () => {
   const location = useLocation();
-  const path = location.pathname;
+  const path = location.pathname.toLowerCase();
 
   const [selectedCategory, setSelectedCategory] = useState(null);
 

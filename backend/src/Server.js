@@ -6,13 +6,15 @@ dotenv.config();
 
 const { connectDB } = require("./Db");
 const authRoutes = require("./AuthRoutes");
+const blogRoutes = require("./BlogRoutes");
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: ["http://localhost:5173", "http://127.0.0.1:5173"], credentials: true }));
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/blogs", blogRoutes);
 
 app.get("/", (req, res) => res.json({ message: "🌿 NutriSmart API running" }));
 

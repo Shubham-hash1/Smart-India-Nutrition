@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import { AuthProvider } from "./Context/AuthContext.jsx";
 
 import Navbar from "./Component/Links/Navbar/Navbar.jsx";
 import Footer from "./Component/Footer/Footer.jsx";
@@ -107,15 +108,17 @@ const AnimatedRoutes = () => {
 
 /* ── Root app ── */
 const App = () => (
-  <BrowserRouter>
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow">
-        <AnimatedRoutes />
-      </main>
-      <Footer />
-    </div>
-  </BrowserRouter>
+  <AuthProvider>
+    <BrowserRouter>
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-grow">
+          <AnimatedRoutes />
+        </main>
+        <Footer />
+      </div>
+    </BrowserRouter>
+  </AuthProvider>
 );
 
 export default App;

@@ -1,16 +1,48 @@
 import { useState } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "../../../Context/AuthContext";
 
 export default function LoginForm({ close }) {
+  const { login, signup } = useAuth();
+  const [isSignup, setIsSignup] = useState(false);
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [focused, setFocused] = useState(null);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    close();
+    setError("");
+    setLoading(true);
+
+    let res;
+    if (isSignup) {
+      res = await signup(name, email, password);
+    } else {
+      res = await login(email, password);
+    }
+
+    setLoading(false);
+    if (res.success) {
+      close();
+    } else {
+      setError(res.message);
+    }
   };
+
+  const formFields = isSignup 
+    ? [
+        { id: "name", label: "Full Name", type: "text", value: name, setter: setName, placeholder: "John Doe" },
+        { id: "email", label: "Email", type: "email", value: email, setter: setEmail, placeholder: "you@example.com" },
+        { id: "password", label: "Password", type: "password", value: password, setter: setPassword, placeholder: "••••••••" },
+      ]
+    : [
+        { id: "email", label: "Email", type: "email", value: email, setter: setEmail, placeholder: "you@example.com" },
+        { id: "password", label: "Password", type: "password", value: password, setter: setPassword, placeholder: "••••••••" },
+      ];
 
   const modal = (
     <AnimatePresence>
@@ -102,19 +134,21 @@ export default function LoginForm({ close }) {
               fontFamily: "'Playfair Display', serif", fontSize: "26px",
               fontWeight: 700, color: "#f0e8dc", margin: "0 0 6px", letterSpacing: "-0.01em",
             }}>
-              Welcome back
+              {isSignup ? "Create an account" : "Welcome back"}
             </h2>
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "rgba(240,232,220,0.38)", margin: 0, fontWeight: 300 }}>
-              Sign in to your account to continue
+              {isSignup ? "Sign up to start posting and commenting" : "Sign in to your account to continue"}
             </p>
           </div>
 
           {/* Form */}
           <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
-            {[
-              { id: "email", label: "Email", type: "email", value: email, setter: setEmail, placeholder: "you@example.com" },
-              { id: "password", label: "Password", type: "password", value: password, setter: setPassword, placeholder: "••••••••" },
-            ].map(({ id, label, type, value, setter, placeholder }) => (
+            {error && (
+              <div style={{ color: "#ef4444", fontSize: "13px", fontFamily: "'DM Sans', sans-serif", marginBottom: "8px" }}>
+                {error}
+              </div>
+            )}
+            {formFields.map(({ id, label, type, value, setter, placeholder }) => (
               <div key={id}>
                 <label htmlFor={id} style={{
                   display: "block", fontFamily: "'DM Sans', sans-serif",
@@ -145,14 +179,17 @@ export default function LoginForm({ close }) {
               </div>
             ))}
 
-            <div style={{ textAlign: "right", marginTop: "-4px" }}>
-              <a href="#" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "12px", color: "rgba(74,222,128,0.7)", textDecoration: "none" }}>
-                Forgot password?
-              </a>
-            </div>
+            {!isSignup && (
+              <div style={{ textAlign: "right", marginTop: "-4px" }}>
+                <a href="#" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "12px", color: "rgba(74,222,128,0.7)", textDecoration: "none" }}>
+                  Forgot password?
+                </a>
+              </div>
+            )}
 
             <motion.button
               type="submit"
+              disabled={loading}
               whileHover={{ scale: 1.02, boxShadow: "0 0 24px rgba(34,197,94,0.4)" }}
               whileTap={{ scale: 0.97 }}
               style={{
@@ -162,6 +199,7 @@ export default function LoginForm({ close }) {
                 fontFamily: "'DM Sans', sans-serif", fontSize: "14px",
                 fontWeight: 700, letterSpacing: "0.03em", cursor: "pointer",
                 position: "relative", overflow: "hidden",
+                opacity: loading ? 0.7 : 1,
               }}
             >
               <motion.span
@@ -174,7 +212,7 @@ export default function LoginForm({ close }) {
                   pointerEvents: "none",
                 }}
               />
-              Sign In
+              {loading ? "Please wait..." : (isSignup ? "Sign Up" : "Sign In")}
             </motion.button>
 
             <div style={{ display: "flex", alignItems: "center", gap: "12px", margin: "4px 0" }}>
@@ -184,8 +222,16 @@ export default function LoginForm({ close }) {
             </div>
 
             <p style={{ textAlign: "center", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "rgba(240,232,220,0.35)", margin: 0 }}>
-              Don't have an account?{" "}
-              <a href="#" style={{ color: "#4ade80", textDecoration: "none", fontWeight: 500 }}>Sign up</a>
+              {isSignup ? "Already have an account?" : "Don't have an account?"}{" "}
+              <button 
+                type="button"
+                onClick={() => { setIsSignup(!isSignup); setError(""); }}
+                style={{ 
+                  color: "#4ade80", textDecoration: "none", fontWeight: 500, 
+                  background: "none", border: "none", cursor: "pointer", padding: 0 
+                }}>
+                {isSignup ? "Sign in" : "Sign up"}
+              </button>
             </p>
           </form>
         </motion.div>

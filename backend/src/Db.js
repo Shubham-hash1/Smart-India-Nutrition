@@ -25,7 +25,36 @@ const connectDB = async () => {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);
-    console.log("✅ Users table ready");
+    
+    // Create blogs table
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS blogs (
+        id SERIAL PRIMARY KEY,
+        title VARCHAR(255) NOT NULL,
+        content TEXT NOT NULL,
+        likes INTEGER DEFAULT 0,
+        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+    
+    // Ensure likes column exists for older tables
+    await client.query(`
+      ALTER TABLE blogs ADD COLUMN IF NOT EXISTS likes INTEGER DEFAULT 0;
+    `);
+
+    // Create comments table
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS comments (
+        id SERIAL PRIMARY KEY,
+        content TEXT NOT NULL,
+        blog_id INTEGER REFERENCES blogs(id) ON DELETE CASCADE,
+        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    console.log("✅ Database tables ready");
     client.release();
   } catch (error) {
     console.error("❌ PostgreSQL Error:", error.message);

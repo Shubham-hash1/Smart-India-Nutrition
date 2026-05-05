@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import RegionFilter from '../Common/RegionFilter';
+import { getRegionForFood } from '../../Data/regionalFoods';;
 
 // ✅ AUTO IMPORT IMAGES
 const imageModules = import.meta.glob('/src/Images/Heart/*.jpg', { eager: true });
@@ -10,6 +12,7 @@ Object.entries(imageModules).forEach(([path, module]) => {
 });
 
 const HeartSol = ({ category, onBack }) => {
+    const [selectedRegion, setSelectedRegion] = useState("All India");
 
     const FoodHeart = {
         Proteins: [
@@ -101,6 +104,12 @@ const HeartSol = ({ category, onBack }) => {
 
     if (!category) return null;
 
+    const filteredItems = itemsToDisplay.filter(item => {
+        if (selectedRegion === "All India" || category === "Exercises") return true;
+        const region = getRegionForFood(item.key);
+        return region === selectedRegion || region === "Common";
+    });
+
     return (
         <div className='m-2.5'>
             
@@ -118,6 +127,10 @@ const HeartSol = ({ category, onBack }) => {
             <h1 className='text-5xl font-bold text-center mb-8 text-[#f0e8dc]'>
                 {heading}
             </h1>
+            
+            {category !== "Exercises" && (
+                <RegionFilter selectedRegion={selectedRegion} onSelectRegion={setSelectedRegion} />
+            )}
 
             {/* 📦 Items Grid */}
             <div className='flex gap-4 flex-wrap justify-center'>

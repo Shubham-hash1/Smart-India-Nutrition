@@ -7,8 +7,8 @@ const imageModules = import.meta.glob('/src/Images/nutritional/*.jpg', { eager: 
 const imageMap = {};
 
 Object.entries(imageModules).forEach(([path, module]) => {
-  const name = path.split('/').pop().split('.')[0];
-  imageMap[name] = module.default;
+    const name = path.split('/').pop().split('.')[0];
+    imageMap[name] = module.default;
 });
 
 const NutritionalSol = ({ category, onBack }) => {
@@ -42,8 +42,8 @@ const NutritionalSol = ({ category, onBack }) => {
             { title: "Orange", key: "orange" },
             { title: "Watermelon", key: "watermelon" },
             { title: "Pineapple", key: "Pineapple" },
-            { title: "Coconut", key: "Coconut" }, 
-            { title: "Avacado", key: "avacado" }, 
+            { title: "Coconut", key: "Coconut" },
+            { title: "Avacado", key: "avacado" },
         ],
         Carbohydrates: [
             { title: "Roti", key: "roti" },
@@ -113,18 +113,18 @@ const NutritionalSol = ({ category, onBack }) => {
     return (
         <div className='m-2.5'>
             <div className="flex justify-center mb-8">
-                <button 
+                <button
                     onClick={onBack}
                     className="px-6 py-2 bg-[#c4a484] text-[#0f0e0d] font-bold rounded-lg hover:bg-[#e8d5b7] transition-colors"
                 >
                     &larr; Back to Categories
                 </button>
             </div>
-            
+
             <h1 className='text-5xl font-bold text-center mb-8 text-[#f0e8dc]'>
                 {heading}
             </h1>
-            
+
             {category !== "Exercises" && (
                 <RegionFilter selectedRegion={selectedRegion} onSelectRegion={setSelectedRegion} />
             )}

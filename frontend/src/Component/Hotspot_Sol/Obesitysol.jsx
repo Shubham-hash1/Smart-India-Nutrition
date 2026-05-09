@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import RegionFilter from '../Common/RegionFilter';
-import { getRegionForFood } from '../../Data/regionalFoods';
+import { getFilteredItemsForDisease } from '../../Data/deseasefood';
 
 // ✅ AUTO IMPORT (only this, no manual map)
 const imageModules = import.meta.glob('/src/Images/obesity/*.jpg', { eager: true });
@@ -14,101 +14,17 @@ Object.entries(imageModules).forEach(([path, module]) => {
 const Obesitysol = ({ category, onBack }) => {
     const [selectedRegion, setSelectedRegion] = useState("All India");
 
-    const FoodObesity = {
-        Proteins: [
-            { title: "Paneer", key: "paneer" },
-            { title: "Tofu", key: "tofu" },
-            { title: "Soya chunks", key: "soya_chunks" },
-            { title: "Moong dal", key: "moong_dal" },
-            { title: "Masoor dal", key: "masoor_dal" },
-            { title: "Chickpeas", key: "chickpeas" },
-            { title: "Rajma", key: "rajma" },
-            { title: "Sprouts", key: "sprouts" },
-            { title: "Besan chilla", key: "besan_chilla" },
-        ],
-        Vitamins: [
-            { title: "Spinach", key: "spinach" },
-            { title: "Broccoli", key: "broccoli" },
-            { title: "Cabbage", key: "cabbage" },
-            { title: "Lauki", key: "lauki" },
-            { title: "Tori", key: "tori" },
-            { title: "Carrot", key: "carrot" },
-            { title: "Cucumber", key: "cucumber" },
-            { title: "Beans", key: "beans" },
-            { title: "Mushrooms", key: "Mushrooms" },
-            { title: "Apple", key: "apple" },
-            { title: "Papaya", key: "papaya" },
-            { title: "Guava", key: "guava" },
-            { title: "Orange", key: "orange" },
-            { title: "Watermelon", key: "watermelon" },
-            { title: "Pineapple", key: "Pineapple" },
-            { title: "Coconut", key: "Coconut" }, 
-            { title: "Avacado", key: "avacado" }, 
-        ],
-        Carbohydrates: [
-            { title: "Roti", key: "roti" },
-            { title: "Brown rice", key: "brown_rice" },
-            { title: "Oats", key: "oats" },
-            { title: "Daliya", key: "daliya" },
-            { title: "Bajra roti", key: "bajra_roti" },
-            { title: "Jowar roti", key: "jowar_roti" },
-        ],
-        Minerals: [
-            { title: "Almonds", key: "almonds" },
-            { title: "Walnuts", key: "walnuts" },
-            { title: "Flax seeds", key: "flax_seeds" },
-            { title: "Peanuts", key: "peanuts" },
-        ]
-    };
-
-    const exerciseObesity = [
-        { title: "Walking", key: "walking" },
-        { title: "Brisk walking", key: "brisk_walking" },
-        { title: "Jogging", key: "jogging" },
-        { title: "Running", key: "running" },
-        { title: "Cycling", key: "cycling" },
-        { title: "Skipping rope", key: "skipping_rope" },
-        { title: "Swimming", key: "swimming" },
-        { title: "Jumping jacks", key: "jumping_jacks" },
-        { title: "Burpees", key: "burpees" },
-        { title: "Push ups", key: "push_ups" },
-        { title: "Squats", key: "squats" },
-        { title: "Lunges", key: "lunges" },
-        { title: "Plank", key: "plank" },
-        { title: "Mountain climbers", key: "mountain_climbers" },
-        { title: "High knees", key: "high_knees" },
-        { title: "Sit ups", key: "sit_ups" },
-        { title: "Crunches", key: "crunches" },
-        { title: "Yoga", key: "yoga" },
-        { title: "Surya namaskar", key: "surya_namaskar" },
-        { title: "Stretching", key: "stretching" },
-        { title: "Zumba", key: "zumba" },
-        { title: "Aerobics", key: "aerobics" },
-        { title: "Dancing", key: "dancing" },
-        { title: "Stair climbing", key: "stair_climbing" },
-        { title: "Hiking", key: "hiking" },
-        { title: "Elliptical workout", key: "elliptical" },
-        { title: "Rowing", key: "rowing" }
-    ];
-
-    let itemsToDisplay = [];
     let heading = "";
 
     if (category === "Exercises") {
-        itemsToDisplay = exerciseObesity;
         heading = "Exercise you should do";
-    } else if (category && FoodObesity[category]) {
-        itemsToDisplay = FoodObesity[category];
+    } else if (category) {
         heading = `Food you should take for ${category}`;
     }
 
     if (!category) return null;
 
-    const filteredItems = itemsToDisplay.filter(item => {
-        if (selectedRegion === "All India" || category === "Exercises") return true;
-        const region = getRegionForFood(item.key);
-        return region === selectedRegion || region === "Common";
-    });
+    const filteredItems = getFilteredItemsForDisease("Obesity", category, selectedRegion);
 
     return (
         <div className='m-2.5'>

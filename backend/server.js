@@ -4,9 +4,9 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const { connectDB } = require("./Db");
-const authRoutes = require("./AuthRoutes");
-const blogRoutes = require("./BlogRoutes");
+const { connectDB } = require("../backend/src/Db");
+const authRoutes = require("../backend/src/AuthRoutes");
+const blogRoutes = require("../backend/src/BlogRoutes");
 
 const app = express();
 

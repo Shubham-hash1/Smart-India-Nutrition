@@ -2,14 +2,6 @@ import React, { useState } from 'react';
 import RegionFilter from '../Common/RegionFilter';
 import { getFilteredItemsForDisease } from '../../Data/deseasefood';
 
-// ✅ AUTO IMPORT (only this, no manual map)
-const imageModules = import.meta.glob('/src/Images/nutritional/*.jpg', { eager: true });
-const imageMap = {};
-
-Object.entries(imageModules).forEach(([path, module]) => {
-    const name = path.split('/').pop().split('.')[0];
-    imageMap[name] = module.default;
-});
 
 const NutritionalSol = ({ category, onBack }) => {
     const [selectedRegion, setSelectedRegion] = useState("All India");
@@ -50,7 +42,8 @@ const NutritionalSol = ({ category, onBack }) => {
                     filteredItems.map((item, index) => (
                         <div key={index} className='flex flex-col items-center w-[140px] gap-2'>
                             <img
-                                src={imageMap[item.key] ?? "https://via.placeholder.com/120"}
+                                src={`/food-images/${item.key}.jpg`}
+                                onError={(e) => { e.target.onerror = null; e.target.src="https://via.placeholder.com/120"; }}
                                 alt={item.title}
                                 className='h-[120px] w-[120px] object-cover rounded'
                             />

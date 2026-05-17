@@ -4,6 +4,7 @@ import { AuthProvider } from "./Context/AuthContext.jsx";
 
 import Navbar from "./Component/Links/Navbar/Navbar.jsx";
 import Footer from "./Component/Footer/Footer.jsx";
+import HealthCalculators from "./Component/Calculators/HealthCalculators.jsx";
 
 import HeroSection from "./Component/Sections/HeroSection.jsx";
 import Hotspot_bimari from "./Component/Sections/Hotspot_bimari.jsx";
@@ -45,6 +46,7 @@ const Home = () => (
     <Ai />
     <Hotspot_bimari />
     <Age_Section />
+    <HealthCalculators />
   </PageWrapper>
 );
 
@@ -115,6 +117,7 @@ const App = () => (
         <main className="flex-grow">
           <AnimatedRoutes />
         </main>
+        
         <Footer />
       </div>
     </BrowserRouter>

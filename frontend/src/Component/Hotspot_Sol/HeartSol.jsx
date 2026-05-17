@@ -2,14 +2,6 @@ import React, { useState } from 'react';
 import RegionFilter from '../Common/RegionFilter';
 import { getFilteredItemsForDisease } from '../../Data/deseasefood';
 
-// ✅ AUTO IMPORT IMAGES
-const imageModules = import.meta.glob('/src/Images/Heart/*.jpg', { eager: true });
-const imageMap = {};
-
-Object.entries(imageModules).forEach(([path, module]) => {
-  const name = path.split('/').pop().split('.')[0].toLowerCase(); // ensure lowercase
-  imageMap[name] = module.default;
-});
 
 const HeartSol = ({ category, onBack }) => {
     const [selectedRegion, setSelectedRegion] = useState("All India");
@@ -56,7 +48,8 @@ const HeartSol = ({ category, onBack }) => {
                             
                             {/* 🖼 Image */}
                             <img
-                                src={imageMap[item.key] || imageMap["default"]}
+                                src={`/food-images/${item.key}.jpg`}
+                                onError={(e) => { e.target.onerror = null; e.target.src="https://via.placeholder.com/120"; }}
                                 alt={item.title}
                                 className='h-[120px] w-[120px] object-cover rounded'
                             />

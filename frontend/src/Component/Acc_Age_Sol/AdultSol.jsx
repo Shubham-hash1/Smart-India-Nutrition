@@ -2,113 +2,23 @@ import React, { useState } from 'react';
 import RegionFilter from '../Common/RegionFilter';
 import { getRegionForFood } from '../../Data/regionalFoods';
 
-// ✅ AUTO IMPORT (only this, no manual map)
-const imageModules = import.meta.glob('/src/Images/adult/*.jpg', { eager: true });
-const imageMap = {};
-
-Object.entries(imageModules).forEach(([path, module]) => {
-  const name = path.split('/').pop().split('.')[0];
-  imageMap[name] = module.default;
-});
+import { getFilteredItemsForAge } from '../../Data/agefood';
 
 const AdultSol = ({ category, onBack }) => {
     const [selectedRegion, setSelectedRegion] = useState("All India");
-
-    const FoodHeart = {
-        Proteins: [
-            { title: "Paneer", key: "paneer" },
-            { title: "Tofu", key: "tofu" },
-            { title: "Soya chunks", key: "soya_chunks" },
-            { title: "Moong dal", key: "moong_dal" },
-            { title: "Masoor dal", key: "masoor_dal" },
-            { title: "Chickpeas", key: "chickpeas" },
-            { title: "Rajma", key: "rajma" },
-            { title: "Sprouts", key: "sprouts" },
-            { title: "Besan chilla", key: "besan_chilla" },
-        ],
-        Vitamins: [
-            { title: "Spinach", key: "spinach" },
-            { title: "Broccoli", key: "broccoli" },
-            { title: "Cabbage", key: "cabbage" },
-            { title: "Lauki", key: "lauki" },
-            { title: "Tori", key: "tori" },
-            { title: "Carrot", key: "carrot" },
-            { title: "Cucumber", key: "cucumber" },
-            { title: "Beans", key: "beans" },
-            { title: "Mushrooms", key: "Mushrooms" },
-            { title: "Apple", key: "apple" },
-            { title: "Papaya", key: "papaya" },
-            { title: "Guava", key: "guava" },
-            { title: "Orange", key: "orange" },
-            { title: "Watermelon", key: "watermelon" },
-            { title: "Pineapple", key: "Pineapple" },
-            { title: "Coconut", key: "Coconut" }, 
-            { title: "Avacado", key: "avacado" }, 
-        ],
-        Carbohydrates: [
-            { title: "Roti", key: "roti" },
-            { title: "Brown rice", key: "brown_rice" },
-            { title: "Oats", key: "oats" },
-            { title: "Daliya", key: "daliya" },
-            { title: "Bajra roti", key: "bajra_roti" },
-            { title: "Jowar roti", key: "jowar_roti" },
-        ],
-        Minerals: [
-            { title: "Almonds", key: "almonds" },
-            { title: "Walnuts", key: "walnuts" },
-            { title: "Flax seeds", key: "flax_seeds" },
-            { title: "Peanuts", key: "peanuts" },
-        ]
-    };
-
-    const exerciseHeart = [
-        { title: "Walking", key: "walking" },
-        { title: "Brisk walking", key: "brisk_walking" },
-        { title: "Jogging", key: "jogging" },
-        { title: "Running", key: "running" },
-        { title: "Cycling", key: "cycling" },
-        { title: "Skipping rope", key: "skipping_rope" },
-        { title: "Swimming", key: "swimming" },
-        { title: "Jumping jacks", key: "jumping_jacks" },
-        { title: "Burpees", key: "burpees" },
-        { title: "Push ups", key: "push_ups" },
-        { title: "Squats", key: "squats" },
-        { title: "Lunges", key: "lunges" },
-        { title: "Plank", key: "plank" },
-        { title: "Mountain climbers", key: "mountain_climbers" },
-        { title: "High knees", key: "high_knees" },
-        { title: "Sit ups", key: "sit_ups" },
-        { title: "Crunches", key: "crunches" },
-        { title: "Yoga", key: "yoga" },
-        { title: "Surya namaskar", key: "surya_namaskar" },
-        { title: "Stretching", key: "stretching" },
-        { title: "Zumba", key: "zumba" },
-        { title: "Aerobics", key: "aerobics" },
-        { title: "Dancing", key: "dancing" },
-        { title: "Stair climbing", key: "stair_climbing" },
-        { title: "Hiking", key: "hiking" },
-        { title: "Elliptical workout", key: "elliptical" },
-        { title: "Rowing", key: "rowing" }
-    ];
 
     let itemsToDisplay = [];
     let heading = "";
 
     if (category === "Exercises") {
-        itemsToDisplay = exerciseHeart;
-        heading = "Exercise you should do";
-    } else if (category && FoodHeart[category]) {
-        itemsToDisplay = FoodHeart[category];
+        heading = "Exercises you should do";
+    } else if (category) {
         heading = `Food you should take for ${category}`;
     }
 
     if (!category) return null;
 
-    const filteredItems = itemsToDisplay.filter(item => {
-        if (selectedRegion === "All India" || category === "Exercises") return true;
-        const region = getRegionForFood(item.key);
-        return region === selectedRegion || region === "Common";
-    });
+    const filteredItems = getFilteredItemsForAge("Adult", category, selectedRegion);
 
     return (
         <div className='m-2.5'>
@@ -132,13 +42,19 @@ const AdultSol = ({ category, onBack }) => {
             <div className='flex gap-4 flex-wrap justify-center'>
                 {
                     filteredItems.map((item, index) => (
-                        <div key={index} className='flex flex-col items-center w-[140px] gap-2'>
-                            <img
-                                src={imageMap[item.key] ?? "https://via.placeholder.com/120"}
-                                alt={item.title}
-                                className='h-[120px] w-[120px] object-cover rounded'
-                            />
-                            <p className='text-sm text-center text-[rgba(240,232,220,0.8)]'>{item.title}</p>
+                        <div key={index} className='flex flex-col items-center w-[140px] gap-2 p-2 rounded-xl transition-all hover:bg-white/5 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-500/10 cursor-pointer'>
+                            <div className="w-[120px] h-[120px] rounded-xl overflow-hidden shadow-md shadow-black/40 ring-1 ring-white/10 group">
+                                <img
+                                    src={`/food-images/${item.key}.jpg`}
+                                    onError={(e) => {
+                                        e.target.onerror = null; 
+                                        e.target.src = "https://via.placeholder.com/120?text=No+Image";
+                                    }}
+                                    alt={item.title}
+                                    className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-110'
+                                />
+                            </div>
+                            <p className='text-sm text-center font-medium text-[rgba(240,232,220,0.9)]'>{item.title}</p>
                         </div>
                     ))
                 }

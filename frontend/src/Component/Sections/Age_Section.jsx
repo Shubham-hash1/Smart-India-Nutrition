@@ -10,8 +10,8 @@ import TeenImg from "../../Images/Teen.jpeg";
 import TodlerImg from "../../Images/Todler.jpg";
 
 const ageData = [
-  { image: ChildImg,  title: "Child",     description: "Young child learning to walk, speak, and explore.", route: "/child"   },
   { image: TodlerImg, title: "Toddler",   description: "Growing stage focused on learning and play.",        route: "/toddler" },
+  { image: ChildImg,  title: "Child",     description: "Young child learning to walk, speak, and explore.", route: "/child"   },
   { image: TeenImg,   title: "Teenager",  description: "Adolescent stage with rapid development.",           route: "/teen"    },
   { image: AdultImg,  title: "Adult",     description: "Mature stage with responsibilities and independence.", route: "/adult" },
   { image: OldageImg, title: "Old Age",   description: "Later life stage with aging body and wisdom.",       route: "/oldage"  },

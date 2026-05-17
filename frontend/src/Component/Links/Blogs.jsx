@@ -128,6 +128,28 @@ const Blogs = () => {
     }
   };
 
+  const handleDeletePost = async (blogId) => {
+    if (!window.confirm("Are you sure you want to delete this post?")) return;
+    
+    try {
+      const res = await fetch(`http://localhost:5000/api/blogs/${blogId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      const data = await res.json();
+      if (data.success) {
+        setBlogs(blogs.filter(blog => blog.id !== blogId));
+      } else {
+        alert(data.message || "Failed to delete post");
+      }
+    } catch (error) {
+      console.error('Failed to delete post', error);
+      alert("An error occurred while deleting the post.");
+    }
+  };
+
   return (
     <div style={{ 
       minHeight: "100vh", 
@@ -282,10 +304,39 @@ const Blogs = () => {
                   boxShadow: "0 10px 30px rgba(0,0,0,0.2)", position: "relative"
                 }}
               >
-                {/* Decoration */}
                 <div style={{ position: "absolute", top: 0, left: 0, width: "4px", height: "100%", background: "linear-gradient(to bottom, #22c55e, #059669)" }} />
                 
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "16px" }}>
+                {user && user.id === blog.user_id && (
+                  <button
+                    onClick={() => handleDeletePost(blog.id)}
+                    style={{
+                      position: "absolute",
+                      top: "20px",
+                      right: "20px",
+                      background: "rgba(239, 68, 68, 0.1)",
+                      border: "1px solid rgba(239, 68, 68, 0.3)",
+                      color: "#ef4444",
+                      padding: "6px 12px",
+                      borderRadius: "8px",
+                      fontSize: "12px",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                      transition: "all 0.2s"
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.background = "rgba(239, 68, 68, 0.2)";
+                      e.currentTarget.style.transform = "scale(1.05)";
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.background = "rgba(239, 68, 68, 0.1)";
+                      e.currentTarget.style.transform = "scale(1)";
+                    }}
+                  >
+                    Delete
+                  </button>
+                )}
+                
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "16px", paddingRight: user && user.id === blog.user_id ? "70px" : "0" }}>
                   <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "24px", color: "#f0e8dc", margin: 0 }}>
                     {blog.title}
                   </h2>

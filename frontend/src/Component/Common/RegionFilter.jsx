@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const regions = ["All India", "North", "South", "East", "West"];
-
 const RegionFilter = ({ selectedRegion, onSelectRegion }) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -92,27 +91,19 @@ const RegionFilter = ({ selectedRegion, onSelectRegion }) => {
                   color: selectedRegion === region ? "#021a0a" : "rgba(240,232,220,0.8)",
                   background: selectedRegion === region ? "linear-gradient(135deg, #22c55e 0%, #059669 100%)" : "transparent",
                   fontWeight: selectedRegion === region ? 700 : 500,
-                  transition: "background 0.2s ease, color 0.2s ease",
-                }}
+                  transition: "background 0.2s ease, color 0.2s ease",}}
                 onMouseEnter={(e) => {
                   if (selectedRegion !== region) {
                     e.currentTarget.style.background = "rgba(255,255,255,0.05)";
-                  }
-                }}
+                  }}}
                 onMouseLeave={(e) => {
                   if (selectedRegion !== region) {
                     e.currentTarget.style.background = "transparent";
                   }
-                }}
-              >
+                }}>
                 {region}
-              </div>
-            ))}
-          </motion.div>
-        )}
+              </div>))}
+          </motion.div>)}
       </AnimatePresence>
-    </div>
-  );
-};
-
+    </div>);};
 export default RegionFilter;

@@ -35,7 +35,7 @@ export default function LoginForm({ close }) {
 
   const formFields = isSignup 
     ? [
-        { id: "name", label: "Full Name", type: "text", value: name, setter: setName, placeholder: "John Doe" },
+        { id: "name", label: "Full Name", type: "text", value: name, setter: setName, placeholder: "Your Name" },
         { id: "email", label: "Email", type: "email", value: email, setter: setEmail, placeholder: "you@example.com" },
         { id: "password", label: "Password", type: "password", value: password, setter: setPassword, placeholder: "••••••••" },
       ]

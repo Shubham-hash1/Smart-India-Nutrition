@@ -31,22 +31,22 @@ const ProductCard = ({ item, accent }) => (
       transition={{ duration: 0.35 }}
       style={{
         position: "absolute", inset: "-8px", borderRadius: "24px",
-        background: `radial-gradient(ellipse at center, ${accent}22 0%, transparent 70%)`,
-        filter: "blur(16px)", pointerEvents: "none", zIndex: 0,
+        
+         pointerEvents: "none", zIndex: 0,
       }}
     />
 
     <motion.div
       variants={{
-        rest: { y: 0, boxShadow: "0 4px 24px rgba(0,0,0,0.35)" },
-        hover: { y: -8, boxShadow: "0 20px 52px rgba(0,0,0,0.55)" },
+        rest: { y: 0,  },
+        hover: { y: -8,  },
       }}
       transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
       style={{
         position: "relative", zIndex: 1,
         borderRadius: "18px", overflow: "hidden",
-        background: "#0f0e0d",
-        border: "1px solid rgba(255,255,255,0.07)",
+        background: "#ffffff",
+        border: "1px solid rgba(0,0,0,0.07)",
         display: "flex", flexDirection: "column",
       }}
     >
@@ -61,7 +61,7 @@ const ProductCard = ({ item, accent }) => (
         />
         <div style={{
           position: "absolute", inset: 0,
-          background: "linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(10,9,8,0.65) 100%)",
+          background: "none",
         }} />
 
         {/* Badge if available */}
@@ -94,9 +94,9 @@ const ProductCard = ({ item, accent }) => (
         />
 
         <h3 style={{
-          fontFamily: "'Playfair Display', serif",
+          fontFamily: "'Inter', serif",
           fontSize: "17px", fontWeight: 700,
-          color: "#f0e8dc", margin: "0 0 6px",
+          color: "#1f2937", margin: "0 0 6px",
           lineHeight: 1.3,
         }}>
           {item.name}
@@ -105,7 +105,7 @@ const ProductCard = ({ item, accent }) => (
         {item.description && (
           <p style={{
             fontFamily: "'DM Sans', sans-serif",
-            fontSize: "12.5px", color: "rgba(240,232,220,0.42)",
+            fontSize: "12.5px", color: "#4b5563",
             lineHeight: 1.6, margin: "0 0 14px", fontWeight: 300,
           }}>
             {item.description}
@@ -115,7 +115,7 @@ const ProductCard = ({ item, accent }) => (
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           {item.price && (
             <span style={{
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Inter', serif",
               fontSize: "18px", fontWeight: 700, color: accent,
             }}>
               {item.price}
@@ -131,7 +131,7 @@ const ProductCard = ({ item, accent }) => (
               border: "none", cursor: "pointer",
               fontFamily: "'DM Sans', sans-serif",
               fontSize: "11px", fontWeight: 700,
-              color: "#021a0a", letterSpacing: "0.05em",
+              color: "#f0fdf4", letterSpacing: "0.05em",
             }}
           >
             Add to Cart
@@ -171,9 +171,9 @@ const ProductSection = ({ title, items = [], accent = "#4ade80", index = 0 }) =>
         />
 
         <h2 style={{
-          fontFamily: "'Playfair Display', serif",
+          fontFamily: "'Inter', serif",
           fontSize: "clamp(22px, 3vw, 30px)",
-          fontWeight: 700, color: "#f0e8dc",
+          fontWeight: 700, color: "#1f2937",
           margin: 0, letterSpacing: "-0.01em",
         }}>
           {title}
@@ -182,7 +182,7 @@ const ProductSection = ({ title, items = [], accent = "#4ade80", index = 0 }) =>
         {/* Right fade line */}
         <div style={{
           flex: 1, height: "1px",
-          background: "linear-gradient(90deg, rgba(255,255,255,0.07), transparent)",
+          background: "linear-gradient(90deg, rgba(0,0,0,0.07), transparent)",
         }} />
       </motion.div>
 

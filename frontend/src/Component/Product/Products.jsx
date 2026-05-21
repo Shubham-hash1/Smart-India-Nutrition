@@ -18,11 +18,11 @@ const Products = () => {
       style={{
         width: "100%",
         minHeight: "100vh",
-        background: "#080706",
+        background: "#ffffff",
         fontFamily: "'DM Sans', sans-serif",
       }}
     >
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,800&family=DM+Sans:wght@300;400;500&display=swap');`}</style>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap');`}</style>
 
       {/* ── Page header ── */}
       <div
@@ -38,7 +38,7 @@ const Products = () => {
         <div style={{
           position: "absolute", top: "-100px", left: "50%", transform: "translateX(-50%)",
           width: "600px", height: "300px",
-          background: "radial-gradient(ellipse, rgba(34,197,94,0.08) 0%, transparent 70%)",
+          
           pointerEvents: "none",
         }} />
 
@@ -61,9 +61,9 @@ const Products = () => {
           animate={headerInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.9, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
           style={{
-            fontFamily: "'Playfair Display', serif",
+            fontFamily: "'Inter', serif",
             fontSize: "clamp(38px, 6vw, 64px)",
-            fontWeight: 900, color: "#f0e8dc",
+            fontWeight: 900, color: "#1f2937",
             margin: 0, lineHeight: 1.05, letterSpacing: "-0.02em",
           }}
         >
@@ -79,7 +79,7 @@ const Products = () => {
             marginTop: "16px",
             fontFamily: "'DM Sans', sans-serif",
             fontSize: "clamp(14px, 1.8vw, 17px)",
-            color: "rgba(240,232,220,0.42)",
+            color: "#4b5563",
             maxWidth: "440px", margin: "16px auto 0",
             lineHeight: 1.7, fontWeight: 300,
           }}

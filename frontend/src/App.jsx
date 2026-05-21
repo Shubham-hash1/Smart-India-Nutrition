@@ -20,10 +20,10 @@ import ProductSection from "./Component/Product/ProductSection.jsx";
 
 /* ── Page transition wrapper ── */
 const pageVariants = {
-  initial: { opacity: 0, y: 24, filter: "blur(6px)" },
-  enter:   { opacity: 1, y: 0,  filter: "blur(0px)",
+  initial: { opacity: 0, y: 24,  },
+  enter:   { opacity: 1, y: 0,  
     transition: { duration: 0.55, ease: [0.23, 1, 0.32, 1] } },
-  exit:    { opacity: 0, y: -16, filter: "blur(4px)",
+  exit:    { opacity: 0, y: -16, 
     transition: { duration: 0.3, ease: [0.32, 0, 0.67, 0] } },
 };
 
@@ -88,15 +88,15 @@ const AnimatedRoutes = () => {
                   flexDirection: "column",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontFamily: "'Playfair Display', serif",
-                  color: "#f0e8dc",
-                  background: "#080706",
+                  fontFamily: "'Inter', serif",
+                  color: "#1f2937",
+                  background: "#ffffff",
                   gap: "16px",
                 }}
               >
                 <span style={{ fontSize: "80px", fontWeight: 900, opacity: 0.12 }}>404</span>
                 <h1 style={{ fontSize: "28px", margin: 0 }}>Page Not Found</h1>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", color: "rgba(240,232,220,0.45)", margin: 0 }}>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#4b5563", margin: 0 }}>
                   The page you're looking for doesn't exist.
                 </p>
               </div>

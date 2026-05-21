@@ -25,13 +25,13 @@ const TeenSol = ({ category, onBack }) => {
             <div className="flex justify-center mb-8">
                 <button 
                     onClick={onBack}
-                    className="px-6 py-2 bg-[#c4a484] text-[#0f0e0d] font-bold rounded-lg hover:bg-[#e8d5b7] transition-colors"
+                    className="px-6 py-2 bg-[#3b82f6] text-[#ffffff] font-bold rounded-lg hover:bg-[#bfdbfe] transition-colors"
                 >
                     &larr; Back to Categories
                 </button>
             </div>
             
-            <h1 className='text-5xl font-bold text-center mb-8 text-[#f0e8dc]'>
+            <h1 className='text-5xl font-bold text-center mb-8 text-[#1f2937]'>
                 {heading}
             </h1>
             
@@ -54,7 +54,7 @@ const TeenSol = ({ category, onBack }) => {
                                     className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-110'
                                 />
                             </div>
-                            <p className='text-sm text-center font-medium text-[rgba(240,232,220,0.9)]'>{item.title}</p>
+                            <p className='text-sm text-center font-medium text-[rgba(31,41,55,0.9)]'>{item.title}</p>
                         </div>
                     ))
                 }

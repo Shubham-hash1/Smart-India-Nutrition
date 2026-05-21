@@ -46,13 +46,13 @@ const cardVariants = {
     opacity: 0,
     x: i % 2 === 0 ? -60 : 60,
     scale: 0.92,
-    filter: "blur(8px)",
+    
   }),
   visible: (i) => ({
     opacity: 1,
     x: 0,
     scale: 1,
-    filter: "blur(0px)",
+    
     transition: {
       duration: 0.75,
       ease: [0.23, 1, 0.32, 1],
@@ -71,17 +71,17 @@ const Hotspot_bimari = () => {
       ref={sectionRef}
       style={{
         minHeight: "100vh",
-        background: "#080706",
+        background: "#ffffff",
         padding: "80px 24px 100px",
         position: "relative",
         overflow: "hidden",
         fontFamily: "'DM Sans', sans-serif",
       }}
     >
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap');`}</style>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap');`}</style>
 
-      <div style={{ position: "absolute", top: "-120px", left: "50%", transform: "translateX(-50%)", width: "600px", height: "360px", background: "radial-gradient(ellipse, rgba(232,120,120,0.07) 0%, transparent 70%)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", bottom: 0, right: "-180px", width: "480px", height: "480px", background: "radial-gradient(ellipse, rgba(124,184,232,0.05) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", top: "-120px", left: "50%", transform: "translateX(-50%)", width: "600px", height: "360px",  pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: 0, right: "-180px", width: "480px", height: "480px",  pointerEvents: "none" }} />
 
       {/* Header */}
       <motion.div
@@ -91,9 +91,9 @@ const Hotspot_bimari = () => {
         style={{ textAlign: "center", marginBottom: "64px" }}
       >
         <h1 style={{
-          fontFamily: "'Playfair Display', serif",
+          fontFamily: "'Inter', serif",
           fontSize: "clamp(36px, 6vw, 50px)",
-          fontWeight: 900, color: "#f0e8dc",
+          fontWeight: 900, color: "#1f2937",
           margin: 0, lineHeight: 1.05, letterSpacing: "-0.02em",
         }}>
           Know the{" "}

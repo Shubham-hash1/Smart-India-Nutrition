@@ -40,19 +40,19 @@ const containerVariants = {
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 32, filter: "blur(6px)" },
-  visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.85, ease: [0.23, 1, 0.32, 1] } },
+  hidden: { opacity: 0, y: 32,  },
+  visible: { opacity: 1, y: 0,  transition: { duration: 0.85, ease: [0.23, 1, 0.32, 1] } },
 };
 
 const About = () => {
   return (
     <>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,800;0,900;1,800&family=DM+Sans:wght@300;400;500&display=swap');`}</style>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap');`}</style>
       
       <div 
         style={{
           minHeight: "100vh",
-          backgroundColor: "#080706",
+          backgroundColor: "#ffffff",
           position: "relative",
           overflow: "hidden",
           padding: "80px 20px"
@@ -71,8 +71,8 @@ const About = () => {
             width: "600px",
             height: "600px",
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(34,197,94,0.12) 0%, transparent 70%)",
-            filter: "blur(60px)",
+            
+            
             pointerEvents: "none",
           }}
         />
@@ -114,7 +114,7 @@ const About = () => {
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "11px",
                   fontWeight: 500,
-                  color: "#4ade80",
+                  color: "black",
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
                 }}
@@ -136,10 +136,10 @@ const About = () => {
             <motion.h1 
               variants={fadeUp}
               style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "'Inter', serif",
                 fontSize: "clamp(40px, 5.5vw, 64px)",
                 fontWeight: 900,
-                color: "#f5f0e8",
+                color: "#111827",
                 margin: "0 0 24px 0",
                 lineHeight: 1.04,
                 letterSpacing: "-0.025em",
@@ -147,13 +147,13 @@ const About = () => {
             >
               Empowering India with <br className="hidden md:block"/>
               <motion.span
-                initial={{ backgroundPosition: "200% center" }}
+                initial={{ backgroundPosition: "210% center" }}
                 animate={{ backgroundPosition: "0% center" }}
                 transition={{ duration: 1.4, delay: 0.6, ease: "easeOut" }}
                 style={{
                   fontStyle: "italic",
                   background: "linear-gradient(90deg, #4ade80, #059669, #4ade80)",
-                  backgroundSize: "200% auto",
+                  backgroundSize: "210% auto",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -169,7 +169,7 @@ const About = () => {
               style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: "clamp(16px, 2vw, 20px)",
-                color: "rgba(245,240,232,0.58)",
+                color: "black",
                 maxWidth: "600px",
                 margin: "0 auto",
                 lineHeight: 1.7,
@@ -191,14 +191,14 @@ const About = () => {
               <motion.div
                 key={index}
                 variants={fadeUp}
-                whileHover={{ scale: 1.02, backgroundColor: "rgba(255,255,255,0.06)" }}
+                whileHover={{ scale: 1.02, backgroundColor: "rgba(0,0,0,0.06)" }}
                 transition={{ duration: 0.3 }}
                 style={{
                   padding: "40px",
                   borderRadius: "28px",
-                  background: "rgba(255,255,255,0.03)",
-                  backdropFilter: "blur(20px)",
-                  border: "1px solid rgba(255,255,255,0.08)",
+                  background: "rgba(0,0,0,0.03)",
+                  
+                  border: "1px solid rgba(0,0,0,0.08)",
                   position: "relative",
                   overflow: "hidden"
                 }}
@@ -229,10 +229,10 @@ const About = () => {
                   </div>
                   
                   <h2 style={{
-                    fontFamily: "'Playfair Display', serif",
+                    fontFamily: "'Inter', serif",
                     fontSize: "26px",
                     fontWeight: 800,
-                    color: "#f5f0e8",
+                    color: "#111827",
                     marginBottom: "16px",
                     letterSpacing: "-0.01em"
                   }}>
@@ -242,7 +242,7 @@ const About = () => {
                   <p style={{
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: "16px",
-                    color: "rgba(245,240,232,0.6)",
+                    color: "rgba(75,85,99,0.6)",
                     lineHeight: 1.7,
                     fontWeight: 300
                   }}>
@@ -278,16 +278,16 @@ const About = () => {
               transform: "translate(-50%, -50%)",
               width: "100%",
               height: "100%",
-              background: "radial-gradient(circle, rgba(34,197,94,0.15) 0%, transparent 60%)",
+              
               pointerEvents: "none"
             }} />
 
             <div className="relative z-10">
               <h3 style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "'Inter', serif",
                 fontSize: "clamp(32px, 4vw, 48px)",
                 fontWeight: 900,
-                color: "#f5f0e8",
+                color: "#111827",
                 marginBottom: "20px"
               }}>
                 Join the Health Revolution
@@ -295,7 +295,7 @@ const About = () => {
               <p style={{
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: "18px",
-                color: "rgba(245,240,232,0.7)",
+                color: "black",
                 maxWidth: "600px",
                 margin: "0 auto 40px auto",
                 lineHeight: 1.6,
@@ -305,7 +305,7 @@ const About = () => {
               </p>
               
               <motion.button
-                whileHover={{ scale: 1.04, boxShadow: "0 0 28px rgba(74,222,128,0.45)" }}
+                whileHover={{ scale: 1.04,  }}
                 whileTap={{ scale: 0.96 }}
                 transition={{ type: "spring", stiffness: 350, damping: 20 }}
                 style={{
@@ -313,7 +313,7 @@ const About = () => {
                   borderRadius: "100px",
                   background: "linear-gradient(135deg, #22c55e 0%, #059669 100%)",
                   border: "none",
-                  color: "#021a0a",
+                  color: "#f0fdf4",
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "15px",
                   fontWeight: 700,

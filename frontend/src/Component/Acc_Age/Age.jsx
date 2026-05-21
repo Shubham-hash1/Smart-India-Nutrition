@@ -20,8 +20,8 @@ const Age = ({ image, title, description, onClick }) => {
           position: "absolute",
           inset: "-10px",
           borderRadius: "28px",
-          background: "radial-gradient(ellipse at center, rgba(196,164,132,0.35) 0%, transparent 70%)",
-          filter: "blur(18px)",
+          
+          
           zIndex: 0,
           pointerEvents: "none",
         }}
@@ -30,8 +30,8 @@ const Age = ({ image, title, description, onClick }) => {
       {/* Card */}
       <motion.div
         variants={{
-          rest: { y: 0, boxShadow: "0 4px 24px rgba(0,0,0,0.35)" },
-          hover: { y: -10, boxShadow: "0 24px 60px rgba(0,0,0,0.55)" },
+          rest: { y: 0,  },
+          hover: { y: -10,  },
         }}
         transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
         style={{
@@ -39,8 +39,8 @@ const Age = ({ image, title, description, onClick }) => {
           zIndex: 1,
           borderRadius: "20px",
           overflow: "hidden",
-          background: "#0f0e0d",
-          border: "1px solid rgba(255,255,255,0.07)",
+          background: "#ffffff",
+          border: "1px solid rgba(0,0,0,0.07)",
           height: "380px",
           display: "flex",
           flexDirection: "column",
@@ -68,7 +68,7 @@ const Age = ({ image, title, description, onClick }) => {
             style={{
               position: "absolute",
               inset: 0,
-              background: "linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(10,9,8,0.7) 100%)",
+              background: "none",
             }}
           />
 
@@ -82,10 +82,10 @@ const Age = ({ image, title, description, onClick }) => {
               position: "absolute",
               top: "-10px",
               right: "12px",
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Inter', serif",
               fontSize: "120px",
               fontWeight: 900,
-              color: "#fff",
+              color: "#000",
               lineHeight: 1,
               userSelect: "none",
               letterSpacing: "-4px",
@@ -97,8 +97,8 @@ const Age = ({ image, title, description, onClick }) => {
         <div
           style={{
             padding: "20px 22px 22px",
-            background: "#0f0e0d",
-            borderTop: "1px solid rgba(255,255,255,0.06)",
+            background: "#ffffff",
+            borderTop: "1px solid rgba(0,0,0,0.06)",
             flexShrink: 0,
           }}
         >
@@ -111,7 +111,7 @@ const Age = ({ image, title, description, onClick }) => {
             transition={{ duration: 0.35, ease: "easeOut" }}
             style={{
               height: "2px",
-              background: "linear-gradient(90deg, #c4a484, #e8d5b7)",
+              background: "linear-gradient(90deg, #3b82f6, #bfdbfe)",
               borderRadius: "2px",
               marginBottom: "10px",
             }}
@@ -120,10 +120,10 @@ const Age = ({ image, title, description, onClick }) => {
           <h3
             style={{
               margin: 0,
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Inter', serif",
               fontSize: "22px",
               fontWeight: 700,
-              color: "#f0e8dc",
+              color: "#1f2937",
               letterSpacing: "0.01em",
               lineHeight: 1.2,
             }}
@@ -136,7 +136,7 @@ const Age = ({ image, title, description, onClick }) => {
               margin: "7px 0 0",
               fontFamily: "'DM Sans', sans-serif",
               fontSize: "13px",
-              color: "rgba(240,232,220,0.5)",
+              color: "#4b5563",
               lineHeight: 1.6,
               letterSpacing: "0.01em",
             }}
@@ -159,14 +159,14 @@ const Age = ({ image, title, description, onClick }) => {
               fontFamily: "'DM Sans', sans-serif",
               fontSize: "12px",
               fontWeight: 500,
-              color: "#c4a484",
+              color: "#3b82f6",
               letterSpacing: "0.08em",
               textTransform: "uppercase",
             }}
           >
             Explore
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M2 7h10M8 3l4 4-4 4" stroke="#c4a484" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="#3b82f6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </motion.div>
         </div>

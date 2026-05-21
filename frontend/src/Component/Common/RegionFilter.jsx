@@ -19,7 +19,7 @@ const RegionFilter = ({ selectedRegion, onSelectRegion }) => {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "32px", position: "relative", zIndex: 20 }} ref={dropdownRef}>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@500&display=swap');`}</style>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@500&display=swap');`}</style>
       
       {/* Dropdown Button */}
       <motion.button
@@ -37,12 +37,12 @@ const RegionFilter = ({ selectedRegion, onSelectRegion }) => {
           fontSize: "15px",
           fontWeight: 500,
           cursor: "pointer",
-          background: "rgba(255,255,255,0.05)",
-          color: "#f0e8dc",
-          border: "1px solid rgba(255,255,255,0.1)",
+          background: "rgba(0,0,0,0.05)",
+          color: "#1f2937",
+          border: "1px solid rgba(0,0,0,0.1)",
           boxShadow: isOpen ? "0 0 20px rgba(34,197,94,0.2)" : "0 4px 10px rgba(0,0,0,0.3)",
           transition: "box-shadow 0.3s ease, border-color 0.3s ease",
-          borderColor: isOpen ? "rgba(34,197,94,0.5)" : "rgba(255,255,255,0.1)",
+          borderColor: isOpen ? "rgba(34,197,94,0.5)" : "rgba(0,0,0,0.1)",
         }}
       >
         <span>{selectedRegion}</span>
@@ -68,11 +68,11 @@ const RegionFilter = ({ selectedRegion, onSelectRegion }) => {
               top: "100%",
               marginTop: "8px",
               width: "200px",
-              background: "#0d0c0b",
-              border: "1px solid rgba(255,255,255,0.08)",
+              background: "#f9fafb",
+              border: "1px solid rgba(0,0,0,0.08)",
               borderRadius: "12px",
               overflow: "hidden",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+              
               transformOrigin: "top",
             }}
           >
@@ -88,13 +88,13 @@ const RegionFilter = ({ selectedRegion, onSelectRegion }) => {
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "14px",
                   cursor: "pointer",
-                  color: selectedRegion === region ? "#021a0a" : "rgba(240,232,220,0.8)",
+                  color: selectedRegion === region ? "#f0fdf4" : "rgba(31,41,55,0.8)",
                   background: selectedRegion === region ? "linear-gradient(135deg, #22c55e 0%, #059669 100%)" : "transparent",
                   fontWeight: selectedRegion === region ? 700 : 500,
                   transition: "background 0.2s ease, color 0.2s ease",}}
                 onMouseEnter={(e) => {
                   if (selectedRegion !== region) {
-                    e.currentTarget.style.background = "rgba(255,255,255,0.05)";
+                    e.currentTarget.style.background = "rgba(0,0,0,0.05)";
                   }}}
                 onMouseLeave={(e) => {
                   if (selectedRegion !== region) {

@@ -32,14 +32,14 @@ const cardVariants = {
     scale: 0.72,
     rotate: i % 2 === 0 ? -6 : 6,
     y: 30,
-    filter: "blur(5px)",
+    
   }),
   visible: (i) => ({
     opacity: 1,
     scale: 1,
     rotate: 0,
     y: 0,
-    filter: "blur(0px)",
+    
     transition: {
       duration: 0.85,
       ease: [0.34, 1.28, 0.64, 1], // spring overshoot
@@ -58,17 +58,17 @@ const Age_Section = () => {
       ref={sectionRef}
       style={{
         minHeight: "100vh",
-        background: "#080706",
+        background: "#ffffff",
         padding: "80px 24px 100px",
         position: "relative",
         overflow: "hidden",
         fontFamily: "'DM Sans', sans-serif",
       }}
     >
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,800&family=DM+Sans:wght@300;400;500&display=swap');`}</style>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap');`}</style>
 
-      <div style={{ position: "absolute", top: "-160px", left: "50%", transform: "translateX(-50%)", width: "700px", height: "400px", background: "radial-gradient(ellipse, rgba(196,164,132,0.08) 0%, transparent 70%)", pointerEvents: "none" }} />
-      <div style={{ position: "absolute", bottom: 0, left: "-200px", width: "500px", height: "500px", background: "radial-gradient(ellipse, rgba(100,80,60,0.06) 0%, transparent 70%)", pointerEvents: "none" }} />
+      <div style={{ position: "absolute", top: "-160px", left: "50%", transform: "translateX(-50%)", width: "700px", height: "400px",  pointerEvents: "none" }} />
+      <div style={{ position: "absolute", bottom: 0, left: "-200px", width: "500px", height: "500px",  pointerEvents: "none" }} />
 
       {/* Header */}
       <motion.div
@@ -78,19 +78,19 @@ const Age_Section = () => {
         style={{ textAlign: "center", marginBottom: "64px" }}
       >
         <h1 style={{
-          fontFamily: "'Playfair Display', serif",
+          fontFamily: "'Inter', serif",
           fontSize: "clamp(38px, 6vw, 55px)",
-          fontWeight: 900, color: "#f0e8dc",
+          fontWeight: 900, color: "#1f2937",
           margin: 0, lineHeight: 1.05, letterSpacing: "-0.02em",
         }}>
           Every Stage,{" "}
-          <span style={{ fontStyle: "italic", color: "#c4a484" }}>Every Story</span>
+          <span style={{ fontStyle: "italic", color: "#3b82f6" }}>Every Story</span>
         </h1>
         <motion.div
           initial={{ scaleX: 0 }}
           animate={isInView ? { scaleX: 1 } : {}}
           transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-          style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, transparent, #c4a484, transparent)", margin: "24px auto 0", transformOrigin: "center" }}
+          style={{ width: "60px", height: "1px", background: "linear-gradient(90deg, transparent, #3b82f6, transparent)", margin: "24px auto 0", transformOrigin: "center" }}
         />
       </motion.div>
 

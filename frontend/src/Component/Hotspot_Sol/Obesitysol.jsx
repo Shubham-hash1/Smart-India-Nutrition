@@ -23,13 +23,13 @@ const Obesitysol = ({ category, onBack }) => {
             <div className="flex justify-center mb-8">
                 <button 
                     onClick={onBack}
-                    className="px-6 py-2 bg-[#c4a484] text-[#0f0e0d] font-bold rounded-lg hover:bg-[#e8d5b7] transition-colors"
+                    className="px-6 py-2 bg-[#3b82f6] text-[#ffffff] font-bold rounded-lg hover:bg-[#bfdbfe] transition-colors"
                 >
                     &larr; Back to Categories
                 </button>
             </div>
             
-            <h1 className='text-5xl font-bold text-center mb-8 text-[#f0e8dc]'>
+            <h1 className='text-5xl font-bold text-center mb-8 text-[#1f2937]'>
                 {heading}
             </h1>
             
@@ -47,7 +47,7 @@ const Obesitysol = ({ category, onBack }) => {
                                 alt={item.title}
                                 className='h-[120px] w-[120px] object-cover rounded'
                             />
-                            <p className='text-sm text-center text-[rgba(240,232,220,0.8)]'>{item.title}</p>
+                            <p className='text-sm text-center text-[rgba(31,41,55,0.8)]'>{item.title}</p>
                         </div>
                     ))
                 }

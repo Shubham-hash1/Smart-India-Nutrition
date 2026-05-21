@@ -57,12 +57,12 @@ const Footer = () => {
     <footer
       ref={ref}
       style={{
-        background: "#060504",
-        borderTop: "1px solid rgba(255,255,255,0.06)",
+        background: "#ffffff",
+        borderTop: "1px solid rgba(0,0,0,0.06)",
         fontFamily: "'DM Sans', sans-serif",
       }}
     >
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap');`}</style>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap');`}</style>
 
       <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "64px 32px 0" }}>
 
@@ -91,18 +91,18 @@ const Footer = () => {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  boxShadow: "0 0 16px rgba(34,197,94,0.3)",
+                  
                   flexShrink: 0,
                 }}
               >
-                <span style={{ fontFamily: "'Playfair Display', serif", color: "#021a0a", fontSize: "15px", fontWeight: 700 }}>N</span>
+                <span style={{ fontFamily: "'Inter', serif", color: "#f0fdf4", fontSize: "15px", fontWeight: 700 }}>N</span>
               </div>
-              <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "18px", fontWeight: 700, color: "#f0e8dc" }}>
+              <span style={{ fontFamily: "'Inter', serif", fontSize: "18px", fontWeight: 700, color: "#1f2937" }}>
                 Nutri<span style={{ color: "#4ade80" }}>Smart</span>
               </span>
             </div>
 
-            <p style={{ fontSize: "13px", color: "rgba(240,232,220,0.38)", lineHeight: 1.75, maxWidth: "220px", fontWeight: 300 }}>
+            <p style={{ fontSize: "13px", color: "#4b5563", lineHeight: 1.75, maxWidth: "220px", fontWeight: 300 }}>
               Empowering healthier lives through smart nutrition and evidence-based wellness guidance.
             </p>
 
@@ -119,15 +119,15 @@ const Footer = () => {
                     width: "36px",
                     height: "36px",
                     borderRadius: "10px",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(0,0,0,0.08)",
+                    background: "rgba(0,0,0,0.04)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     transition: "border-color 0.2s",
                   }}
                 >
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(240,232,220,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="rgba(31,41,55,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d={s.path} />
                   </svg>
                 </motion.a>
@@ -156,11 +156,11 @@ const Footer = () => {
                   <li key={link.label}>
                     <motion.a
                       href={link.href}
-                      whileHover={{ x: 4, color: "#f0e8dc" }}
+                      whileHover={{ x: 4, color: "#1f2937" }}
                       transition={{ duration: 0.2 }}
                       style={{
                         fontSize: "14px",
-                        color: "rgba(240,232,220,0.45)",
+                        color: "#4b5563",
                         textDecoration: "none",
                         display: "inline-block",
                         fontWeight: 400,
@@ -182,7 +182,7 @@ const Footer = () => {
           transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
           style={{
             height: "1px",
-            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)",
+            background: "linear-gradient(90deg, transparent, rgba(0,0,0,0.08), transparent)",
             transformOrigin: "left",
           }}
         />
@@ -201,10 +201,10 @@ const Footer = () => {
             padding: "20px 0",
           }}
         >
-          <span style={{ fontSize: "12px", color: "rgba(240,232,220,0.25)", letterSpacing: "0.03em" }}>
+          <span style={{ fontSize: "12px", color: "#4b5563", letterSpacing: "0.03em" }}>
             © 2026 Smart India Nutrition. All Rights Reserved.
           </span>
-          <span style={{ fontSize: "12px", color: "rgba(240,232,220,0.2)", letterSpacing: "0.03em" }}>
+          <span style={{ fontSize: "12px", color: "#4b5563", letterSpacing: "0.03em" }}>
             Made with care for your health
           </span>
         </motion.div>
@@ -215,7 +215,7 @@ const Footer = () => {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.85, duration: 0.7 }}
           style={{
-            borderTop: "1px solid rgba(255,255,255,0.20)",
+            borderTop: "1px solid rgba(0,0,0,0.20)",
             padding: "24px 0 32px",
             textAlign: "center",
           }}
@@ -226,7 +226,7 @@ const Footer = () => {
               fontWeight: 500,
               letterSpacing: "0.14em",
               textTransform: "uppercase",
-              color: "rgba(255,255,255,1)",
+              color: "#1f2937",
               marginBottom: "8px",
             }}
           >
@@ -235,7 +235,7 @@ const Footer = () => {
           <p
             style={{
               fontSize: "14px",
-              color: "rgba(255,255,255,1)",
+              color: "black",
               lineHeight: 1.8,
               maxWidth: "600px",
               margin: "0 auto",

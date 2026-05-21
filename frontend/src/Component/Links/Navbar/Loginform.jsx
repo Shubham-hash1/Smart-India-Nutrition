@@ -46,7 +46,7 @@ export default function LoginForm({ close }) {
 
   const modal = (
     <AnimatePresence>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap');`}</style>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap');`}</style>
 
       {/* ── Backdrop ── */}
       <motion.div
@@ -60,8 +60,8 @@ export default function LoginForm({ close }) {
           position: "fixed",
           top: 0, left: 0, right: 0, bottom: 0,
           background: "rgba(0,0,0,0.75)",
-          backdropFilter: "blur(10px)",
-          WebkitBackdropFilter: "blur(10px)",
+          
+          
           zIndex: 9999,
           display: "flex",
           alignItems: "center",
@@ -72,20 +72,20 @@ export default function LoginForm({ close }) {
         {/* ── Modal card ── */}
         <motion.div
           key="modal"
-          initial={{ opacity: 0, y: 40, scale: 0.94, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+          initial={{ opacity: 0, y: 40, scale: 0.94,  }}
+          animate={{ opacity: 1, y: 0, scale: 1,  }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
           transition={{ duration: 0.45, ease: [0.23, 1, 0.32, 1] }}
           onClick={(e) => e.stopPropagation()}
           style={{
             width: "100%",
             maxWidth: "420px",
-            background: "#0d0c0b",
-            border: "1px solid rgba(255,255,255,0.09)",
+            background: "#f9fafb",
+            border: "1px solid rgba(0,0,0,0.09)",
             borderRadius: "24px",
             padding: "40px 36px 36px",
             position: "relative",
-            boxShadow: "0 40px 100px rgba(0,0,0,0.7), 0 0 0 1px rgba(74,222,128,0.05)",
+            
             overflow: "hidden",
           }}
         >
@@ -93,22 +93,22 @@ export default function LoginForm({ close }) {
           <div style={{
             position: "absolute", top: "-60px", right: "-60px",
             width: "220px", height: "220px", borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(34,197,94,0.12) 0%, transparent 70%)",
+            
             pointerEvents: "none",
           }} />
 
           {/* Close button */}
           <motion.button
-            whileHover={{ scale: 1.1, background: "rgba(255,255,255,0.1)" }}
+            whileHover={{ scale: 1.1, background: "rgba(0,0,0,0.1)" }}
             whileTap={{ scale: 0.9 }}
             onClick={close}
             style={{
               position: "absolute", top: "16px", right: "16px",
               width: "32px", height: "32px", borderRadius: "50%",
-              border: "1px solid rgba(255,255,255,0.1)",
-              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(0,0,0,0.1)",
+              background: "rgba(0,0,0,0.05)",
               cursor: "pointer", display: "flex", alignItems: "center",
-              justifyContent: "center", color: "rgba(240,232,220,0.5)",
+              justifyContent: "center", color: "#4b5563",
               fontSize: "18px", lineHeight: 1, transition: "background 0.2s",
             }}
           >
@@ -122,21 +122,21 @@ export default function LoginForm({ close }) {
                 width: "30px", height: "30px", borderRadius: "8px",
                 background: "linear-gradient(135deg, #22c55e, #059669)",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                boxShadow: "0 0 14px rgba(34,197,94,0.3)",
+                
               }}>
-                <span style={{ fontFamily: "'Playfair Display', serif", color: "#021a0a", fontSize: "13px", fontWeight: 700 }}>N</span>
+                <span style={{ fontFamily: "'Inter', serif", color: "#f0fdf4", fontSize: "13px", fontWeight: 700 }}>N</span>
               </div>
-              <span style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", fontWeight: 700, color: "#f0e8dc" }}>
+              <span style={{ fontFamily: "'Inter', serif", fontSize: "16px", fontWeight: 700, color: "#1f2937" }}>
                 Nutri<span style={{ color: "#4ade80" }}>Smart</span>
               </span>
             </div>
             <h2 style={{
-              fontFamily: "'Playfair Display', serif", fontSize: "26px",
-              fontWeight: 700, color: "#f0e8dc", margin: "0 0 6px", letterSpacing: "-0.01em",
+              fontFamily: "'Inter', serif", fontSize: "26px",
+              fontWeight: 700, color: "#1f2937", margin: "0 0 6px", letterSpacing: "-0.01em",
             }}>
               {isSignup ? "Create an account" : "Welcome back"}
             </h2>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "rgba(240,232,220,0.38)", margin: 0, fontWeight: 300 }}>
+            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "#4b5563", margin: 0, fontWeight: 300 }}>
               {isSignup ? "Sign up to start posting and commenting" : "Sign in to your account to continue"}
             </p>
           </div>
@@ -154,7 +154,7 @@ export default function LoginForm({ close }) {
                   display: "block", fontFamily: "'DM Sans', sans-serif",
                   fontSize: "11px", fontWeight: 500, letterSpacing: "0.1em",
                   textTransform: "uppercase",
-                  color: focused === id ? "#4ade80" : "rgba(240,232,220,0.4)",
+                  color: focused === id ? "#4ade80" : "rgba(31,41,55,0.4)",
                   marginBottom: "8px", transition: "color 0.2s",
                 }}>
                   {label}
@@ -168,9 +168,9 @@ export default function LoginForm({ close }) {
                   required
                   style={{
                     width: "100%", padding: "12px 16px", borderRadius: "12px",
-                    border: focused === id ? "1px solid rgba(74,222,128,0.5)" : "1px solid rgba(255,255,255,0.08)",
-                    background: "rgba(255,255,255,0.04)",
-                    color: "#f0e8dc", fontFamily: "'DM Sans', sans-serif",
+                    border: focused === id ? "1px solid rgba(74,222,128,0.5)" : "1px solid rgba(0,0,0,0.08)",
+                    background: "rgba(0,0,0,0.04)",
+                    color: "#1f2937", fontFamily: "'DM Sans', sans-serif",
                     fontSize: "14px", outline: "none", boxSizing: "border-box",
                     transition: "border-color 0.25s, box-shadow 0.25s",
                     boxShadow: focused === id ? "0 0 0 3px rgba(34,197,94,0.12)" : "none",
@@ -190,12 +190,12 @@ export default function LoginForm({ close }) {
             <motion.button
               type="submit"
               disabled={loading}
-              whileHover={{ scale: 1.02, boxShadow: "0 0 24px rgba(34,197,94,0.4)" }}
+              whileHover={{ scale: 1.02,  }}
               whileTap={{ scale: 0.97 }}
               style={{
                 marginTop: "4px", width: "100%", padding: "14px", borderRadius: "12px",
                 background: "linear-gradient(135deg, #22c55e 0%, #059669 100%)",
-                border: "none", color: "#021a0a",
+                border: "none", color: "#f0fdf4",
                 fontFamily: "'DM Sans', sans-serif", fontSize: "14px",
                 fontWeight: 700, letterSpacing: "0.03em", cursor: "pointer",
                 position: "relative", overflow: "hidden",
@@ -208,7 +208,7 @@ export default function LoginForm({ close }) {
                 transition={{ duration: 0.5 }}
                 style={{
                   position: "absolute", inset: 0,
-                  background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.2) 50%, transparent 60%)",
+                  background: "linear-gradient(105deg, transparent 40%, rgba(0,0,0,0.2) 50%, transparent 60%)",
                   pointerEvents: "none",
                 }}
               />
@@ -216,12 +216,12 @@ export default function LoginForm({ close }) {
             </motion.button>
 
             <div style={{ display: "flex", alignItems: "center", gap: "12px", margin: "4px 0" }}>
-              <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.07)" }} />
-              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "rgba(240,232,220,0.25)" }}>or</span>
-              <div style={{ flex: 1, height: "1px", background: "rgba(255,255,255,0.07)" }} />
+              <div style={{ flex: 1, height: "1px", background: "rgba(0,0,0,0.07)" }} />
+              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "#4b5563", }}>or</span>
+              <div style={{ flex: 1, height: "1px", background: "rgba(0,0,0,0.07)" }} />
             </div>
 
-            <p style={{ textAlign: "center", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "rgba(240,232,220,0.35)", margin: 0 }}>
+            <p style={{ textAlign: "center", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "#4b5563", margin: 0 }}>
               {isSignup ? "Already have an account?" : "Don't have an account?"}{" "}
               <button 
                 type="button"

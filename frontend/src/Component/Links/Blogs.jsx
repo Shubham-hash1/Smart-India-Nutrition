@@ -153,12 +153,12 @@ const Blogs = () => {
   return (
     <div style={{ 
       minHeight: "100vh", 
-      background: "#080706",
+      background: "#ffffff",
       padding: "80px 20px",
       fontFamily: "'DM Sans', sans-serif",
-      color: "#f0e8dc"
+      color: "#1f2937"
     }}>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;700&display=swap');`}</style>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;700&display=swap');`}</style>
       
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
         
@@ -169,14 +169,14 @@ const Blogs = () => {
           style={{ textAlign: "center", marginBottom: "40px" }}
         >
           <h1 style={{ 
-            fontFamily: "'Playfair Display', serif", 
+            fontFamily: "'Inter', serif", 
             fontSize: "42px", 
             fontWeight: 700, 
             marginBottom: "12px"
           }}>
             Community <span style={{ color: "#4ade80" }}>Voices</span>
           </h1>
-          <p style={{ color: "rgba(240,232,220,0.6)", fontSize: "16px" }}>
+          <p style={{ color: "#4b5563", fontSize: "16px" }}>
             Share your health journey, tips, and experiences.
           </p>
         </motion.div>
@@ -194,12 +194,12 @@ const Blogs = () => {
                 onClick={() => setShowPostForm(true)}
                 style={{
                   width: "100%", padding: "18px", borderRadius: "16px",
-                  background: "rgba(255,255,255,0.03)", border: "1px dashed rgba(74,222,128,0.3)",
+                  background: "rgba(0,0,0,0.03)", border: "1px dashed rgba(74,222,128,0.3)",
                   color: "#4ade80", fontSize: "16px", fontWeight: 500, cursor: "pointer",
                   transition: "all 0.3s ease", display: "flex", alignItems: "center", justifyContent: "center", gap: "10px"
                 }}
                 onMouseEnter={e => e.currentTarget.style.background = "rgba(74,222,128,0.05)"}
-                onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.03)"}
+                onMouseLeave={e => e.currentTarget.style.background = "rgba(0,0,0,0.03)"}
               >
                 <span style={{ fontSize: "20px" }}>+</span> Create a New Post
               </button>
@@ -209,11 +209,11 @@ const Blogs = () => {
                 animate={{ opacity: 1, height: "auto" }}
                 onSubmit={handleCreatePost}
                 style={{
-                  background: "#0d0c0b", border: "1px solid rgba(255,255,255,0.08)",
-                  borderRadius: "20px", padding: "24px", boxShadow: "0 20px 40px rgba(0,0,0,0.4)"
+                  background: "#f9fafb", border: "1px solid rgba(0,0,0,0.08)",
+                  borderRadius: "20px", padding: "24px", 
                 }}
               >
-                <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "20px", marginBottom: "16px", color: "#f0e8dc" }}>Write a Post</h3>
+                <h3 style={{ fontFamily: "'Inter', serif", fontSize: "20px", marginBottom: "16px", color: "#1f2937" }}>Write a Post</h3>
                 <input 
                   type="text" 
                   placeholder="Post Title..." 
@@ -221,8 +221,8 @@ const Blogs = () => {
                   onChange={(e) => setTitle(e.target.value)}
                   style={{
                     width: "100%", padding: "14px 16px", borderRadius: "12px",
-                    background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)",
-                    color: "#f0e8dc", fontFamily: "'DM Sans', sans-serif", fontSize: "15px",
+                    background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.1)",
+                    color: "#1f2937", fontFamily: "'DM Sans', sans-serif", fontSize: "15px",
                     marginBottom: "16px", outline: "none", boxSizing: "border-box"
                   }}
                   required
@@ -234,8 +234,8 @@ const Blogs = () => {
                   rows={4}
                   style={{
                     width: "100%", padding: "14px 16px", borderRadius: "12px",
-                    background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)",
-                    color: "#f0e8dc", fontFamily: "'DM Sans', sans-serif", fontSize: "15px",
+                    background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.1)",
+                    color: "#1f2937", fontFamily: "'DM Sans', sans-serif", fontSize: "15px",
                     marginBottom: "16px", outline: "none", boxSizing: "border-box", resize: "vertical"
                   }}
                   required
@@ -246,7 +246,7 @@ const Blogs = () => {
                     onClick={() => setShowPostForm(false)}
                     style={{
                       padding: "10px 20px", borderRadius: "10px", background: "transparent",
-                      border: "1px solid rgba(255,255,255,0.1)", color: "rgba(240,232,220,0.6)",
+                      border: "1px solid rgba(0,0,0,0.1)", color: "#4b5563",
                       cursor: "pointer", fontSize: "14px", fontWeight: 500
                     }}
                   >
@@ -258,7 +258,7 @@ const Blogs = () => {
                     style={{
                       padding: "10px 24px", borderRadius: "10px",
                       background: "linear-gradient(135deg, #22c55e 0%, #059669 100%)",
-                      border: "none", color: "#021a0a", cursor: "pointer",
+                      border: "none", color: "#f0fdf4", cursor: "pointer",
                       fontSize: "14px", fontWeight: 700, opacity: isPosting ? 0.7 : 1
                     }}
                   >
@@ -287,9 +287,9 @@ const Blogs = () => {
 
         {/* Blogs List */}
         {loading ? (
-          <div style={{ textAlign: "center", padding: "40px", color: "rgba(240,232,220,0.5)" }}>Loading posts...</div>
+          <div style={{ textAlign: "center", padding: "40px", color: "#4b5563", }}>Loading posts...</div>
         ) : blogs.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "40px", color: "rgba(240,232,220,0.5)" }}>No posts yet. Be the first to share!</div>
+          <div style={{ textAlign: "center", padding: "40px", color: "#4b5563", }}>No posts yet. Be the first to share!</div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
             {blogs.map((blog, idx) => (
@@ -299,9 +299,9 @@ const Blogs = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 + (idx * 0.05) }}
                 style={{
-                  background: "#0d0c0b", border: "1px solid rgba(255,255,255,0.06)",
+                  background: "#f9fafb", border: "1px solid rgba(0,0,0,0.06)",
                   borderRadius: "20px", padding: "30px", overflow: "hidden",
-                  boxShadow: "0 10px 30px rgba(0,0,0,0.2)", position: "relative"
+                   position: "relative"
                 }}
               >
                 <div style={{ position: "absolute", top: 0, left: 0, width: "4px", height: "100%", background: "linear-gradient(to bottom, #22c55e, #059669)" }} />
@@ -337,7 +337,7 @@ const Blogs = () => {
                 )}
                 
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "16px", paddingRight: user && user.id === blog.user_id ? "70px" : "0" }}>
-                  <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "24px", color: "#f0e8dc", margin: 0 }}>
+                  <h2 style={{ fontFamily: "'Inter', serif", fontSize: "24px", color: "#1f2937", margin: 0 }}>
                     {blog.title}
                   </h2>
                   <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
@@ -358,7 +358,7 @@ const Blogs = () => {
                     >
                       <span style={{ fontSize: "16px" }}>{likedPosts.includes(blog.id) ? "❤️" : "♥"}</span> {blog.likes || 0}
                     </motion.button>
-                    <span style={{ fontSize: "12px", color: "rgba(240,232,220,0.4)" }}>
+                    <span style={{ fontSize: "12px", color: "#4b5563", }}>
                       {new Date(blog.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                     </span>
                   </div>
@@ -368,32 +368,32 @@ const Blogs = () => {
                   <div style={{ width: "24px", height: "24px", borderRadius: "50%", background: "rgba(34,197,94,0.2)", display: "flex", alignItems: "center", justifyContent: "center", color: "#4ade80", fontSize: "12px", fontWeight: 700 }}>
                     {blog.author_name ? blog.author_name.charAt(0).toUpperCase() : 'A'}
                   </div>
-                  <span style={{ fontSize: "13px", color: "rgba(240,232,220,0.6)", fontWeight: 500 }}>
+                  <span style={{ fontSize: "13px", color: "#4b5563", fontWeight: 500 }}>
                     {blog.author_name || 'Anonymous'}
                   </span>
                 </div>
 
-                <p style={{ color: "rgba(240,232,220,0.8)", fontSize: "15px", lineHeight: 1.6, marginBottom: "30px", whiteSpace: "pre-wrap" }}>
+                <p style={{ color: "#4b5563", fontSize: "15px", lineHeight: 1.6, marginBottom: "30px", whiteSpace: "pre-wrap" }}>
                   {blog.content}
                 </p>
 
                 {/* Comments Section */}
-                <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: "20px" }}>
-                  <h4 style={{ fontSize: "14px", color: "rgba(240,232,220,0.6)", marginBottom: "16px", fontWeight: 500 }}>
+                <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: "20px" }}>
+                  <h4 style={{ fontSize: "14px", color: "#4b5563", marginBottom: "16px", fontWeight: 500 }}>
                     Comments ({blog.comments ? blog.comments.length : 0})
                   </h4>
                   
                   {blog.comments && blog.comments.length > 0 && (
                     <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "20px" }}>
                       {blog.comments.map((comment) => (
-                        <div key={comment.id} style={{ background: "rgba(255,255,255,0.02)", padding: "12px 16px", borderRadius: "12px" }}>
+                        <div key={comment.id} style={{ background: "rgba(0,0,0,0.02)", padding: "12px 16px", borderRadius: "12px" }}>
                           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
                             <span style={{ fontSize: "13px", color: "#4ade80", fontWeight: 500 }}>{comment.author_name}</span>
-                            <span style={{ fontSize: "11px", color: "rgba(240,232,220,0.3)" }}>
+                            <span style={{ fontSize: "11px", color: "#4b5563", }}>
                               {new Date(comment.created_at).toLocaleDateString()}
                             </span>
                           </div>
-                          <p style={{ margin: 0, fontSize: "14px", color: "rgba(240,232,220,0.7)" }}>{comment.content}</p>
+                          <p style={{ margin: 0, fontSize: "14px", color: "#4b5563", }}>{comment.content}</p>
                         </div>
                       ))}
                     </div>
@@ -408,8 +408,8 @@ const Blogs = () => {
                         onChange={(e) => setCommentInputs({ ...commentInputs, [blog.id]: e.target.value })}
                         style={{
                           flex: 1, padding: "10px 16px", borderRadius: "100px",
-                          background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.1)",
-                          color: "#f0e8dc", fontFamily: "'DM Sans', sans-serif", fontSize: "14px",
+                          background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.1)",
+                          color: "#1f2937", fontFamily: "'DM Sans', sans-serif", fontSize: "14px",
                           outline: "none"
                         }}
                       />
@@ -418,8 +418,8 @@ const Blogs = () => {
                         disabled={!commentInputs[blog.id]?.trim()}
                         style={{
                           padding: "0 20px", borderRadius: "100px",
-                          background: commentInputs[blog.id]?.trim() ? "linear-gradient(135deg, #22c55e 0%, #059669 100%)" : "rgba(255,255,255,0.1)",
-                          border: "none", color: commentInputs[blog.id]?.trim() ? "#021a0a" : "rgba(255,255,255,0.3)", 
+                          background: commentInputs[blog.id]?.trim() ? "linear-gradient(135deg, #22c55e 0%, #059669 100%)" : "rgba(0,0,0,0.1)",
+                          border: "none", color: commentInputs[blog.id]?.trim() ? "#f0fdf4" : "rgba(0,0,0,0.3)", 
                           cursor: commentInputs[blog.id]?.trim() ? "pointer" : "not-allowed",
                           fontSize: "13px", fontWeight: 700, transition: "all 0.2s"
                         }}

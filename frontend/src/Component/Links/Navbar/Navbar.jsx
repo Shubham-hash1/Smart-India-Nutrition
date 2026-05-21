@@ -15,7 +15,7 @@ const Navbar = () => {
 
   return (
     <>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@400;500&display=swap');`}</style>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500&display=swap');`}</style>
 
       <motion.nav
         initial={{ y: -80, opacity: 0 }}
@@ -28,12 +28,12 @@ const Navbar = () => {
           zIndex: 40,
           transition: "all 0.35s ease",
           background: scrolled
-            ? "rgba(8,7,6,0.82)"
-            : "rgba(8,7,6,0.55)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
+            ? "rgba(255, 255, 255,0.82)"
+            : "rgba(255, 255, 255,0.55)",
+          
+          
           borderBottom: scrolled
-            ? "1px solid rgba(255,255,255,0.07)"
+            ? "1px solid rgba(0,0,0,0.07)"
             : "1px solid transparent",
           boxShadow: scrolled
             ? "0 8px 40px rgba(0,0,0,0.4)"
@@ -69,14 +69,14 @@ const Navbar = () => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                boxShadow: "0 0 16px rgba(34,197,94,0.35)",
+                
                 flexShrink: 0,
               }}
             >
               <span
                 style={{
-                  fontFamily: "'Playfair Display', serif",
-                  color: "#021a0a",
+                  fontFamily: "'Inter', serif",
+                  color: "#f0fdf4",
                   fontSize: "15px",
                   fontWeight: 700,
                   lineHeight: 1,
@@ -89,10 +89,10 @@ const Navbar = () => {
             {/* Wordmark */}
             <span
               style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "'Inter', serif",
                 fontSize: "18px",
                 fontWeight: 700,
-                color: "#f0e8dc",
+                color: "#1f2937",
                 letterSpacing: "-0.01em",
               }}
             >
@@ -133,8 +133,8 @@ const Navbar = () => {
                 width: "38px",
                 height: "38px",
                 borderRadius: "10px",
-                border: "1px solid rgba(255,255,255,0.1)",
-                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(0,0,0,0.1)",
+                background: "rgba(0,0,0,0.05)",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -156,7 +156,7 @@ const Navbar = () => {
                     display: "block",
                     width: "18px",
                     height: "1.5px",
-                    background: "#f0e8dc",
+                    background: "#1f2937",
                     borderRadius: "2px",
                   }}
                 />
@@ -190,10 +190,10 @@ const Navbar = () => {
               position: "sticky",
               top: "63px",
               zIndex: 30,
-              background: "rgba(10,9,8,0.97)",
-              backdropFilter: "blur(24px)",
-              WebkitBackdropFilter: "blur(24px)",
-              borderBottom: "1px solid rgba(255,255,255,0.07)",
+              background: "rgba(255, 255, 255,0.97)",
+              
+              
+              borderBottom: "1px solid rgba(0,0,0,0.07)",
               overflow: "hidden",
             }}
           >
@@ -215,7 +215,7 @@ const Navbar = () => {
               <div
                 style={{
                   paddingTop: "16px",
-                  borderTop: "1px solid rgba(255,255,255,0.07)",
+                  borderTop: "1px solid rgba(0,0,0,0.07)",
                 }}
               >
                 <Login />

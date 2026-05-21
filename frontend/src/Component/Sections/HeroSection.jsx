@@ -23,13 +23,13 @@ const HeroSection = () => {
   };
 
   const fadeUp = {
-    hidden: { opacity: 0, y: 32, filter: "blur(6px)" },
-    visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.85, ease: [0.23, 1, 0.32, 1] } },
+    hidden: { opacity: 0, y: 32,  },
+    visible: { opacity: 1, y: 0,  transition: { duration: 0.85, ease: [0.23, 1, 0.32, 1] } },
   };
 
   return (
     <>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,800;0,900;1,800&family=DM+Sans:wght@300;400;500&display=swap');`}</style>
+      <style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500&display=swap');`}</style>
 
       <section
         ref={sectionRef}
@@ -40,7 +40,7 @@ const HeroSection = () => {
           height: "clamp(400px, 70vh, 680px)",
           borderRadius: "2.5rem",
           overflow: "hidden",
-          boxShadow: "0 32px 80px rgba(0,0,0,0.45)",
+          
         }}
       >
         {/* ── Parallax background image ── */}
@@ -81,8 +81,8 @@ const HeroSection = () => {
             width: "420px",
             height: "420px",
             borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(34,197,94,0.18) 0%, transparent 70%)",
-            filter: "blur(40px)",
+            
+            
             pointerEvents: "none",
           }}
         />
@@ -160,10 +160,10 @@ const HeroSection = () => {
             <motion.h1
               variants={fadeUp}
               style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "'Inter', serif",
                 fontSize: "clamp(40px, 6.5vw, 76px)",
                 fontWeight: 900,
-                color: "#f5f0e8",
+                color: "green",
                 margin: 0,
                 lineHeight: 1.04,
                 letterSpacing: "-0.025em",
@@ -196,7 +196,7 @@ const HeroSection = () => {
                 marginTop: "20px",
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: "clamp(14px, 2vw, 18px)",
-                color: "rgba(245,240,232,0.58)",
+                color: "rgba(75,85,99,0.58)",
                 maxWidth: "400px",
                 lineHeight: 1.7,
                 fontWeight: 300,
@@ -213,7 +213,7 @@ const HeroSection = () => {
               {/* Primary */}
               <motion.button
                 onClick={() => navigate("/Products")}
-                whileHover={{ scale: 1.04, boxShadow: "0 0 28px rgba(74,222,128,0.45)" }}
+                whileHover={{ scale: 1.04,  }}
                 whileTap={{ scale: 0.96 }}
                 transition={{ type: "spring", stiffness: 350, damping: 20 }}
                 style={{
@@ -221,7 +221,7 @@ const HeroSection = () => {
                   borderRadius: "100px",
                   background: "linear-gradient(135deg, #22c55e 0%, #059669 100%)",
                   border: "none",
-                  color: "#021a0a",
+                  color: "#f0fdf4",
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "14px",
                   fontWeight: 700,
@@ -239,7 +239,7 @@ const HeroSection = () => {
                   style={{
                     position: "absolute",
                     inset: 0,
-                    background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.28) 50%, transparent 60%)",
+                    background: "linear-gradient(105deg, transparent 40%, rgba(0,0,0,0.28) 50%, transparent 60%)",
                     pointerEvents: "none",
                   }}
                 />
@@ -249,16 +249,16 @@ const HeroSection = () => {
               {/* Secondary */}
               <motion.button
                 onClick={() => navigate("/about")}
-                whileHover={{ background: "rgba(255,255,255,0.16)", borderColor: "rgba(255,255,255,0.5)" }}
+                whileHover={{ background: "rgba(0,0,0,0.16)", borderColor: "rgba(255,255,255,0.5)" }}
                 whileTap={{ scale: 0.96 }}
                 transition={{ duration: 0.2 }}
                 style={{
                   padding: "14px 32px",
                   borderRadius: "100px",
-                  border: "1px solid rgba(255,255,255,0.25)",
-                  background: "rgba(255,255,255,0.08)",
-                  backdropFilter: "blur(12px)",
-                  color: "rgba(245,240,232,0.9)",
+                  border: "1px solid rgba(0,0,0,0.25)",
+                  background: "rgba(0,0,0,0.08)",
+                  
+                  color: "rgba(75,85,99,0.9)",
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "14px",
                   fontWeight: 500,
@@ -282,9 +282,9 @@ const HeroSection = () => {
             right: "28px",
             padding: "14px 20px",
             borderRadius: "18px",
-            background: "rgba(255,255,255,0.07)",
-            backdropFilter: "blur(20px)",
-            border: "1px solid rgba(255,255,255,0.12)",
+            background: "rgba(0,0,0,0.07)",
+            
+            border: "1px solid rgba(0,0,0,0.12)",
             display: "flex",
             gap: "24px",
             zIndex: 10,
@@ -298,7 +298,7 @@ const HeroSection = () => {
               <p
                 style={{
                   margin: 0,
-                  fontFamily: "'Playfair Display', serif",
+                  fontFamily: "'Inter', serif",
                   fontSize: "22px",
                   fontWeight: 800,
                   color: "#4ade80",
@@ -312,7 +312,7 @@ const HeroSection = () => {
                   margin: "4px 0 0",
                   fontFamily: "'DM Sans', sans-serif",
                   fontSize: "10px",
-                  color: "rgba(245,240,232,0.45)",
+                  color: "rgba(75,85,99,0.45)",
                   letterSpacing: "0.1em",
                   textTransform: "uppercase",
                 }}
@@ -344,7 +344,7 @@ const HeroSection = () => {
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: "10px",
-              color: "rgba(245,240,232,0.3)",
+              color: "rgba(75,85,99,0.3)",
               letterSpacing: "0.12em",
               textTransform: "uppercase",
               margin: 0,

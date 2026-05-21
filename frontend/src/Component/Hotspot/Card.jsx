@@ -8,7 +8,7 @@ const diseaseAccents = {
   "Nutritional Deficiencies": { color: "#b87ce8", glow: "rgba(184,124,232,0.3)" },
 };
 
-const defaultAccent = { color: "#c4a484", glow: "rgba(196,164,132,0.3)" };
+const defaultAccent = { color: "#3b82f6", glow: "rgba(59,130,246,0.3)" };
 
 const Card = ({ image, title, description, onClick }) => {
   const accent = diseaseAccents[title] || defaultAccent;
@@ -32,8 +32,8 @@ const Card = ({ image, title, description, onClick }) => {
           position: "absolute",
           inset: "-12px",
           borderRadius: "28px",
-          background: `radial-gradient(ellipse at center, ${accent.glow} 0%, transparent 70%)`,
-          filter: "blur(20px)",
+          
+          
           zIndex: 0,
           pointerEvents: "none",
         }}
@@ -42,8 +42,8 @@ const Card = ({ image, title, description, onClick }) => {
       {/* Card body */}
       <motion.div
         variants={{
-          rest: { y: 0, boxShadow: "0 4px 28px rgba(0,0,0,0.4)" },
-          hover: { y: -12, boxShadow: "0 28px 64px rgba(0,0,0,0.6)" },
+          rest: { y: 0,  },
+          hover: { y: -12,  },
         }}
         transition={{ duration: 0.45, ease: [0.23, 1, 0.32, 1] }}
         style={{
@@ -51,8 +51,8 @@ const Card = ({ image, title, description, onClick }) => {
           zIndex: 1,
           borderRadius: "20px",
           overflow: "hidden",
-          background: "#0d0c0b",
-          border: "1px solid rgba(255,255,255,0.07)",
+          background: "#f9fafb",
+          border: "1px solid rgba(0,0,0,0.07)",
           height: "360px",
           display: "flex",
           flexDirection: "column",
@@ -74,7 +74,7 @@ const Card = ({ image, title, description, onClick }) => {
             style={{
               position: "absolute",
               inset: 0,
-              background: "linear-gradient(to bottom, rgba(0,0,0,0.0) 40%, rgba(8,7,6,0.75) 100%)",
+              background: "none",
             }}
           />
 
@@ -92,7 +92,7 @@ const Card = ({ image, title, description, onClick }) => {
               padding: "4px 12px",
               borderRadius: "100px",
               background: "rgba(0,0,0,0.55)",
-              backdropFilter: "blur(8px)",
+              
               border: `1px solid ${accent.color}44`,
               fontFamily: "'DM Sans', sans-serif",
               fontSize: "10px",
@@ -110,8 +110,8 @@ const Card = ({ image, title, description, onClick }) => {
         <div
           style={{
             padding: "18px 20px 20px",
-            background: "#0d0c0b",
-            borderTop: "1px solid rgba(255,255,255,0.06)",
+            background: "#f9fafb",
+            borderTop: "1px solid rgba(0,0,0,0.06)",
             flexShrink: 0,
           }}
         >
@@ -133,10 +133,10 @@ const Card = ({ image, title, description, onClick }) => {
           <h3
             style={{
               margin: 0,
-              fontFamily: "'Playfair Display', serif",
+              fontFamily: "'Inter', serif",
               fontSize: "20px",
               fontWeight: 700,
-              color: "#f0e8dc",
+              color: "#1f2937",
               letterSpacing: "0.01em",
               lineHeight: 1.2,
             }}
@@ -149,7 +149,7 @@ const Card = ({ image, title, description, onClick }) => {
               margin: "7px 0 0",
               fontFamily: "'DM Sans', sans-serif",
               fontSize: "12.5px",
-              color: "rgba(240,232,220,0.45)",
+              color: "#4b5563",
               lineHeight: 1.6,
             }}
           >

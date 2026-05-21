@@ -14,7 +14,7 @@ export default function Login() {
           <span style={{
             fontFamily: "'DM Sans', sans-serif",
             fontSize: "14px",
-            color: "#f0e8dc",
+            color: "#1f2937",
             fontWeight: 500,
           }}>
             Hi, <span style={{ color: "#4ade80" }}>{user.name.split(' ')[0]}</span>
@@ -37,13 +37,13 @@ export default function Login() {
               ? "rgba(239, 68, 68, 0.15)" // Subtle red background for logout
               : "linear-gradient(135deg, #22c55e 0%, #059669 100%)",
             border: user ? "1px solid rgba(239, 68, 68, 0.3)" : "none",
-            color: user ? "#fca5a5" : "#021a0a",
+            color: user ? "#fca5a5" : "#f0fdf4",
             fontFamily: "'DM Sans', sans-serif",
             fontSize: "13px",
             fontWeight: 700,
             letterSpacing: "0.03em",
             cursor: "pointer",
-            boxShadow: "0 0 0 rgba(34,197,94,0)",
+            
             transition: "all 0.3s ease",
             position: "relative",
             overflow: "hidden",
@@ -74,7 +74,7 @@ export default function Login() {
               style={{
                 position: "absolute",
                 inset: 0,
-                background: "linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.25) 50%, transparent 60%)",
+                background: "linear-gradient(105deg, transparent 40%, rgba(0,0,0,0.25) 50%, transparent 60%)",
                 pointerEvents: "none",
               }}
             />

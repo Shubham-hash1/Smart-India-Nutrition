@@ -27,17 +27,23 @@ function isValidImage(filePath) {
 }
 
 async function main() {
-  const content = fs.readFileSync(path.join(__dirname, 'src', 'Data', 'regionalFoods.js'), 'utf8');
-  
-  const regex = /^\s*([a-zA-Z0-9_]+):\s*"[^"]+",?/gm;
+  const dataFiles = ['regionalFoods.js', 'deseasefood.js', 'agefood.js'];
   const keys = new Set();
-  let match;
-  while ((match = regex.exec(content)) !== null) {
-    keys.add(match[1]);
+  
+  for (const file of dataFiles) {
+      if (fs.existsSync(path.join(__dirname, 'src', 'Data', file))) {
+          const content = fs.readFileSync(path.join(__dirname, 'src', 'Data', file), 'utf8');
+          // Match key: "some_key"
+          const regex = /key:\s*"([^"]+)"/g;
+          let match;
+          while ((match = regex.exec(content)) !== null) {
+              keys.add(match[1]);
+          }
+      }
   }
   
   const foodItems = Array.from(keys);
-  console.log(`Found ${foodItems.length} food items to process.`);
+  console.log(`Found ${foodItems.length} unique items to process.`);
   
   const targetDir = path.join(__dirname, 'public', 'food-images');
   if (!fs.existsSync(targetDir)) {
@@ -49,7 +55,12 @@ async function main() {
     
     // Clean up the search query to remove regional suffixes
     let cleanFood = food.replace(/_(north|south|east|west)$/i, '');
-    const searchQuery = cleanFood.replace(/_/g, ' ') + " fresh raw single ingredient high quality";
+    let searchQuery = cleanFood.replace(/_/g, ' ') + " fresh raw single ingredient high quality";
+    
+    const exercisesList = ['running', 'walking', 'cycling', 'swimming', 'skipping_rope', 'yoga', 'stretching', 'jogging', 'burpees', 'squats', 'plank', 'lunges', 'brisk_walking'];
+    if (exercisesList.includes(food)) {
+        searchQuery = cleanFood.replace(/_/g, ' ') + " exercise healthy lifestyle clear image";
+    }
     
     let needsDownload = true;
     if (fs.existsSync(dest)) {

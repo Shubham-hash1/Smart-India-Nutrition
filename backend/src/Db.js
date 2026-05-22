@@ -22,8 +22,18 @@ const connectDB = async () => {
         name VARCHAR(50) NOT NULL,
         email VARCHAR(100) UNIQUE NOT NULL,
         password VARCHAR(255) NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        is_verified BOOLEAN DEFAULT false,
+        otp VARCHAR(10),
+        otp_expires TIMESTAMP
       );
+    `);
+
+    // Ensure OTP fields exist for older users
+    await client.query(`
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS is_verified BOOLEAN DEFAULT false;
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS otp VARCHAR(10);
+      ALTER TABLE users ADD COLUMN IF NOT EXISTS otp_expires TIMESTAMP;
     `);
     
     // Create blogs table

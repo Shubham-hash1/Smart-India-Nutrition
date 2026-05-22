@@ -196,7 +196,7 @@ const HeroSection = () => {
                 marginTop: "20px",
                 fontFamily: "'DM Sans', sans-serif",
                 fontSize: "clamp(14px, 2vw, 18px)",
-                color: "rgba(75,85,99,0.58)",
+                color: "rgba(233, 238, 244, 0.58)",
                 maxWidth: "400px",
                 lineHeight: 1.7,
                 fontWeight: 300,
@@ -344,7 +344,7 @@ const HeroSection = () => {
             style={{
               fontFamily: "'DM Sans', sans-serif",
               fontSize: "10px",
-              color: "rgba(75,85,99,0.3)",
+              color: "rgba(255, 255, 255, 1)",
               letterSpacing: "0.12em",
               textTransform: "uppercase",
               margin: 0,

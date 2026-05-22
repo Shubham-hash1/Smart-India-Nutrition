@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import RegionFilter from '../Common/RegionFilter';
 import { getFilteredItemsForDisease } from '../../Data/deseasefood';
+import FoodCard from '../Common/FoodCard';
 
 
 const NutritionalSol = ({ category, onBack }) => {
@@ -40,15 +41,7 @@ const NutritionalSol = ({ category, onBack }) => {
             <div className='flex gap-4 flex-wrap justify-center'>
                 {
                     filteredItems.map((item, index) => (
-                        <div key={index} className='flex flex-col items-center w-[140px] gap-2'>
-                            <img
-                                src={`/food-images/${item.key}.jpg`}
-                                onError={(e) => { e.target.onerror = null; e.target.src="https://via.placeholder.com/120"; }}
-                                alt={item.title}
-                                className='h-[120px] w-[120px] object-cover rounded'
-                            />
-                            <p className='text-sm text-center text-[rgba(31,41,55,0.8)]'>{item.title}</p>
-                        </div>
+                        <FoodCard key={index} item={item} isExercise={category === "Exercises" || category === "Exercise"} />
                     ))
                 }
             </div>

@@ -242,7 +242,7 @@ const About = () => {
                   <p style={{
                     fontFamily: "'DM Sans', sans-serif",
                     fontSize: "16px",
-                    color: "rgba(75,85,99,0.6)",
+                    color: "#000000",
                     lineHeight: 1.7,
                     fontWeight: 300
                   }}>
@@ -321,7 +321,7 @@ const About = () => {
                   cursor: "pointer",
                 }}
               >
-                Get Started Now
+                Comming soon
               </motion.button>
             </div>
           </motion.div>

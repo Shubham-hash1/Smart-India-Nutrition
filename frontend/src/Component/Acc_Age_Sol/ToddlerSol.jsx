@@ -3,6 +3,7 @@ import RegionFilter from '../Common/RegionFilter';
 import { getRegionForFood } from '../../Data/regionalFoods';
 
 import { getFilteredItemsForAge } from '../../Data/agefood';
+import FoodCard from '../Common/FoodCard';
 
 const ToddlerSol = ({ category, onBack }) => {
     const [selectedRegion, setSelectedRegion] = useState("All India");
@@ -42,20 +43,7 @@ const ToddlerSol = ({ category, onBack }) => {
             <div className='flex gap-4 flex-wrap justify-center'>
                 {
                     filteredItems.map((item, index) => (
-                        <div key={index} className='flex flex-col items-center w-[140px] gap-2 p-2 rounded-xl transition-all hover:bg-white/5 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-500/10 cursor-pointer'>
-                            <div className="w-[120px] h-[120px] rounded-xl overflow-hidden shadow-md shadow-black/40 ring-1 ring-white/10 group">
-                                <img
-                                    src={`/food-images/${item.key}.jpg`}
-                                    onError={(e) => {
-                                        e.target.onerror = null; 
-                                        e.target.src = "https://via.placeholder.com/120?text=No+Image";
-                                    }}
-                                    alt={item.title}
-                                    className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-110'
-                                />
-                            </div>
-                            <p className='text-sm text-center font-medium text-[rgba(31,41,55,0.9)]'>{item.title}</p>
-                        </div>
+                        <FoodCard key={index} item={item} isExercise={category === "Exercises" || category === "Exercise"} />
                     ))
                 }
             </div>

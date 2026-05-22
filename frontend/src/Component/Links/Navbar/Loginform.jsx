@@ -4,11 +4,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../../../Context/AuthContext";
 
 export default function LoginForm({ close }) {
-  const { login, signup } = useAuth();
+  const { login, signup, verifyOtp } = useAuth();
   const [isSignup, setIsSignup] = useState(false);
+  const [awaitingOtp, setAwaitingOtp] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [otp, setOtp] = useState("");
   const [focused, setFocused] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -17,6 +19,17 @@ export default function LoginForm({ close }) {
     e.preventDefault();
     setError("");
     setLoading(true);
+
+    if (awaitingOtp) {
+      const res = await verifyOtp(email, otp);
+      setLoading(false);
+      if (res.success) {
+        close();
+      } else {
+        setError(res.message);
+      }
+      return;
+    }
 
     let res;
     if (isSignup) {
@@ -27,22 +40,34 @@ export default function LoginForm({ close }) {
 
     setLoading(false);
     if (res.success) {
-      close();
+      if (res.requiresOtp) {
+        setAwaitingOtp(true);
+        setError(""); // Clear any errors
+      } else {
+        close();
+      }
     } else {
       setError(res.message);
     }
   };
 
-  const formFields = isSignup 
-    ? [
-        { id: "name", label: "Full Name", type: "text", value: name, setter: setName, placeholder: "Your Name" },
-        { id: "email", label: "Email", type: "email", value: email, setter: setEmail, placeholder: "you@example.com" },
-        { id: "password", label: "Password", type: "password", value: password, setter: setPassword, placeholder: "••••••••" },
-      ]
-    : [
-        { id: "email", label: "Email", type: "email", value: email, setter: setEmail, placeholder: "you@example.com" },
-        { id: "password", label: "Password", type: "password", value: password, setter: setPassword, placeholder: "••••••••" },
-      ];
+  let formFields = [];
+  if (awaitingOtp) {
+    formFields = [
+      { id: "otp", label: "Verification Code", type: "text", value: otp, setter: setOtp, placeholder: "Enter 6-digit OTP" }
+    ];
+  } else if (isSignup) {
+    formFields = [
+      { id: "name", label: "Full Name", type: "text", value: name, setter: setName, placeholder: "Your Name" },
+      { id: "email", label: "Email", type: "email", value: email, setter: setEmail, placeholder: "you@example.com" },
+      { id: "password", label: "Password", type: "password", value: password, setter: setPassword, placeholder: "••••••••" },
+    ];
+  } else {
+    formFields = [
+      { id: "email", label: "Email", type: "email", value: email, setter: setEmail, placeholder: "you@example.com" },
+      { id: "password", label: "Password", type: "password", value: password, setter: setPassword, placeholder: "••••••••" },
+    ];
+  }
 
   const modal = (
     <AnimatePresence>
@@ -60,8 +85,6 @@ export default function LoginForm({ close }) {
           position: "fixed",
           top: 0, left: 0, right: 0, bottom: 0,
           background: "rgba(0,0,0,0.75)",
-          
-          
           zIndex: 9999,
           display: "flex",
           alignItems: "center",
@@ -85,7 +108,6 @@ export default function LoginForm({ close }) {
             borderRadius: "24px",
             padding: "40px 36px 36px",
             position: "relative",
-            
             overflow: "hidden",
           }}
         >
@@ -93,7 +115,6 @@ export default function LoginForm({ close }) {
           <div style={{
             position: "absolute", top: "-60px", right: "-60px",
             width: "220px", height: "220px", borderRadius: "50%",
-            
             pointerEvents: "none",
           }} />
 
@@ -122,7 +143,6 @@ export default function LoginForm({ close }) {
                 width: "30px", height: "30px", borderRadius: "8px",
                 background: "linear-gradient(135deg, #22c55e, #059669)",
                 display: "flex", alignItems: "center", justifyContent: "center",
-                
               }}>
                 <span style={{ fontFamily: "'Inter', serif", color: "#f0fdf4", fontSize: "13px", fontWeight: 700 }}>N</span>
               </div>
@@ -134,10 +154,12 @@ export default function LoginForm({ close }) {
               fontFamily: "'Inter', serif", fontSize: "26px",
               fontWeight: 700, color: "#1f2937", margin: "0 0 6px", letterSpacing: "-0.01em",
             }}>
-              {isSignup ? "Create an account" : "Welcome back"}
+              {awaitingOtp ? "Verify Email" : (isSignup ? "Create an account" : "Welcome back")}
             </h2>
             <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "#4b5563", margin: 0, fontWeight: 300 }}>
-              {isSignup ? "Sign up to start posting and commenting" : "Sign in to your account to continue"}
+              {awaitingOtp 
+                ? "Enter the 6-digit OTP sent to your email" 
+                : (isSignup ? "Sign up to start posting and commenting" : "Sign in to your account to continue")}
             </p>
           </div>
 
@@ -179,7 +201,7 @@ export default function LoginForm({ close }) {
               </div>
             ))}
 
-            {!isSignup && (
+            {!isSignup && !awaitingOtp && (
               <div style={{ textAlign: "right", marginTop: "-4px" }}>
                 <a href="#" style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "12px", color: "rgba(74,222,128,0.7)", textDecoration: "none" }}>
                   Forgot password?
@@ -190,7 +212,7 @@ export default function LoginForm({ close }) {
             <motion.button
               type="submit"
               disabled={loading}
-              whileHover={{ scale: 1.02,  }}
+              whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.97 }}
               style={{
                 marginTop: "4px", width: "100%", padding: "14px", borderRadius: "12px",
@@ -212,33 +234,36 @@ export default function LoginForm({ close }) {
                   pointerEvents: "none",
                 }}
               />
-              {loading ? "Please wait..." : (isSignup ? "Sign Up" : "Sign In")}
+              {loading ? "Please wait..." : (awaitingOtp ? "Verify OTP" : (isSignup ? "Sign Up" : "Sign In"))}
             </motion.button>
 
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", margin: "4px 0" }}>
-              <div style={{ flex: 1, height: "1px", background: "rgba(0,0,0,0.07)" }} />
-              <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "#4b5563", }}>or</span>
-              <div style={{ flex: 1, height: "1px", background: "rgba(0,0,0,0.07)" }} />
-            </div>
+            {!awaitingOtp && (
+              <>
+                <div style={{ display: "flex", alignItems: "center", gap: "12px", margin: "4px 0" }}>
+                  <div style={{ flex: 1, height: "1px", background: "rgba(0,0,0,0.07)" }} />
+                  <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "11px", color: "#4b5563" }}>or</span>
+                  <div style={{ flex: 1, height: "1px", background: "rgba(0,0,0,0.07)" }} />
+                </div>
 
-            <p style={{ textAlign: "center", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "#4b5563", margin: 0 }}>
-              {isSignup ? "Already have an account?" : "Don't have an account?"}{" "}
-              <button 
-                type="button"
-                onClick={() => { setIsSignup(!isSignup); setError(""); }}
-                style={{ 
-                  color: "#4ade80", textDecoration: "none", fontWeight: 500, 
-                  background: "none", border: "none", cursor: "pointer", padding: 0 
-                }}>
-                {isSignup ? "Sign in" : "Sign up"}
-              </button>
-            </p>
+                <p style={{ textAlign: "center", fontFamily: "'DM Sans', sans-serif", fontSize: "13px", color: "#4b5563", margin: 0 }}>
+                  {isSignup ? "Already have an account?" : "Don't have an account?"}{" "}
+                  <button 
+                    type="button"
+                    onClick={() => { setIsSignup(!isSignup); setError(""); }}
+                    style={{ 
+                      color: "#4ade80", textDecoration: "none", fontWeight: 500, 
+                      background: "none", border: "none", cursor: "pointer", padding: 0 
+                    }}>
+                    {isSignup ? "Sign in" : "Sign up"}
+                  </button>
+                </p>
+              </>
+            )}
           </form>
         </motion.div>
       </motion.div>
     </AnimatePresence>
   );
 
-  // Renders directly into <body> — bypasses navbar, z-index stacking, overflow:hidden parents
   return createPortal(modal, document.body);
 }

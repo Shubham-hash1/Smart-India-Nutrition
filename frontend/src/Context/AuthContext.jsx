@@ -69,6 +69,10 @@ export const AuthProvider = ({ children }) => {
       const data = await res.json();
       
       if (data.success) {
+        if (data.requiresOtp) {
+          return { success: true, requiresOtp: true, message: data.message };
+        }
+        // Fallback if no OTP required
         setToken(data.token);
         setUser(data.user);
         localStorage.setItem('token', data.token);
@@ -82,6 +86,29 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const verifyOtp = async (email, otp) => {
+    try {
+      const res = await fetch('http://localhost:5000/api/auth/verify-otp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, otp })
+      });
+      const data = await res.json();
+      
+      if (data.success) {
+        setToken(data.token);
+        setUser(data.user);
+        localStorage.setItem('token', data.token);
+        return { success: true };
+      } else {
+        return { success: false, message: data.message };
+      }
+    } catch (error) {
+      console.error("Verify OTP error", error);
+      return { success: false, message: 'Server error during OTP verification' };
+    }
+  };
+
   const logout = () => {
     setUser(null);
     setToken(null);
@@ -89,7 +116,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, signup, logout, loading }}>
+    <AuthContext.Provider value={{ user, token, login, signup, verifyOtp, logout, loading }}>
       {!loading && children}
     </AuthContext.Provider>
   );

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
 const getNutritionInfo = (title) => {
-    // Generate some deterministic mock nutritional data based on title length
     return {
         calories: Math.floor(title.length * 12 + 40) + " kcal",
         protein: Math.floor(title.length * 1.2) + "g",
@@ -11,30 +10,79 @@ const getNutritionInfo = (title) => {
     };
 };
 
-const FoodCard = ({ item, isExercise }) => {
+const FoodCard = ({ item, isExercise, user, onEdit, onDelete }) => {
     const [isFlipped, setIsFlipped] = useState(false);
+    const itemKey = item.food_key || item.key || "default";
     
     // Exercises shouldn't have nutritional value.
     if (isExercise) {
         return (
-            <div className='flex flex-col items-center w-[140px] gap-2 p-2 rounded-xl transition-all hover:bg-white/5 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-500/10 cursor-pointer'>
-                <div className="w-[120px] h-[120px] rounded-xl overflow-hidden shadow-md shadow-black/40 ring-1 ring-white/10 group">
+            <div className='flex flex-col items-center w-[140px] gap-2 p-2 rounded-xl transition-all hover:bg-white/5 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-500/10 cursor-pointer relative'>
+                <div className="w-[120px] h-[120px] rounded-xl overflow-hidden shadow-md shadow-black/40 ring-1 ring-white/10 group relative">
                     <img
-                        src={`/food-images/${item.key}.jpg`}
+                        src={`/food-images/${itemKey}.jpg`}
                         onError={(e) => {
                             e.target.onerror = null; 
-                            e.target.src = "https://via.placeholder.com/120?text=No+Image";
+                            e.target.src = "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=120&q=60";
                         }}
                         alt={item.title}
                         className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-110'
                     />
+                    
+                    {user && (
+                        <div className="absolute top-1.5 right-1.5 flex gap-1 z-10">
+                            <button
+                                onClick={(e) => { e.stopPropagation(); onEdit(item); }}
+                                style={{
+                                    background: "rgba(255, 255, 255, 0.95)",
+                                    border: "none",
+                                    borderRadius: "50%",
+                                    width: "22px",
+                                    height: "22px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    cursor: "pointer",
+                                    fontSize: "10px",
+                                    boxShadow: "0 2px 4px rgba(0,0,0,0.2)"
+                                }}
+                                title="Edit"
+                            >
+                                ✏️
+                            </button>
+                            <button
+                                onClick={(e) => { e.stopPropagation(); onDelete(item); }}
+                                style={{
+                                    background: "rgba(255, 255, 255, 0.95)",
+                                    border: "none",
+                                    borderRadius: "50%",
+                                    width: "22px",
+                                    height: "22px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    cursor: "pointer",
+                                    fontSize: "10px",
+                                    boxShadow: "0 2px 4px rgba(0,0,0,0.2)"
+                                }}
+                                title="Delete"
+                            >
+                                🗑️
+                            </button>
+                        </div>
+                    )}
                 </div>
                 <p className='text-sm text-center font-medium text-[rgba(31,41,55,0.9)]'>{item.title}</p>
             </div>
         );
     }
 
-    const nutrition = getNutritionInfo(item.title);
+    const nutrition = item.calories ? {
+        calories: item.calories + " kcal",
+        protein: item.protein + "g",
+        carbs: item.carbs + "g",
+        fat: item.fat + "g"
+    } : getNutritionInfo(item.title);
 
     return (
         <div 
@@ -54,16 +102,59 @@ const FoodCard = ({ item, isExercise }) => {
                     className="absolute w-full h-full flex flex-col items-center gap-2 p-2 rounded-xl bg-transparent transition-all hover:shadow-lg hover:shadow-green-500/10"
                     style={{ backfaceVisibility: "hidden" }}
                 >
-                    <div className="w-[120px] h-[120px] rounded-xl overflow-hidden shadow-md shadow-black/40 ring-1 ring-white/10">
+                    <div className="w-[120px] h-[120px] rounded-xl overflow-hidden shadow-md shadow-black/40 ring-1 ring-white/10 relative">
                         <img
-                            src={`/food-images/${item.key}.jpg`}
+                            src={`/food-images/${itemKey}.jpg`}
                             onError={(e) => {
                                 e.target.onerror = null; 
-                                e.target.src = "https://via.placeholder.com/120?text=No+Image";
+                                e.target.src = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=120&q=60";
                             }}
                             alt={item.title}
                             className='h-full w-full object-cover transition-transform duration-300 hover:scale-110'
                         />
+                        
+                        {user && (
+                            <div className="absolute top-1.5 right-1.5 flex gap-1 z-10">
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); onEdit(item); }}
+                                    style={{
+                                        background: "rgba(255, 255, 255, 0.95)",
+                                        border: "none",
+                                        borderRadius: "50%",
+                                        width: "22px",
+                                        height: "22px",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        cursor: "pointer",
+                                        fontSize: "10px",
+                                        boxShadow: "0 2px 4px rgba(0,0,0,0.2)"
+                                    }}
+                                    title="Edit"
+                                >
+                                    ✏️
+                                </button>
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); onDelete(item); }}
+                                    style={{
+                                        background: "rgba(255, 255, 255, 0.95)",
+                                        border: "none",
+                                        borderRadius: "50%",
+                                        width: "22px",
+                                        height: "22px",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        cursor: "pointer",
+                                        fontSize: "10px",
+                                        boxShadow: "0 2px 4px rgba(0,0,0,0.2)"
+                                    }}
+                                    title="Delete"
+                                >
+                                    🗑️
+                                </button>
+                            </div>
+                        )}
                     </div>
                     <p className='text-sm text-center font-medium text-[rgba(31,41,55,0.9)]'>{item.title}</p>
                 </div>

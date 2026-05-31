@@ -9,7 +9,7 @@ const getBlogs = async (req, res, next) => {
   try {
     const query = `
       SELECT 
-        b.id, b.user_id, b.title, b.content, b.likes, b.created_at, u.name as author_name,
+        b.id, b.user_id, b.title, b.content, b.video_url, b.likes, b.created_at, u.name as author_name,
         COALESCE(
           (SELECT json_agg(
             json_build_object(
@@ -34,7 +34,8 @@ const getBlogs = async (req, res, next) => {
     });
   } catch (error) {
     next(error);
-  }};
+  }
+};
 
 // ────────────────────────────────────────
 // @desc    Create a new blog
@@ -43,14 +44,14 @@ const getBlogs = async (req, res, next) => {
 // ────────────────────────────────────────
 const createBlog = async (req, res, next) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, video_url } = req.body;
     if (!title || !content) {
       return res.status(400).json({ success: false, message: "Title and content are required." });
     }
     const userId = req.user.id;
     const result = await pool.query(
-      "INSERT INTO blogs (title, content, user_id) VALUES ($1, $2, $3) RETURNING *",
-      [title, content, userId]
+      "INSERT INTO blogs (title, content, user_id, video_url) VALUES ($1, $2, $3, $4) RETURNING *",
+      [title, content, userId, video_url || null]
     );
     // Fetch the author name to append to the response
     const authorResult = await pool.query("SELECT name FROM users WHERE id = $1", [userId]);
@@ -151,6 +152,35 @@ const deleteBlog = async (req, res, next) => {
   }
 };
 
-module.exports = { getBlogs, createBlog, addComment, likeBlog, deleteBlog };
+const updateBlog = async (req, res, next) => {
+  try {
+    const blogId = req.params.id;
+    const userId = req.user.id;
+    const { title, content, video_url } = req.body;
+
+    if (!title || !content) {
+      return res.status(400).json({ success: false, message: "Title and content are required." });
+    }
+
+    const result = await pool.query(
+      "UPDATE blogs SET title = $1, content = $2, video_url = $3 WHERE id = $4 AND user_id = $5 RETURNING *",
+      [title, content, video_url || null, blogId, userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(403).json({ success: false, message: "Not authorized to edit this blog or blog not found." });
+    }
+
+    res.status(200).json({
+      success: true,
+      blog: result.rows[0],
+      message: "Blog updated successfully."
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { getBlogs, createBlog, addComment, likeBlog, deleteBlog, updateBlog };
 
 

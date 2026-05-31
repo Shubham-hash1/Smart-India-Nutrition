@@ -1,6 +1,9 @@
+import { lazy, Suspense, useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { AuthProvider } from "./Context/AuthContext.jsx";
+import { ThemeProvider } from "./Context/ThemeContext.jsx";
+import { LanguageProvider } from "./Context/LanguageContext.jsx";
 
 import Navbar from "./Component/Links/Navbar/Navbar.jsx";
 import Footer from "./Component/Footer/Footer.jsx";
@@ -11,12 +14,23 @@ import Hotspot_bimari from "./Component/Sections/Hotspot_bimari.jsx";
 import Age_Section from "./Component/Sections/Age_Section.jsx";
 import Ai from "./Component/Ai_Section.jsx/Ai.jsx";
 
-import About from "./Component/Links/About.jsx";
-import Products from "./Component/Links/Product.jsx";
-import Blog from "./Component/Links/Blogs.jsx";
-
 import CommonPage from "./Component/Common/CommonPage.jsx";
 import ProductSection from "./Component/Product/ProductSection.jsx";
+
+// Lazy-loaded pages (Light loading optimization)
+const About = lazy(() => import("./Component/Links/About.jsx"));
+const Products = lazy(() => import("./Component/Links/Product.jsx"));
+const Blog = lazy(() => import("./Component/Links/Blogs.jsx"));
+const AiAssistant = lazy(() => import("./Component/Links/AiAssistant.jsx"));
+const CalorieTracker = lazy(() => import("./Component/Links/CalorieTracker.jsx"));
+
+/* ── Skeleton Loader Fallback ── */
+const PageSkeleton = () => (
+  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
+    <div className="w-12 h-12 rounded-full border-4 border-green-500 border-t-transparent animate-spin"></div>
+    <p className="text-sm font-semibold tracking-wide text-gray-500">Loading premium content...</p>
+  </div>
+);
 
 /* ── Page transition wrapper ── */
 const pageVariants = {
@@ -39,6 +53,20 @@ const PageWrapper = ({ children }) => (
   </motion.div>
 );
 
+const LazyWrapper = ({ children }) => (
+  <LazyWrapperWithSuspense>
+    {children}
+  </LazyWrapperWithSuspense>
+);
+
+const LazyWrapperWithSuspense = ({ children }) => (
+  <PageWrapper>
+    <Suspense fallback={<PageSkeleton />}>
+      {children}
+    </Suspense>
+  </PageWrapper>
+);
+
 /* ── Home page ── */
 const Home = () => (
   <PageWrapper>
@@ -59,15 +87,21 @@ const AnimatedRoutes = () => {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
 
-        <Route path="/about"   element={<PageWrapper><About /></PageWrapper>} />
-        <Route path="/products" element={<PageWrapper><Products /></PageWrapper>} />
-        <Route path="/blogs"   element={<PageWrapper><Blog /></PageWrapper>} />
+        <Route path="/about"           element={<LazyWrapperWithSuspense><About /></LazyWrapperWithSuspense>} />
+        <Route path="/products"        element={<LazyWrapperWithSuspense><Products /></LazyWrapperWithSuspense>} />
+        <Route path="/blogs"           element={<LazyWrapperWithSuspense><Blog /></LazyWrapperWithSuspense>} />
+        <Route path="/ai-assistant"    element={<LazyWrapperWithSuspense><AiAssistant /></LazyWrapperWithSuspense>} />
+        <Route path="/calorie-tracker" element={<LazyWrapperWithSuspense><CalorieTracker /></LazyWrapperWithSuspense>} />
 
         <Route path="/obesity"      element={<PageWrapper><CommonPage /></PageWrapper>} />
         <Route path="/diabetes"     element={<PageWrapper><CommonPage /></PageWrapper>} />
         <Route path="/heart"        element={<PageWrapper><CommonPage /></PageWrapper>} />
         <Route path="/stomach"      element={<PageWrapper><CommonPage /></PageWrapper>} />
         <Route path="/nutritional"  element={<PageWrapper><CommonPage /></PageWrapper>} />
+        <Route path="/hypertension" element={<PageWrapper><CommonPage /></PageWrapper>} />
+        <Route path="/thyroid"      element={<PageWrapper><CommonPage /></PageWrapper>} />
+        <Route path="/pcod"         element={<PageWrapper><CommonPage /></PageWrapper>} />
+        <Route path="/liver"        element={<PageWrapper><CommonPage /></PageWrapper>} />
 
         <Route path="/adult"    element={<PageWrapper><CommonPage /></PageWrapper>} />
         <Route path="/child"    element={<PageWrapper><CommonPage /></PageWrapper>} />
@@ -90,13 +124,13 @@ const AnimatedRoutes = () => {
                   justifyContent: "center",
                   fontFamily: "'Inter', serif",
                   color: "#1f2937",
-                  background: "#ffffff",
+                  background: "var(--bg-primary)",
                   gap: "16px",
                 }}
               >
                 <span style={{ fontSize: "80px", fontWeight: 900, opacity: 0.12 }}>404</span>
-                <h1 style={{ fontSize: "28px", margin: 0 }}>Page Not Found</h1>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", color: "#4b5563", margin: 0 }}>
+                <h1 style={{ fontSize: "28px", margin: 0, color: "var(--text-primary)" }}>Page Not Found</h1>
+                <p style={{ fontFamily: "'DM Sans', sans-serif", color: "var(--text-secondary)", margin: 0 }}>
                   The page you're looking for doesn't exist.
                 </p>
               </div>
@@ -111,16 +145,20 @@ const AnimatedRoutes = () => {
 /* ── Root app ── */
 const App = () => (
   <AuthProvider>
-    <BrowserRouter>
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-grow">
-          <AnimatedRoutes />
-        </main>
-        
-        <Footer />
-      </div>
-    </BrowserRouter>
+    <ThemeProvider>
+      <LanguageProvider>
+        <BrowserRouter>
+          <div className="flex flex-col min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors duration-200">
+            <Navbar />
+            <main className="flex-grow">
+              <AnimatedRoutes />
+            </main>
+            
+            <Footer />
+          </div>
+        </BrowserRouter>
+      </LanguageProvider>
+    </ThemeProvider>
   </AuthProvider>
 );
 export default App;

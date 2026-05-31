@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Navlinks from "./Navlinks";
 import Login from "./Login";
+import { useTheme } from "../../../Context/ThemeContext";
+import { useLanguage } from "../../../Context/LanguageContext";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
+  const { language, setLanguage } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -28,15 +32,12 @@ const Navbar = () => {
           zIndex: 40,
           transition: "all 0.35s ease",
           background: scrolled
-            ? "rgba(255, 255, 255,0.82)"
-            : "rgba(255, 255, 255,0.55)",
-          
-          
-          borderBottom: scrolled
-            ? "1px solid rgba(0,0,0,0.07)"
-            : "1px solid transparent",
+            ? "var(--bg-primary)"
+            : "rgba(var(--bg-primary), 0.7)",
+          backdropFilter: "blur(12px)",
+          borderBottom: "1px solid var(--border-color)",
           boxShadow: scrolled
-            ? "0 8px 40px rgba(0,0,0,0.4)"
+            ? "0 8px 30px var(--shadow-color)"
             : "none",
         }}
       >
@@ -47,7 +48,7 @@ const Navbar = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            padding: "14px 32px",
+            padding: "14px 24px",
           }}
         >
           {/* ── Logo ── */}
@@ -65,18 +66,17 @@ const Navbar = () => {
                 width: "34px",
                 height: "34px",
                 borderRadius: "10px",
-                background: "linear-gradient(135deg, #22c55e 0%, #059669 100%)",
+                background: "linear-gradient(135deg, var(--accent-color) 0%, #059669 100%)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                
                 flexShrink: 0,
               }}
             >
               <span
                 style={{
                   fontFamily: "'Inter', serif",
-                  color: "#f0fdf4",
+                  color: "#ffffff",
                   fontSize: "15px",
                   fontWeight: 700,
                   lineHeight: 1,
@@ -92,12 +92,12 @@ const Navbar = () => {
                 fontFamily: "'Inter', serif",
                 fontSize: "18px",
                 fontWeight: 700,
-                color: "#1f2937",
+                color: "var(--text-primary)",
                 letterSpacing: "-0.01em",
               }}
             >
               Nutri
-              <span style={{ color: "#4ade80" }}>Smart</span>
+              <span style={{ color: "var(--accent-text)" }}>Smart</span>
             </span>
           </motion.div>
 
@@ -107,18 +107,62 @@ const Navbar = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.5 }}
             style={{ display: "flex" }}
-            className="hidden md:flex"
+            className="hidden lg:flex"
           >
             <Navlinks />
           </motion.div>
 
-          {/* ── Right: Login + Hamburger ── */}
+          {/* ── Right Controls ── */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.4, duration: 0.5 }}
             style={{ display: "flex", alignItems: "center", gap: "12px" }}
           >
+            {/* Language Switcher */}
+            <button
+              onClick={() => setLanguage(language === "en" ? "hi" : "en")}
+              style={{
+                padding: "6px 12px",
+                borderRadius: "8px",
+                border: "1px solid var(--border-color)",
+                background: "var(--bg-secondary)",
+                color: "var(--text-primary)",
+                fontSize: "12px",
+                fontWeight: "600",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "4px",
+                transition: "all 0.2s"
+              }}
+            >
+              🌐 {language === "en" ? "EN" : "HI"}
+            </button>
+
+            {/* Theme Selector */}
+            <select
+              value={theme}
+              onChange={(e) => toggleTheme(e.target.value)}
+              style={{
+                padding: "6px 10px",
+                borderRadius: "8px",
+                border: "1px solid var(--border-color)",
+                background: "var(--bg-secondary)",
+                color: "var(--text-primary)",
+                fontSize: "12px",
+                fontWeight: "600",
+                cursor: "pointer",
+                outline: "none",
+                transition: "all 0.2s"
+              }}
+            >
+              <option value="color">🎨 Light Mode</option>
+              <option value="dark">🌙 Dark Mode</option>
+              <option value="mono-light">⚪ Light Mono</option>
+              <option value="mono-dark">⚫ Dark Mono</option>
+            </select>
+
             <div className="hidden md:flex">
               <Login />
             </div>
@@ -127,14 +171,14 @@ const Navbar = () => {
             <motion.button
               whileTap={{ scale: 0.88 }}
               onClick={() => setMenuOpen(!menuOpen)}
-              className="md:hidden"
+              className="lg:hidden"
               aria-label="Toggle menu"
               style={{
                 width: "38px",
                 height: "38px",
                 borderRadius: "10px",
-                border: "1px solid rgba(0,0,0,0.1)",
-                background: "rgba(0,0,0,0.05)",
+                border: "1px solid var(--border-color)",
+                background: "var(--bg-secondary)",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
@@ -156,7 +200,7 @@ const Navbar = () => {
                     display: "block",
                     width: "18px",
                     height: "1.5px",
-                    background: "#1f2937",
+                    background: "var(--text-primary)",
                     borderRadius: "2px",
                   }}
                 />
@@ -172,7 +216,7 @@ const Navbar = () => {
           transition={{ delay: 0.7, duration: 1, ease: "easeOut" }}
           style={{
             height: "1px",
-            background: "linear-gradient(90deg, transparent, rgba(74,222,128,0.5), transparent)",
+            background: "linear-gradient(90deg, transparent, var(--accent-border), transparent)",
             transformOrigin: "center",
           }}
         />
@@ -190,10 +234,8 @@ const Navbar = () => {
               position: "sticky",
               top: "63px",
               zIndex: 30,
-              background: "rgba(255, 255, 255,0.97)",
-              
-              
-              borderBottom: "1px solid rgba(0,0,0,0.07)",
+              background: "var(--bg-primary)",
+              borderBottom: "1px solid var(--border-color)",
               overflow: "hidden",
             }}
           >
@@ -205,17 +247,17 @@ const Navbar = () => {
               style={{
                 maxWidth: "1280px",
                 margin: "0 auto",
-                padding: "20px 28px 24px",
+                padding: "20px 24px 24px",
                 display: "flex",
                 flexDirection: "column",
                 gap: "16px",
               }}
             >
-              <Navlinks mobile />
+              <Navlinks mobile onClick={() => setMenuOpen(false)} />
               <div
                 style={{
                   paddingTop: "16px",
-                  borderTop: "1px solid rgba(0,0,0,0.07)",
+                  borderTop: "1px solid var(--border-color)",
                 }}
               >
                 <Login />

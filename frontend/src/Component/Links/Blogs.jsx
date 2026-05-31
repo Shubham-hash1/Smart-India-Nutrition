@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../../Context/AuthContext';
+import { useLanguage } from '../../Context/LanguageContext';
 
 const Blogs = () => {
   const { user, token } = useAuth();
+  const { t } = useLanguage();
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   
   // New Post State
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [videoUrl, setVideoUrl] = useState('');
   const [isPosting, setIsPosting] = useState(false);
   const [showPostForm, setShowPostForm] = useState(false);
   
+  // Editing State
+  const [editingPostId, setEditingPostId] = useState(null);
+  const [editTitle, setEditTitle] = useState('');
+  const [editContent, setEditContent] = useState('');
+  const [editVideoUrl, setEditVideoUrl] = useState('');
+
   // Comment State
   const [commentInputs, setCommentInputs] = useState({});
 
@@ -55,19 +64,55 @@ const Blogs = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ title, content })
+        body: JSON.stringify({ title, content, video_url: videoUrl })
       });
       const data = await res.json();
       if (data.success) {
         setBlogs([data.blog, ...blogs]);
         setTitle('');
         setContent('');
+        setVideoUrl('');
         setShowPostForm(false);
       }
     } catch (error) {
       console.error('Failed to create post', error);
     } finally {
       setIsPosting(false);
+    }
+  };
+
+  const handleUpdatePost = async (e, blogId) => {
+    e.preventDefault();
+    if (!editTitle.trim() || !editContent.trim()) return;
+
+    try {
+      const res = await fetch(`http://localhost:5000/api/blogs/${blogId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ title: editTitle, content: editContent, video_url: editVideoUrl })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setBlogs(blogs.map(blog => {
+          if (blog.id === blogId) {
+            return {
+              ...blog,
+              title: data.blog.title,
+              content: data.blog.content,
+              video_url: data.blog.video_url
+            };
+          }
+          return blog;
+        }));
+        setEditingPostId(null);
+      } else {
+        alert(data.message || "Failed to update post");
+      }
+    } catch (error) {
+      console.error('Failed to update post', error);
     }
   };
 
@@ -87,14 +132,12 @@ const Blogs = () => {
       });
       const data = await res.json();
       if (data.success) {
-        // Update local state
         setBlogs(blogs.map(blog => {
           if (blog.id === blogId) {
-            return { ...blog, comments: [...blog.comments, data.comment] };
+            return { ...blog, comments: [...(blog.comments || []), data.comment] };
           }
           return blog;
         }));
-        // Clear input
         setCommentInputs({ ...commentInputs, [blogId]: '' });
       }
     } catch (error) {
@@ -106,7 +149,6 @@ const Blogs = () => {
     if (likedPosts.includes(blogId)) return;
 
     try {
-      // Optimistic update
       setBlogs(blogs.map(blog => 
         blog.id === blogId ? { ...blog, likes: (blog.likes || 0) + 1 } : blog
       ));
@@ -120,7 +162,6 @@ const Blogs = () => {
       });
       const data = await res.json();
       if (!data.success) {
-        // Revert on failure (simple version: just refetch or rely on next refresh)
         console.error('Failed to like post');
       }
     } catch (error) {
@@ -150,13 +191,31 @@ const Blogs = () => {
     }
   };
 
+  const getYouTubeEmbedUrl = (url) => {
+    if (!url) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    const match = url.match(regExp);
+    if (match && match[2].length === 11) {
+      return `https://www.youtube.com/embed/${match[2]}`;
+    }
+    
+    const vimeoReg = /vimeo\.com\/(\d+)/;
+    const vimeoMatch = url.match(vimeoReg);
+    if (vimeoMatch) {
+      return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+    }
+
+    return null;
+  };
+
   return (
     <div style={{ 
       minHeight: "100vh", 
-      background: "#ffffff",
+      background: "var(--bg-primary)",
       padding: "80px 20px",
       fontFamily: "'DM Sans', sans-serif",
-      color: "#1f2937"
+      color: "var(--text-primary)",
+      transition: "background-color 0.3s, color 0.3s"
     }}>
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=DM+Sans:wght@300;400;500;700&display=swap');`}</style>
       
@@ -174,10 +233,10 @@ const Blogs = () => {
             fontWeight: 700, 
             marginBottom: "12px"
           }}>
-            Community <span style={{ color: "#4ade80" }}>Voices</span>
+            {t("blogTitle1")} <span style={{ color: "var(--accent-text)" }}>{t("blogTitle2")}</span>
           </h1>
-          <p style={{ color: "#4b5563", fontSize: "16px" }}>
-            Share your health journey, tips, and experiences.
+          <p style={{ color: "var(--text-secondary)", fontSize: "16px" }}>
+            {t("blogDesc")}
           </p>
         </motion.div>
 
@@ -194,14 +253,14 @@ const Blogs = () => {
                 onClick={() => setShowPostForm(true)}
                 style={{
                   width: "100%", padding: "18px", borderRadius: "16px",
-                  background: "rgba(0,0,0,0.03)", border: "1px dashed rgba(74,222,128,0.3)",
-                  color: "#4ade80", fontSize: "16px", fontWeight: 500, cursor: "pointer",
+                  background: "var(--bg-secondary)", border: "1px dashed var(--accent-border)",
+                  color: "var(--accent-text)", fontSize: "16px", fontWeight: 500, cursor: "pointer",
                   transition: "all 0.3s ease", display: "flex", alignItems: "center", justifyContent: "center", gap: "10px"
                 }}
-                onMouseEnter={e => e.currentTarget.style.background = "rgba(74,222,128,0.05)"}
-                onMouseLeave={e => e.currentTarget.style.background = "rgba(0,0,0,0.03)"}
+                onMouseEnter={e => e.currentTarget.style.opacity = "0.8"}
+                onMouseLeave={e => e.currentTarget.style.opacity = "1"}
               >
-                <span style={{ fontSize: "20px" }}>+</span> Create a New Post
+                <span style={{ fontSize: "20px" }}>+</span> {t("createPost")}
               </button>
             ) : (
               <motion.form 
@@ -209,36 +268,48 @@ const Blogs = () => {
                 animate={{ opacity: 1, height: "auto" }}
                 onSubmit={handleCreatePost}
                 style={{
-                  background: "#f9fafb", border: "1px solid rgba(0,0,0,0.08)",
+                  background: "var(--bg-secondary)", border: "1px solid var(--border-color)",
                   borderRadius: "20px", padding: "24px", 
                 }}
               >
-                <h3 style={{ fontFamily: "'Inter', serif", fontSize: "20px", marginBottom: "16px", color: "#1f2937" }}>Write a Post</h3>
+                <h3 style={{ fontFamily: "'Inter', serif", fontSize: "20px", marginBottom: "16px", color: "var(--text-primary)" }}>{t("createPost")}</h3>
                 <input 
                   type="text" 
-                  placeholder="Post Title..." 
+                  placeholder={t("postTitle")} 
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   style={{
                     width: "100%", padding: "14px 16px", borderRadius: "12px",
-                    background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.1)",
-                    color: "#1f2937", fontFamily: "'DM Sans', sans-serif", fontSize: "15px",
+                    background: "var(--bg-primary)", border: "1px solid var(--border-color)",
+                    color: "var(--text-primary)", fontFamily: "'DM Sans', sans-serif", fontSize: "15px",
                     marginBottom: "16px", outline: "none", boxSizing: "border-box"
                   }}
                   required
                 />
                 <textarea 
-                  placeholder="What's on your mind?" 
+                  placeholder={t("postContent")} 
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   rows={4}
                   style={{
                     width: "100%", padding: "14px 16px", borderRadius: "12px",
-                    background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.1)",
-                    color: "#1f2937", fontFamily: "'DM Sans', sans-serif", fontSize: "15px",
+                    background: "var(--bg-primary)", border: "1px solid var(--border-color)",
+                    color: "var(--text-primary)", fontFamily: "'DM Sans', sans-serif", fontSize: "15px",
                     marginBottom: "16px", outline: "none", boxSizing: "border-box", resize: "vertical"
                   }}
                   required
+                />
+                <input 
+                  type="text" 
+                  placeholder={t("videoUrlLabel")} 
+                  value={videoUrl}
+                  onChange={(e) => setVideoUrl(e.target.value)}
+                  style={{
+                    width: "100%", padding: "14px 16px", borderRadius: "12px",
+                    background: "var(--bg-primary)", border: "1px solid var(--border-color)",
+                    color: "var(--text-primary)", fontFamily: "'DM Sans', sans-serif", fontSize: "15px",
+                    marginBottom: "16px", outline: "none", boxSizing: "border-box"
+                  }}
                 />
                 <div style={{ display: "flex", justifyContent: "flex-end", gap: "12px" }}>
                   <button 
@@ -246,23 +317,23 @@ const Blogs = () => {
                     onClick={() => setShowPostForm(false)}
                     style={{
                       padding: "10px 20px", borderRadius: "10px", background: "transparent",
-                      border: "1px solid rgba(0,0,0,0.1)", color: "#4b5563",
+                      border: "1px solid var(--border-color)", color: "var(--text-secondary)",
                       cursor: "pointer", fontSize: "14px", fontWeight: 500
                     }}
                   >
-                    Cancel
+                    {t("cancel")}
                   </button>
                   <button 
                     type="submit"
                     disabled={isPosting}
                     style={{
                       padding: "10px 24px", borderRadius: "10px",
-                      background: "linear-gradient(135deg, #22c55e 0%, #059669 100%)",
-                      border: "none", color: "#f0fdf4", cursor: "pointer",
+                      background: "var(--accent-color)",
+                      border: "none", color: "#ffffff", cursor: "pointer",
                       fontSize: "14px", fontWeight: 700, opacity: isPosting ? 0.7 : 1
                     }}
                   >
-                    {isPosting ? "Posting..." : "Publish"}
+                    {isPosting ? t("posting") : t("publish")}
                   </button>
                 </div>
               </motion.form>
@@ -274,163 +345,268 @@ const Blogs = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
             style={{
-              padding: "20px", background: "rgba(34,197,94,0.05)", 
-              border: "1px solid rgba(34,197,94,0.2)", borderRadius: "16px",
+              padding: "20px", background: "var(--accent-light)", 
+              border: "1px solid var(--accent-border)", borderRadius: "16px",
               textAlign: "center", marginBottom: "40px"
             }}
           >
-            <p style={{ color: "#4ade80", fontSize: "15px", margin: 0, fontWeight: 500 }}>
-              Please log in to join the conversation, create posts, and leave comments!
+            <p style={{ color: "var(--accent-text)", fontSize: "15px", margin: 0, fontWeight: 500 }}>
+              {t("loginToPost")}
             </p>
           </motion.div>
         )}
 
         {/* Blogs List */}
         {loading ? (
-          <div style={{ textAlign: "center", padding: "40px", color: "#4b5563", }}>Loading posts...</div>
+          <div style={{ textAlign: "center", padding: "40px", color: "var(--text-secondary)", }}>{t("loading")}</div>
         ) : blogs.length === 0 ? (
-          <div style={{ textAlign: "center", padding: "40px", color: "#4b5563", }}>No posts yet. Be the first to share!</div>
+          <div style={{ textAlign: "center", padding: "40px", color: "var(--text-secondary)", }}>No posts yet. Be the first to share!</div>
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
-            {blogs.map((blog, idx) => (
-              <motion.div 
-                key={blog.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + (idx * 0.05) }}
-                style={{
-                  background: "#f9fafb", border: "1px solid rgba(0,0,0,0.06)",
-                  borderRadius: "20px", padding: "30px", overflow: "hidden",
-                   position: "relative"
-                }}
-              >
-                <div style={{ position: "absolute", top: 0, left: 0, width: "4px", height: "100%", background: "linear-gradient(to bottom, #22c55e, #059669)" }} />
-                
-                {user && user.id === blog.user_id && (
-                  <button
-                    onClick={() => handleDeletePost(blog.id)}
-                    style={{
-                      position: "absolute",
-                      top: "20px",
-                      right: "20px",
-                      background: "rgba(239, 68, 68, 0.1)",
-                      border: "1px solid rgba(239, 68, 68, 0.3)",
-                      color: "#ef4444",
-                      padding: "6px 12px",
-                      borderRadius: "8px",
-                      fontSize: "12px",
-                      fontWeight: 600,
-                      cursor: "pointer",
-                      transition: "all 0.2s"
-                    }}
-                    onMouseEnter={e => {
-                      e.currentTarget.style.background = "rgba(239, 68, 68, 0.2)";
-                      e.currentTarget.style.transform = "scale(1.05)";
-                    }}
-                    onMouseLeave={e => {
-                      e.currentTarget.style.background = "rgba(239, 68, 68, 0.1)";
-                      e.currentTarget.style.transform = "scale(1)";
-                    }}
-                  >
-                    Delete
-                  </button>
-                )}
-                
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "16px", paddingRight: user && user.id === blog.user_id ? "70px" : "0" }}>
-                  <h2 style={{ fontFamily: "'Inter', serif", fontSize: "24px", color: "#1f2937", margin: 0 }}>
-                    {blog.title}
-                  </h2>
-                  <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                    <motion.button 
-                      whileHover={likedPosts.includes(blog.id) ? {} : { scale: 1.1 }}
-                      whileTap={likedPosts.includes(blog.id) ? {} : { scale: 0.9 }}
-                      onClick={() => handleLike(blog.id)}
-                      disabled={likedPosts.includes(blog.id)}
-                      style={{ 
-                        background: likedPosts.includes(blog.id) ? "rgba(239, 68, 68, 0.2)" : "rgba(239, 68, 68, 0.1)", 
-                        border: "1px solid rgba(239, 68, 68, 0.2)",
-                        borderRadius: "20px", padding: "6px 12px", display: "flex", alignItems: "center", gap: "6px",
-                        cursor: likedPosts.includes(blog.id) ? "default" : "pointer", 
-                        color: likedPosts.includes(blog.id) ? "#fca5a5" : "#ef4444", 
-                        fontSize: "13px", fontWeight: 700,
-                        opacity: likedPosts.includes(blog.id) ? 0.8 : 1
-                      }}
-                    >
-                      <span style={{ fontSize: "16px" }}>{likedPosts.includes(blog.id) ? "❤️" : "♥"}</span> {blog.likes || 0}
-                    </motion.button>
-                    <span style={{ fontSize: "12px", color: "#4b5563", }}>
-                      {new Date(blog.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
-                    </span>
-                  </div>
-                </div>
-                
-                <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "20px" }}>
-                  <div style={{ width: "24px", height: "24px", borderRadius: "50%", background: "rgba(34,197,94,0.2)", display: "flex", alignItems: "center", justifyContent: "center", color: "#4ade80", fontSize: "12px", fontWeight: 700 }}>
-                    {blog.author_name ? blog.author_name.charAt(0).toUpperCase() : 'A'}
-                  </div>
-                  <span style={{ fontSize: "13px", color: "#4b5563", fontWeight: 500 }}>
-                    {blog.author_name || 'Anonymous'}
-                  </span>
-                </div>
+            {blogs.map((blog, idx) => {
+              const embedUrl = getYouTubeEmbedUrl(blog.video_url);
+              const isEditing = editingPostId === blog.id;
 
-                <p style={{ color: "#4b5563", fontSize: "15px", lineHeight: 1.6, marginBottom: "30px", whiteSpace: "pre-wrap" }}>
-                  {blog.content}
-                </p>
-
-                {/* Comments Section */}
-                <div style={{ borderTop: "1px solid rgba(0,0,0,0.06)", paddingTop: "20px" }}>
-                  <h4 style={{ fontSize: "14px", color: "#4b5563", marginBottom: "16px", fontWeight: 500 }}>
-                    Comments ({blog.comments ? blog.comments.length : 0})
-                  </h4>
+              return (
+                <motion.div 
+                  key={blog.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 + (idx * 0.05) }}
+                  style={{
+                    background: "var(--bg-secondary)", border: "1px solid var(--border-color)",
+                    borderRadius: "20px", padding: "30px", overflow: "hidden",
+                    position: "relative"
+                  }}
+                >
+                  <div style={{ position: "absolute", top: 0, left: 0, width: "4px", height: "100%", background: "var(--accent-color)" }} />
                   
-                  {blog.comments && blog.comments.length > 0 && (
-                    <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "20px" }}>
-                      {blog.comments.map((comment) => (
-                        <div key={comment.id} style={{ background: "rgba(0,0,0,0.02)", padding: "12px 16px", borderRadius: "12px" }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
-                            <span style={{ fontSize: "13px", color: "#4ade80", fontWeight: 500 }}>{comment.author_name}</span>
-                            <span style={{ fontSize: "11px", color: "#4b5563", }}>
-                              {new Date(comment.created_at).toLocaleDateString()}
-                            </span>
-                          </div>
-                          <p style={{ margin: 0, fontSize: "14px", color: "#4b5563", }}>{comment.content}</p>
-                        </div>
-                      ))}
+                  {user && user.id === blog.user_id && !isEditing && (
+                    <div style={{ position: "absolute", top: "20px", right: "20px", display: "flex", gap: "8px" }}>
+                      <button
+                        onClick={() => {
+                          setEditingPostId(blog.id);
+                          setEditTitle(blog.title);
+                          setEditContent(blog.content);
+                          setEditVideoUrl(blog.video_url || '');
+                        }}
+                        style={{
+                          background: "var(--bg-primary)",
+                          border: "1px solid var(--border-color)",
+                          color: "var(--text-primary)",
+                          padding: "6px 12px",
+                          borderRadius: "8px",
+                          fontSize: "12px",
+                          fontWeight: 600,
+                          cursor: "pointer",
+                          transition: "all 0.2s"
+                        }}
+                      >
+                        ✏️ Edit
+                      </button>
+                      <button
+                        onClick={() => handleDeletePost(blog.id)}
+                        style={{
+                          background: "rgba(239, 68, 68, 0.1)",
+                          border: "1px solid rgba(239, 68, 68, 0.3)",
+                          color: "#ef4444",
+                          padding: "6px 12px",
+                          borderRadius: "8px",
+                          fontSize: "12px",
+                          fontWeight: 600,
+                          cursor: "pointer",
+                          transition: "all 0.2s"
+                        }}
+                      >
+                        {t("delete")}
+                      </button>
                     </div>
                   )}
 
-                  {user ? (
-                    <form onSubmit={(e) => handleAddComment(e, blog.id)} style={{ display: "flex", gap: "12px" }}>
+                  {isEditing ? (
+                    <form onSubmit={(e) => handleUpdatePost(e, blog.id)} style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "10px" }}>
+                      <h3 style={{ fontSize: "16px", fontWeight: "bold" }}>Edit Blog Post</h3>
                       <input 
                         type="text" 
-                        placeholder="Add a comment..." 
-                        value={commentInputs[blog.id] || ''}
-                        onChange={(e) => setCommentInputs({ ...commentInputs, [blog.id]: e.target.value })}
+                        value={editTitle}
+                        onChange={(e) => setEditTitle(e.target.value)}
+                        required
                         style={{
-                          flex: 1, padding: "10px 16px", borderRadius: "100px",
-                          background: "rgba(0,0,0,0.03)", border: "1px solid rgba(0,0,0,0.1)",
-                          color: "#1f2937", fontFamily: "'DM Sans', sans-serif", fontSize: "14px",
-                          outline: "none"
+                          width: "100%", padding: "10px 14px", borderRadius: "10px",
+                          background: "var(--bg-primary)", border: "1px solid var(--border-color)",
+                          color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box"
                         }}
                       />
-                      <button 
-                        type="submit"
-                        disabled={!commentInputs[blog.id]?.trim()}
+                      <textarea 
+                        value={editContent}
+                        onChange={(e) => setEditContent(e.target.value)}
+                        required
+                        rows={4}
                         style={{
-                          padding: "0 20px", borderRadius: "100px",
-                          background: commentInputs[blog.id]?.trim() ? "linear-gradient(135deg, #22c55e 0%, #059669 100%)" : "rgba(0,0,0,0.1)",
-                          border: "none", color: commentInputs[blog.id]?.trim() ? "#f0fdf4" : "rgba(0,0,0,0.3)", 
-                          cursor: commentInputs[blog.id]?.trim() ? "pointer" : "not-allowed",
-                          fontSize: "13px", fontWeight: 700, transition: "all 0.2s"
+                          width: "100%", padding: "10px 14px", borderRadius: "10px",
+                          background: "var(--bg-primary)", border: "1px solid var(--border-color)",
+                          color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box", resize: "vertical"
                         }}
-                      >
-                        Reply
-                      </button>
+                      />
+                      <input 
+                        type="text" 
+                        placeholder={t("videoUrlLabel")} 
+                        value={editVideoUrl}
+                        onChange={(e) => setEditVideoUrl(e.target.value)}
+                        style={{
+                          width: "100%", padding: "10px 14px", borderRadius: "10px",
+                          background: "var(--bg-primary)", border: "1px solid var(--border-color)",
+                          color: "var(--text-primary)", fontSize: "14px", boxSizing: "border-box"
+                        }}
+                      />
+                      <div style={{ display: "flex", justifyContent: "flex-end", gap: "10px" }}>
+                        <button 
+                          type="button"
+                          onClick={() => setEditingPostId(null)}
+                          style={{
+                            padding: "8px 16px", borderRadius: "8px", background: "transparent",
+                            border: "1px solid var(--border-color)", color: "var(--text-secondary)", cursor: "pointer", fontSize: "13px"
+                          }}
+                        >
+                          {t("cancel")}
+                        </button>
+                        <button 
+                          type="submit"
+                          style={{
+                            padding: "8px 20px", borderRadius: "8px", border: "none",
+                            background: "var(--accent-color)", color: "#ffffff", cursor: "pointer", fontSize: "13px", fontWeight: "bold"
+                          }}
+                        >
+                          {t("save")}
+                        </button>
+                      </div>
                     </form>
-                  ) : null}
-                </div>
-              </motion.div>
-            ))}
+                  ) : (
+                    <>
+                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "16px", paddingRight: user && user.id === blog.user_id ? "140px" : "0" }}>
+                        <h2 style={{ fontFamily: "'Inter', serif", fontSize: "24px", color: "var(--text-primary)", margin: 0 }}>
+                          {blog.title}
+                        </h2>
+                        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                          <motion.button 
+                            whileHover={likedPosts.includes(blog.id) ? {} : { scale: 1.1 }}
+                            whileTap={likedPosts.includes(blog.id) ? {} : { scale: 0.9 }}
+                            onClick={() => handleLike(blog.id)}
+                            disabled={likedPosts.includes(blog.id)}
+                            style={{ 
+                              background: likedPosts.includes(blog.id) ? "rgba(239, 68, 68, 0.2)" : "rgba(239, 68, 68, 0.05)", 
+                              border: "1px solid rgba(239, 68, 68, 0.2)",
+                              borderRadius: "20px", padding: "6px 12px", display: "flex", alignItems: "center", gap: "6px",
+                              cursor: likedPosts.includes(blog.id) ? "default" : "pointer", 
+                              color: "#ef4444", 
+                              fontSize: "13px", fontWeight: 700
+                            }}
+                          >
+                            <span style={{ fontSize: "16px" }}>{likedPosts.includes(blog.id) ? "❤️" : "♥"}</span> {blog.likes || 0}
+                          </motion.button>
+                          <span style={{ fontSize: "12px", color: "var(--text-secondary)", }}>
+                            {new Date(blog.created_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "20px" }}>
+                        <div style={{ width: "24px", height: "24px", borderRadius: "50%", background: "var(--accent-light)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--accent-text)", fontSize: "12px", fontWeight: 700 }}>
+                          {blog.author_name ? blog.author_name.charAt(0).toUpperCase() : 'A'}
+                        </div>
+                        <span style={{ fontSize: "13px", color: "var(--text-secondary)", fontWeight: 500 }}>
+                          {blog.author_name || 'Anonymous'}
+                        </span>
+                      </div>
+
+                      <p style={{ color: "var(--text-secondary)", fontSize: "15px", lineHeight: 1.6, marginBottom: "20px", whiteSpace: "pre-wrap" }}>
+                        {blog.content}
+                      </p>
+
+                      {/* Video Render */}
+                      {blog.video_url && (
+                        <div style={{ marginBottom: "24px" }}>
+                          {embedUrl ? (
+                            <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden", borderRadius: "12px", border: "1px solid var(--border-color)" }}>
+                              <iframe
+                                style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }}
+                                src={embedUrl}
+                                title="Recipe Video"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                              />
+                            </div>
+                          ) : (
+                            <div style={{ border: "1px solid var(--border-color)", borderRadius: "12px", padding: "12px", background: "var(--bg-primary)", display: "flex", alignItems: "center", gap: "10px" }}>
+                              <span style={{ fontSize: "20px" }}>🎥</span>
+                              <div>
+                                <span style={{ fontSize: "14px", fontWeight: 600 }}>Recipe Video Link: </span>
+                                <a href={blog.video_url} target="_blank" rel="noopener noreferrer" style={{ fontSize: "14px", color: "var(--accent-text)", textDecoration: "underline" }}>
+                                  {blog.video_url}
+                                </a>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </>
+                  )}
+
+                  {/* Comments Section */}
+                  <div style={{ borderTop: "1px solid var(--border-color)", paddingTop: "20px" }}>
+                    <h4 style={{ fontSize: "14px", color: "var(--text-secondary)", marginBottom: "16px", fontWeight: 500 }}>
+                      {t("comments")} ({blog.comments ? blog.comments.length : 0})
+                    </h4>
+                    
+                    {blog.comments && blog.comments.length > 0 && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "20px" }}>
+                        {blog.comments.map((comment) => (
+                          <div key={comment.id} style={{ background: "var(--bg-primary)", border: "1px solid var(--border-color)", padding: "12px 16px", borderRadius: "12px" }}>
+                            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "6px" }}>
+                              <span style={{ fontSize: "13px", color: "var(--accent-text)", fontWeight: 500 }}>{comment.author_name}</span>
+                              <span style={{ fontSize: "11px", color: "var(--text-secondary)", }}>
+                                {new Date(comment.created_at).toLocaleDateString()}
+                              </span>
+                            </div>
+                            <p style={{ margin: 0, fontSize: "14px", color: "var(--text-primary)", }}>{comment.content}</p>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {user ? (
+                      <form onSubmit={(e) => handleAddComment(e, blog.id)} style={{ display: "flex", gap: "12px" }}>
+                        <input 
+                          type="text" 
+                          placeholder={t("addCommentPlaceholder")} 
+                          value={commentInputs[blog.id] || ''}
+                          onChange={(e) => setCommentInputs({ ...commentInputs, [blog.id]: e.target.value })}
+                          style={{
+                            flex: 1, padding: "10px 16px", borderRadius: "100px",
+                            background: "var(--bg-primary)", border: "1px solid var(--border-color)",
+                            color: "var(--text-primary)", fontFamily: "'DM Sans', sans-serif", fontSize: "14px",
+                            outline: "none"
+                          }}
+                        />
+                        <button 
+                          type="submit"
+                          disabled={!commentInputs[blog.id]?.trim()}
+                          style={{
+                            padding: "0 20px", borderRadius: "100px",
+                            background: commentInputs[blog.id]?.trim() ? "var(--accent-color)" : "var(--border-color)",
+                            border: "none", color: commentInputs[blog.id]?.trim() ? "#ffffff" : "var(--text-secondary)", 
+                            cursor: commentInputs[blog.id]?.trim() ? "pointer" : "not-allowed",
+                            fontSize: "13px", fontWeight: 700, transition: "all 0.2s"
+                          }}
+                        >
+                          {t("reply")}
+                        </button>
+                      </form>
+                    ) : null}
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         )}
       </div>

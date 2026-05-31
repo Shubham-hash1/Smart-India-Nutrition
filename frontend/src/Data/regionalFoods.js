@@ -18,6 +18,11 @@ export const regionalMapping = {
   peaches: "North",
   apricots: "North",
   lotus_stem: "North", // Nadru
+  kafal: "North",
+  hisalu: "North",
+  hissar: "North",
+  buransh: "North",
+  burans: "North",
   // Newly Added North Keys
   dahi_north: "North",
   chole_boiled_north: "North",
@@ -73,6 +78,8 @@ export const regionalMapping = {
   tapioca: "South",
   cocoa: "South",
   // Newly Added South Keys
+  dosa: "South",
+  uttapam: "South",
   kootu_south: "South",
   thoviyal_south: "South",
   pasi_paruppu_south: "South",
@@ -123,6 +130,8 @@ export const regionalMapping = {
   ash_gourd: "East",
   // Newly Added East Keys
   sattu_east: "East",
+  litti_chokha: "East",
+  liti_chaukha: "East",
   chhena_east: "East",
   mash_dal_east: "East",
   masoor_dal_east: "East",
@@ -168,6 +177,8 @@ export const regionalMapping = {
   sesame_seeds: "West",
   chickoo: "West",
   // Newly Added West Keys
+  dal_baati_churma: "West",
+  daal_baati_churma: "West",
   kadhi_west: "West",
   moong_usal_west: "West",
   toor_dal_west: "West",

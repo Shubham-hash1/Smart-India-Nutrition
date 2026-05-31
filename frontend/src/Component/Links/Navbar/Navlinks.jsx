@@ -47,18 +47,10 @@
 
 // export default Navlinks;
 
-// Here is the updated navlink filled with framermotion animation
-
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
- { to: "/products", label: "Products" },
-  { to: "/blogs", label: "Blogs" },
-];
+import { useLanguage } from "../../../Context/LanguageContext";
 
 const NavItem = ({ to, label, index, mobile = false, onClick }) => {
   const { pathname } = useLocation();
@@ -76,8 +68,8 @@ const NavItem = ({ to, label, index, mobile = false, onClick }) => {
           onClick={onClick}
           className={`block text-base font-medium py-2 px-3 rounded-lg transition-colors ${
             isActive
-              ? "text-emerald-600 bg-emerald-50"
-              : "text-gray-700 hover:text-emerald-600 hover:bg-gray-50"
+              ? "text-[var(--accent-text)] bg-[var(--accent-light)] font-bold"
+              : "text-[var(--text-primary)] hover:text-[var(--accent-text)] hover:bg-[var(--bg-secondary)]"
           }`}
         >
           {label}
@@ -96,19 +88,19 @@ const NavItem = ({ to, label, index, mobile = false, onClick }) => {
       <Link
         to={to}
         className={`relative text-sm font-semibold tracking-wide transition-colors duration-200 py-1 group ${
-          isActive ? "text-emerald-600" : "text-gray-600 hover:text-emerald-600"
+          isActive ? "text-[var(--accent-text)] font-bold" : "text-[var(--text-secondary)] hover:text-[var(--accent-text)]"
         }`}
       >
         {label}
 
         {/* Animated underline on hover */}
-        <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-emerald-500 rounded-full transition-all duration-300 group-hover:w-full" />
+        <span className="absolute -bottom-0.5 left-0 w-0 h-0.5 bg-[var(--accent-color)] rounded-full transition-all duration-300 group-hover:w-full" />
 
         {/* Active dot indicator */}
         {isActive && (
           <motion.span
             layoutId="activeIndicator"
-            className="absolute -bottom-0.5 left-0 w-full h-0.5 bg-emerald-500 rounded-full"
+            className="absolute -bottom-0.5 left-0 w-full h-0.5 bg-[var(--accent-color)] rounded-full"
             transition={{ type: "spring", stiffness: 380, damping: 30 }}
           />
         )}
@@ -117,12 +109,23 @@ const NavItem = ({ to, label, index, mobile = false, onClick }) => {
   );
 };
 
-const Navlinks = ({ mobile = false }) => {
+const Navlinks = ({ mobile = false, onClick }) => {
+  const { t } = useLanguage();
+
+  const links = [
+    { to: "/", label: t("home") },
+    { to: "/about", label: t("about") },
+    { to: "/products", label: t("products") },
+    { to: "/blogs", label: t("blogs") },
+    { to: "/ai-assistant", label: t("aiAssistant") },
+    { to: "/calorie-tracker", label: t("calorieTracker") },
+  ];
+
   if (mobile) {
     return (
       <ul className="flex flex-col gap-1">
         {links.map((link, i) => (
-          <NavItem key={link.to} {...link} index={i} mobile />
+          <NavItem key={link.to} {...link} index={i} mobile onClick={onClick} />
         ))}
       </ul>
     );

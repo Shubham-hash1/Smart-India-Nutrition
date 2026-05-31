@@ -1,6 +1,118 @@
 @import "tailwindcss";
 
+:root {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --border-color: rgba(0, 0, 0, 0.08);
+  --accent-color: #22c55e;
+  --accent-hover: #16a34a;
+  --accent-light: rgba(34, 197, 94, 0.08);
+  --accent-border: rgba(34, 197, 94, 0.2);
+  --accent-text: #16a34a;
+  --card-bg: #f9fafb;
+  
+  --disease-accent: #e87c7c;
+  --age-accent: #3b82f6;
+  --shadow-color: rgba(0, 0, 0, 0.05);
+}
+
+:root.theme-mono-light {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f3f4f6;
+  --text-primary: #000000;
+  --text-secondary: #4b5563;
+  --border-color: #111111;
+  --accent-color: #000000;
+  --accent-hover: #262626;
+  --accent-light: #f3f4f6;
+  --accent-border: #111111;
+  --accent-text: #000000;
+  --card-bg: #ffffff;
+  
+  --disease-accent: #000000;
+  --age-accent: #000000;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+:root.theme-mono-dark {
+  --bg-primary: #121212;
+  --bg-secondary: #1a1a1a;
+  --text-primary: #f5f5f5;
+  --text-secondary: #a3a3a3;
+  --border-color: #404040;
+  --accent-color: #ffffff;
+  --accent-hover: #e5e5e5;
+  --accent-light: #262626;
+  --accent-border: #525252;
+  --accent-text: #ffffff;
+  --card-bg: #1e1e1e;
+  
+  --disease-accent: #ffffff;
+  --age-accent: #ffffff;
+  --shadow-color: rgba(0, 0, 0, 0.4);
+}
+
+:root.theme-dark {
+  --bg-primary: #0f172a;       /* Deep slate background, soothing for the eyes */
+  --bg-secondary: #1e293b;     /* Card/secondary background */
+  --text-primary: #f8fafc;     /* Clear white text */
+  --text-secondary: #94a3b8;   /* Soothing slate text */
+  --border-color: rgba(255, 255, 255, 0.08);
+  --accent-color: #22c55e;     /* Vibrant emerald green */
+  --accent-hover: #4ade80;     /* Soft green hover */
+  --accent-light: rgba(34, 197, 94, 0.15);
+  --accent-border: rgba(34, 197, 94, 0.3);
+  --accent-text: #4ade80;      /* Emerald text in dark mode */
+  --card-bg: #1e293b;
+  
+  --disease-accent: #f87171;   /* Soft red */
+  --age-accent: #60a5fa;       /* Soft blue */
+  --shadow-color: rgba(0, 0, 0, 0.3);
+}
+
 body {
-  background-color: #ffffff;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
   margin: 0;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Grayscale filter for monochrome theme images to make them fit the aesthetic */
+.theme-mono-light img,
+.theme-mono-dark img {
+  filter: grayscale(100%);
+  opacity: 0.85;
+}
+
+.theme-mono-light .text-emerald-600,
+.theme-mono-light .text-green-700 {
+  color: #000000 !important;
+}
+
+.theme-mono-dark .text-emerald-600,
+.theme-mono-dark .text-green-700 {
+  color: #ffffff !important;
+}
+
+.theme-dark .text-emerald-600,
+.theme-dark .text-green-700 {
+  color: #4ade80 !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
 }

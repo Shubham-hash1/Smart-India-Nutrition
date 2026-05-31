@@ -71,8 +71,52 @@ const connectDB = async () => {
       );
     `);
 
+    // Ensure video_url exists in blogs table
+    await client.query(`
+      ALTER TABLE blogs ADD COLUMN IF NOT EXISTS video_url VARCHAR(255);
+    `);
+
+    // Create foods table
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS foods (
+        id SERIAL PRIMARY KEY,
+        category_type VARCHAR(50) NOT NULL,
+        target_name VARCHAR(100) NOT NULL,
+        nutrient_type VARCHAR(50) NOT NULL,
+        title VARCHAR(255) NOT NULL,
+        food_key VARCHAR(255) NOT NULL,
+        region VARCHAR(50) DEFAULT 'Common',
+        calories INTEGER DEFAULT 120,
+        protein REAL DEFAULT 4.0,
+        carbs REAL DEFAULT 15.0,
+        fat REAL DEFAULT 2.0,
+        description TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
+    // Create calorie_logs table
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS calorie_logs (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
+        food_name VARCHAR(255) NOT NULL,
+        calories INTEGER NOT NULL,
+        protein REAL DEFAULT 0,
+        carbs REAL DEFAULT 0,
+        fat REAL DEFAULT 0,
+        quantity REAL DEFAULT 1,
+        log_date DATE DEFAULT CURRENT_DATE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
+
     console.log("✅ Database tables ready");
     client.release();
+
+    // Run dynamic seeding
+    const { seedFoods } = require("./seed");
+    await seedFoods(pool);
   } catch (error) {
     console.error("❌ PostgreSQL Error:", error.message);
     process.exit(1);

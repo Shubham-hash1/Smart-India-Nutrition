@@ -79,4 +79,25 @@ Smart India Nutrition is an application that incorporates a modern full-stack we
 - **Community Platform**: Creation of a social networking platform for users to connect.
 - **E-commerce Growth**: Improving the products section into a full-fledged marketplace featuring organic and health-related Indian food products.
 - **Community Portal**: Introducing a social platform for users to exchange stories about their workout experience, health-based recipe ideas, and tips.
+<<<<<<< HEAD
 
+=======
+
+---
+
+## 📂 File Structure
+
+```bash
+SMART-INDIA-NUTRITION/
+│── frontend/
+│   ├── src/
+│   ├── public/
+│   └── package.json
+│
+│── backend/
+│   ├── src/
+│   ├── routes/
+│   ├── controllers/
+│   └── package.json
+```
+>>>>>>> 91b0a54 (updated project)

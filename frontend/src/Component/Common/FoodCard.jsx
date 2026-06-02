@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const getNutritionInfo = (title) => {
@@ -10,9 +10,106 @@ const getNutritionInfo = (title) => {
     };
 };
 
+const resolveFoodImage = (itemKey) => {
+    if (!itemKey) return "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=120&q=60";
+    
+    const key = itemKey.toLowerCase().trim();
+    
+    // Explicit manual mappings for key mismatches to existing public images
+    const manualMapping = {
+        // West
+        "sprouted_chana_west": "sprouted_chana_west.png",
+        "besan_chilla_west": "besan_chilla.jpg",
+        "daal_baati_west": "daal_baati.png",
+        "mango_west": "alphonso_mango.jpg",
+        "chickoo_west": "chickoo.jpg",
+        "custard_apple_west": "custard_apple.jpg",
+        "shira_west": "shira_west.jpg",
+        "bajra_roti_west": "bajra_roti.jpg",
+        "thepla_west": "thepla.jpg",
+        "ragda_west": "white_peas.jpg",
+        "peanuts_west": "peanuts.jpg",
+        "cashews_west": "cashew.jpg",
+        "dates_west": "dates.jpg",
+        
+        // East
+        "prawn_east": "prawn_east.png",
+        "fish_stew_east": "fish_stew_east.png",
+        "roasted_chhena_east": "roasted_chhena_east.png",
+        "bamboo_shoot_east": "bamboo_shoot.jpg",
+        "banana_flower_east": "banana_flower.jpg",
+        "litchi_east": "litchi.jpg",
+        "poppy_seeds_east": "poppy_seeds.jpg",
+        "muri_upma_east": "muri_east.jpg",
+        "litti_east": "litti_east.png",
+        
+        // South
+        "ellu_podi_south": "ellu.jpg",
+        "sambar_dal_south": "sambar_dal_south.png",
+        "urad_dal_south": "kootu_south.jpg",
+        "kollu_sundal_south": "kollu_sundal_south.png",
+        "coconut_south": "coconut.jpg",
+        "tamarind_south": "tamarind.jpg",
+        "cardamom_south": "cardamom.jpg",
+        "curry_tea_south": "curry_leaves_tea.jpg",
+        "dosa_south": "dosa_south.png",
+        
+        // North
+        "paneer_north": "paneer.jpg",
+        "moong_dal_north": "moong_dal_north.png",
+        "rajma_north": "rajma_north.png",
+        "roasted_chana_north": "roasted_chana_north.png",
+        "spinach_north": "spinach.jpg",
+        "carrot_north": "carrot.jpg",
+        "roti_north": "roti.jpg",
+        "suji_north": "suji_halwa_north.jpg",
+        "almonds_north": "almonds.jpg",
+        "walnuts_north": "walnuts.jpg",
+        "ajwain_water_north": "ajwain_water.jpg",
+        "makki_roti_north": "makki_north.jpg",
+        "mishri_water_north": "mishri_north.jpg",
+    };
+    
+    if (manualMapping[key]) {
+        return `/food-images/${manualMapping[key]}`;
+    }
+    
+    return `/food-images/${itemKey}.jpg`;
+};
+
 const FoodCard = ({ item, isExercise, user, onEdit, onDelete }) => {
     const [isFlipped, setIsFlipped] = useState(false);
     const itemKey = item.food_key || item.key || "default";
+
+    const [imgSrc, setImgSrc] = useState(() => resolveFoodImage(itemKey));
+    const [fallbackStep, setFallbackStep] = useState(0);
+
+    useEffect(() => {
+        setImgSrc(resolveFoodImage(itemKey));
+        setFallbackStep(0);
+    }, [itemKey]);
+
+    const handleImgError = () => {
+        if (fallbackStep === 0) {
+            // Step 1 fallback: Try stripping regional suffix
+            const strippedKey = itemKey.replace(/_(west|east|south|north)$/i, "");
+            if (strippedKey !== itemKey) {
+                setImgSrc(`/food-images/${strippedKey}.jpg`);
+                setFallbackStep(1);
+                return;
+            }
+        }
+        
+        // Final fallback: generic Unsplash photo
+        const defaultFallback = isExercise 
+            ? "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=120&q=60"
+            : "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=120&q=60";
+            
+        if (imgSrc !== defaultFallback) {
+            setImgSrc(defaultFallback);
+            setFallbackStep(2);
+        }
+    };
     
     // Exercises shouldn't have nutritional value.
     if (isExercise) {
@@ -20,57 +117,11 @@ const FoodCard = ({ item, isExercise, user, onEdit, onDelete }) => {
             <div className='flex flex-col items-center w-[140px] gap-2 p-2 rounded-xl transition-all hover:bg-white/5 hover:-translate-y-1 hover:shadow-lg hover:shadow-green-500/10 cursor-pointer relative'>
                 <div className="w-[120px] h-[120px] rounded-xl overflow-hidden shadow-md shadow-black/40 ring-1 ring-white/10 group relative">
                     <img
-                        src={`/food-images/${itemKey}.jpg`}
-                        onError={(e) => {
-                            e.target.onerror = null; 
-                            e.target.src = "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?auto=format&fit=crop&w=120&q=60";
-                        }}
+                        src={imgSrc}
+                        onError={handleImgError}
                         alt={item.title}
                         className='h-full w-full object-cover transition-transform duration-300 group-hover:scale-110'
                     />
-                    
-                    {user && (
-                        <div className="absolute top-1.5 right-1.5 flex gap-1 z-10">
-                            <button
-                                onClick={(e) => { e.stopPropagation(); onEdit(item); }}
-                                style={{
-                                    background: "rgba(255, 255, 255, 0.95)",
-                                    border: "none",
-                                    borderRadius: "50%",
-                                    width: "22px",
-                                    height: "22px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    cursor: "pointer",
-                                    fontSize: "10px",
-                                    boxShadow: "0 2px 4px rgba(0,0,0,0.2)"
-                                }}
-                                title="Edit"
-                            >
-                                ✏️
-                            </button>
-                            <button
-                                onClick={(e) => { e.stopPropagation(); onDelete(item); }}
-                                style={{
-                                    background: "rgba(255, 255, 255, 0.95)",
-                                    border: "none",
-                                    borderRadius: "50%",
-                                    width: "22px",
-                                    height: "22px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    cursor: "pointer",
-                                    fontSize: "10px",
-                                    boxShadow: "0 2px 4px rgba(0,0,0,0.2)"
-                                }}
-                                title="Delete"
-                            >
-                                🗑️
-                            </button>
-                        </div>
-                    )}
                 </div>
                 <p className='text-sm text-center font-medium text-[rgba(31,41,55,0.9)]'>{item.title}</p>
             </div>
@@ -104,57 +155,11 @@ const FoodCard = ({ item, isExercise, user, onEdit, onDelete }) => {
                 >
                     <div className="w-[120px] h-[120px] rounded-xl overflow-hidden shadow-md shadow-black/40 ring-1 ring-white/10 relative">
                         <img
-                            src={`/food-images/${itemKey}.jpg`}
-                            onError={(e) => {
-                                e.target.onerror = null; 
-                                e.target.src = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=120&q=60";
-                            }}
+                            src={imgSrc}
+                            onError={handleImgError}
                             alt={item.title}
                             className='h-full w-full object-cover transition-transform duration-300 hover:scale-110'
                         />
-                        
-                        {user && (
-                            <div className="absolute top-1.5 right-1.5 flex gap-1 z-10">
-                                <button
-                                    onClick={(e) => { e.stopPropagation(); onEdit(item); }}
-                                    style={{
-                                        background: "rgba(255, 255, 255, 0.95)",
-                                        border: "none",
-                                        borderRadius: "50%",
-                                        width: "22px",
-                                        height: "22px",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        cursor: "pointer",
-                                        fontSize: "10px",
-                                        boxShadow: "0 2px 4px rgba(0,0,0,0.2)"
-                                    }}
-                                    title="Edit"
-                                >
-                                    ✏️
-                                </button>
-                                <button
-                                    onClick={(e) => { e.stopPropagation(); onDelete(item); }}
-                                    style={{
-                                        background: "rgba(255, 255, 255, 0.95)",
-                                        border: "none",
-                                        borderRadius: "50%",
-                                        width: "22px",
-                                        height: "22px",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        cursor: "pointer",
-                                        fontSize: "10px",
-                                        boxShadow: "0 2px 4px rgba(0,0,0,0.2)"
-                                    }}
-                                    title="Delete"
-                                >
-                                    🗑️
-                                </button>
-                            </div>
-                        )}
                     </div>
                     <p className='text-sm text-center font-medium text-[rgba(31,41,55,0.9)]'>{item.title}</p>
                 </div>

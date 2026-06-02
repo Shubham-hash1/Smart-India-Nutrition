@@ -8,6 +8,10 @@ import StomachImg from "../../Images/Stomach.jpg";
 import heartImg from "../../Images/heart.webp";
 import nutrtional from "../../Images/nutritional.jpg";
 import SugarImg from "../../Images/Sugar.jpg";
+import HypertensionImg from "../../Images/Hypertension.png";
+import ThyroidImg from "../../Images/Thyroid.png";
+import PcodImg from "../../Images/PCOD.png";
+import LiverImg from "../../Images/Liver.png";
 
 const Hotspot_bimari = () => {
   const navigate = useNavigate();
@@ -47,25 +51,25 @@ const Hotspot_bimari = () => {
       route: "/nutritional" 
     },
     {
-      image: "https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=500&q=60",
+      image: HypertensionImg,
       title: "Hypertension",
       description: "High blood pressure putting stress on blood vessels. Emphasizes a low-sodium, potassium-rich dietary profile.",
       route: "/hypertension"
     },
     {
-      image: "https://images.unsplash.com/photo-1559757175-5700dde675bc?auto=format&fit=crop&w=500&q=60",
+      image: ThyroidImg,
       title: "Thyroid",
       description: "Hormonal issues (hypo/hyper) regulating metabolic rates. Focuses on selenium, iodine, and gluten-free fibers.",
       route: "/thyroid"
     },
     {
-      image: "https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=500&q=60",
+      image: PcodImg,
       title: "PCOD / PCOS",
       description: "Hormonal imbalance in women causing metabolic fatigue. Focuses on insulin sensitivity, complex grains, and low-GI foods.",
       route: "/pcod"
     },
     {
-      image: "https://images.unsplash.com/photo-1618932260643-eee4a2f652a6?auto=format&fit=crop&w=500&q=60",
+      image: LiverImg,
       title: "Liver Health",
       description: "Fatty liver changes impacting detoxification. Requires high antioxidants, clean hydration, and minimal processed sugars.",
       route: "/liver"

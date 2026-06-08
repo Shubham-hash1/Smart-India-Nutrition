@@ -4,12 +4,12 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-const { connectDB } = require("../backend/src/Db");
-const authRoutes = require("../backend/src/AuthRoutes");
-const blogRoutes = require("../backend/src/BlogRoutes");
-const aiRoutes = require("../backend/src/AiRoutes");
-const foodRoutes = require("../backend/src/FoodRoutes");
-const calorieRoutes = require("../backend/src/CalorieRoutes");
+const { connectDB } = require("./src/Db");
+const authRoutes = require("./src/AuthRoutes");
+const blogRoutes = require("./src/BlogRoutes");
+const aiRoutes = require("./src/AiRoutes");
+const foodRoutes = require("./src/FoodRoutes");
+const calorieRoutes = require("./src/CalorieRoutes");
 
 const app = express();
 
@@ -36,3 +36,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
 
 connectDB();
+
+module.exports = app;

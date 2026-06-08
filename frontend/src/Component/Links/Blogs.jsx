@@ -40,7 +40,7 @@ const Blogs = () => {
 
   const fetchBlogs = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/blogs');
+      const res = await fetch('https://nutrismart-backend-cm7b.onrender.com/api/blogs');
       const data = await res.json();
       if (data.success) {
         setBlogs(data.blogs);
@@ -58,7 +58,7 @@ const Blogs = () => {
     
     setIsPosting(true);
     try {
-      const res = await fetch('http://localhost:5000/api/blogs', {
+      const res = await fetch('https://nutrismart-backend-cm7b.onrender.com/api/blogs', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -86,7 +86,7 @@ const Blogs = () => {
     if (!editTitle.trim() || !editContent.trim()) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/blogs/${blogId}`, {
+      const res = await fetch(`https://nutrismart-backend-cm7b.onrender.com/api/blogs/${blogId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -122,7 +122,7 @@ const Blogs = () => {
     if (!commentContent || !commentContent.trim()) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/blogs/${blogId}/comments`, {
+      const res = await fetch(`https://nutrismart-backend-cm7b.onrender.com/api/blogs/${blogId}/comments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -157,7 +157,7 @@ const Blogs = () => {
       setLikedPosts(newLikedPosts);
       localStorage.setItem('likedPosts', JSON.stringify(newLikedPosts));
 
-      const res = await fetch(`http://localhost:5000/api/blogs/${blogId}/like`, {
+      const res = await fetch(`https://nutrismart-backend-cm7b.onrender.com/api/blogs/${blogId}/like`, {
         method: 'PUT'
       });
       const data = await res.json();
@@ -173,7 +173,7 @@ const Blogs = () => {
     if (!window.confirm("Are you sure you want to delete this post?")) return;
     
     try {
-      const res = await fetch(`http://localhost:5000/api/blogs/${blogId}`, {
+      const res = await fetch(`https://nutrismart-backend-cm7b.onrender.com/api/blogs/${blogId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

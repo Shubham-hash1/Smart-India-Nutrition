@@ -104,7 +104,7 @@ const CalorieTracker = () => {
 
   const fetchFoods = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/foods');
+      const res = await fetch('https://nutrismart-backend-cm7b.onrender.com/api/foods');
       const data = await res.json();
       if (data.success) {
         setFoodsList(data.foods.filter(f => f.nutrient_type !== 'Exercises'));
@@ -118,7 +118,7 @@ const CalorieTracker = () => {
     setLoading(true);
     if (user) {
       try {
-        const res = await fetch(`http://localhost:5000/api/calories?date=${selectedDate}`, {
+        const res = await fetch(`https://nutrismart-backend-cm7b.onrender.com/api/calories?date=${selectedDate}`, {
           headers: { 'Authorization': `Bearer ${token}` }
         });
         const data = await res.json();
@@ -191,7 +191,7 @@ const CalorieTracker = () => {
     } else {
       // B. Query Backend AI Estimator
       try {
-        const aiRes = await fetch('http://localhost:5000/api/ai/estimate-food', {
+        const aiRes = await fetch('https://nutrismart-backend-cm7b.onrender.com/api/ai/estimate-food', {
           method: 'POST',
           headers: { 
             'Content-Type': 'application/json',
@@ -231,7 +231,7 @@ const CalorieTracker = () => {
     };
 
     try {
-      const res = await fetch('http://localhost:5000/api/calories', {
+      const res = await fetch('https://nutrismart-backend-cm7b.onrender.com/api/calories', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -260,7 +260,7 @@ const CalorieTracker = () => {
     const newQty = parseFloat(editQuantity) || 1.0;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/calories/${log.id}`, {
+      const res = await fetch(`https://nutrismart-backend-cm7b.onrender.com/api/calories/${log.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -289,7 +289,7 @@ const CalorieTracker = () => {
   const handleDeleteLog = async (id) => {
     if (!user) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/calories/${id}`, {
+      const res = await fetch(`https://nutrismart-backend-cm7b.onrender.com/api/calories/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });

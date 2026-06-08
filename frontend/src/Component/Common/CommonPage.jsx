@@ -75,7 +75,7 @@ const CommonPage = () => {
     };
 
     try {
-      const res = await fetch(`http://localhost:5000/api/foods/${editingFood.id}`, {
+      const res = await fetch(`https://nutrismart-backend-cm7b.onrender.com/api/foods/${editingFood.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ const CommonPage = () => {
   const handleDeleteFood = async (food) => {
     if (!window.confirm(`Are you sure you want to delete "${food.title}"?`)) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/foods/${food.id}`, {
+      const res = await fetch(`https://nutrismart-backend-cm7b.onrender.com/api/foods/${food.id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -148,7 +148,7 @@ const CommonPage = () => {
   const fetchFoods = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/foods');
+      const res = await fetch('https://nutrismart-backend-cm7b.onrender.com/api/foods');
       const data = await res.json();
       if (data.success) {
         setAllFoods(data.foods);
@@ -179,7 +179,7 @@ const CommonPage = () => {
     };
 
     try {
-      const res = await fetch('http://localhost:5000/api/foods', {
+      const res = await fetch('https://nutrismart-backend-cm7b.onrender.com/api/foods', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
